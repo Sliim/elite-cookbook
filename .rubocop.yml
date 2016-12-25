@@ -1,0 +1,18 @@
+AllCops:
+  Include:
+    - '**/metadata.rb'
+    - '**/Gemfile'
+    - attributes/**/*
+    - definitions/**/*
+    - libraries/**/*
+    - providers/**/*
+    - recipes/**/*
+    - resources/**/*
+    - spec/**/*
+    - test/**/*
+
+LineLength:
+  Exclude:
+    - attributes/**/*
+    - test/**/*
+    - spec/*

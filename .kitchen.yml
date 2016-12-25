@@ -1,0 +1,24 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: debian-8.2
+
+suites:
+  - name: default
+    run_list:
+      - recipe[elite]
+    attributes:
+      elite:
+        users: [h4x0r]
+        groups: [elite]
+        h4x0r:
+          home: /home/h4x0r
+          shell: /bin/sh
+          groups: [elite]
+          password: $1$ZqEOrqH1$Xdlls.mpHmHcP4XsQl9Ah.
