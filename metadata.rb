@@ -8,7 +8,8 @@ description 'The Elite Cookbook'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.1.0'
 
-recipe 'elite::default', ''
+recipe 'elite::default', 'Creates elite groups and users'
+recipe 'elite::packages', 'Install packages list'
 
 supports 'debian', '> 8.0'
 
