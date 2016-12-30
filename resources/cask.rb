@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Library:: matchers
+# Resource:: cask
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,14 @@
 # limitations under the License.
 #
 
-if defined?(ChefSpec)
-  def create_elite_user(path)
-    ChefSpec::Matchers::ResourceMatcher.new(:elite_user, :create, path)
-  end
+actions :create
 
-  def create_elite_cask(user)
-    ChefSpec::Matchers::ResourceMatcher.new(:elite_cask, :create, user)
-  end
+attribute :user, kind_of: String, name_attribute: true
+attribute :repository, kind_of: String, default: 'https://github.com/cask/cask.git'
+attribute :reference, kind_of: String, default: 'master'
+
+def initialize(*args)
+  super
+  @action = :create
+  @resource_name = :elite_cask
 end
