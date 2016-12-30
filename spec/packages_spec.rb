@@ -21,12 +21,12 @@ require_relative 'spec_helper'
 describe 'elite::packages' do
   let(:subject) do
     ChefSpec::SoloRunner.new do |node|
-      node.set['elite']['packages'] = %w(pkg1 pkg2)
+      node.override['elite']['packages'] = %w(pkg1 pkg2)
     end.converge(described_recipe)
   end
 
   %w(pkg1 pkg2).each do |pkg|
-    it "does install #{pkg} package" do
+    it "installs package[#{pkg}]" do
       expect(subject).to install_package(pkg)
     end
   end

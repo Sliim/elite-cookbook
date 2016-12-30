@@ -19,7 +19,7 @@
 actions :create
 
 attribute :name, kind_of: String
-attribute :home, kind_of: String, default: ''
+attribute :home, kind_of: String, default: "/home/#{name}"
 attribute :shell, kind_of: String, default: '/bin/zsh'
 attribute :password, kind_of: String, default: nil
 attribute :groups, kind_of: Array, default: []

@@ -6,3 +6,5 @@
 
 default['elite']['groups'] = []
 default['elite']['users'] = []
+
+default['elite']['packages'] = []
