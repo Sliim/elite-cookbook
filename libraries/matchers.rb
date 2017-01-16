@@ -29,6 +29,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_user, :create, path)
   end
 
+  def create_elite_bash(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_bash, :create, user)
+  end
+
   def create_elite_cask(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_cask, :create, user)
   end
