@@ -30,7 +30,7 @@ action :create do
 
   link "#{node['elite'][owner]['home']}/#{name}" do
     owner owner
-    group owner
+    group node['elite'][owner]['group']
     link_type :symbolic
     to "#{node['elite'][owner]['dotfd']}/#{new_resource.name}"
     only_if { !exists || (exists && !new_resource.skip_if_exists) }

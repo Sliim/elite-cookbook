@@ -24,7 +24,10 @@ describe 'elite::ack' do
                              platform: 'debian',
                              version: '8.0') do |node|
       node.override['elite']['users'] = %w(sliim foo)
+      node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['home'] = '/home/sliim'
+      node.override['elite']['sliim']['group'] = 'elite'
+      node.override['elite']['sliim']['groups'] = %w(elite)
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
       node.override['elite']['sliim']['ack'] = true
     end.converge(described_recipe)
@@ -54,7 +57,7 @@ describe 'elite::ack' do
   it 'creates cookbook_file[/home/sliim/.dotfiles/ackrc]' do
     expect(subject).to create_cookbook_file('/home/sliim/.dotfiles/ackrc')
       .with(owner: 'sliim',
-            group: 'sliim',
+            group: 'elite',
             mode: '0640',
             source: 'ackrc')
   end
@@ -66,7 +69,7 @@ describe 'elite::ack' do
   it 'creates link[/home/sliim/.ackrc]' do
     expect(subject).to create_link('/home/sliim/.ackrc')
       .with(owner: 'sliim',
-            group: 'sliim',
+            group: 'elite',
             link_type: :symbolic,
             to: '/home/sliim/.dotfiles/ackrc')
   end

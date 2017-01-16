@@ -24,9 +24,9 @@ end
 
 action :create do
   owner = new_resource.owner
-  directory "#{node['elite']['dotfd']}/pics" do
-    owner node['elite']['user']
-    group node['elite']['group']
+  directory "#{node['elite'][owner]['dotfd']}/pics" do
+    owner owner
+    group node['elite'][owner]['group']
     mode '0750'
   end
 
@@ -36,7 +36,7 @@ action :create do
 
   cookbook_file "#{node['elite'][owner]['dotfd']}/pics/#{new_resource.name}" do
     owner owner
-    group owner
+    group node['elite'][owner]['group']
     mode '0640'
     source "pics/#{new_resource.name}"
   end

@@ -24,7 +24,9 @@ describe 'elite::pics' do
                              platform: 'debian',
                              version: '8.0') do |node|
       node.override['elite']['users'] = %w(sliim foo)
+      node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['home'] = '/home/sliim'
+      node.override['elite']['sliim']['group'] = 'elite'
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
       node.override['elite']['sliim']['pics'] = ['img1.jpg']
     end.converge(described_recipe)
@@ -37,7 +39,7 @@ describe 'elite::pics' do
   it 'creates directory[/home/sliim/.dotfiles/pics/scrot]' do
     expect(subject).to create_directory('/home/sliim/.dotfiles/pics/scrot')
       .with(owner: 'sliim',
-            group: 'sliim',
+            group: 'elite',
             mode: '0750',
             recursive: true)
   end
@@ -51,10 +53,17 @@ describe 'elite::pics' do
                                                          skip_if_exists: true)
   end
 
+  it 'creates directory[/home/sliim/.dotfiles/pics]' do
+    expect(subject).to create_directory('/home/sliim/.dotfiles/pics')
+      .with(owner: 'sliim',
+            group: 'elite',
+            mode: '0750')
+  end
+
   it 'creates cookbook_file[/home/sliim/.dotfiles/pics/img1.jpg]' do
     expect(subject).to create_cookbook_file('/home/sliim/.dotfiles/pics/img1.jpg')
       .with(owner: 'sliim',
-            group: 'sliim',
+            group: 'elite',
             mode: '0640',
             source: 'pics/img1.jpg')
   end
@@ -68,7 +77,7 @@ describe 'elite::pics' do
     it 'creates link[/home/sliim/pics]' do
       expect(subject).to create_link('/home/sliim/pics')
         .with(owner: 'sliim',
-              group: 'sliim',
+              group: 'elite',
               link_type: :symbolic,
               to: '/home/sliim/.dotfiles/pics')
     end

@@ -23,23 +23,23 @@ def whyrun_supported?
 end
 
 action :create do
-  owner = new_resource.owner
+  user = new_resource.user
 
-  directory "#{node['elite'][owner]['dotfd']}/pics/scrot" do
-    owner owner
-    group owner
+  directory "#{node['elite'][user]['dotfd']}/pics/scrot" do
+    owner user
+    group node['elite'][user]['group']
     mode '0750'
     recursive true
   end
 
-  node['elite'][owner]['pics'].each do |pic|
+  node['elite'][user]['pics'].each do |pic|
     elite_picture pic do
-      owner owner
+      owner user
     end
   end
 
   elite_dotlink 'pics' do
-    owner owner
+    owner user
     dotprefix false
     skip_if_exists true
   end

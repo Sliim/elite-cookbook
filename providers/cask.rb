@@ -25,7 +25,7 @@ end
 action :create do
   git "#{node['elite'][new_resource.user]['home']}/.cask" do
     user new_resource.user
-    group new_resource.user
+    group node['elite'][new_resource.user]['group']
     repository new_resource.repository
     reference new_resource.reference
     action :sync

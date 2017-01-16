@@ -20,9 +20,13 @@ require_relative 'spec_helper'
 
 describe 'elite::cask' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: ['elite_cask']) do |node|
+    ChefSpec::SoloRunner.new(step_into: ['elite_cask'],
+                             platform: 'debian',
+                             version: '8.0') do |node|
       node.override['elite']['users'] = %w(sliim foo)
+      node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['home'] = '/home/sliim'
+      node.override['elite']['sliim']['group'] = 'elite'
       node.override['elite']['sliim']['cask']['repository'] = 'https://remote/cask.git'
       node.override['elite']['sliim']['cask']['reference'] = 'mybranch'
     end.converge(described_recipe)
@@ -41,7 +45,7 @@ describe 'elite::cask' do
   it 'syncs git[/home/sliim/.cask]' do
     expect(subject).to sync_git('/home/sliim/.cask')
       .with(user: 'sliim',
-            group: 'sliim',
+            group: 'elite',
             repository: 'https://remote/cask.git',
             reference: 'mybranch')
   end

@@ -23,18 +23,18 @@ def whyrun_supported?
 end
 
 action :create do
-  owner = new_resource.owner
+  user = new_resource.user
   package 'ack-grep'
 
-  cookbook_file "#{node['elite'][owner]['dotfd']}/ackrc" do
-    owner new_resource.owner
-    group new_resource.owner
+  cookbook_file "#{node['elite'][user]['dotfd']}/ackrc" do
+    owner user
+    group node['elite'][user]['group']
     mode '0640'
     source 'ackrc'
   end
 
   elite_dotlink 'ackrc' do
-    owner owner
+    owner user
   end
 
   new_resource.updated_by_last_action(true)
