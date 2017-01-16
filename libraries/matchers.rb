@@ -17,11 +17,27 @@
 #
 
 if defined?(ChefSpec)
+  def create_elite_dotlink(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_dotlink, :create, name)
+  end
+
+  def create_elite_picture(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_picture, :create, name)
+  end
+
   def create_elite_user(path)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_user, :create, path)
   end
 
   def create_elite_cask(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_cask, :create, user)
+  end
+
+  def create_elite_ack(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_ack, :create, user)
+  end
+
+  def create_elite_pics(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_pics, :create, user)
   end
 end

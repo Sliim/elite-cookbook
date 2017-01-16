@@ -1,0 +1,7 @@
+--ignore-dir=.project/
+--ignore-dir=var/
+--ignore-dir=log/
+--ignore-dir=cover/
+--ignore-dir=logs/
+--ignore-dir=vendor/
+--type-set=puppet=.pp,.puppet
