@@ -52,4 +52,8 @@ if defined?(ChefSpec)
   def create_elite_git(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_git, :create, user)
   end
+
+  def create_elite_tmux(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_tmux, :create, user)
+  end
 end
