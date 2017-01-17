@@ -44,4 +44,8 @@ if defined?(ChefSpec)
   def create_elite_pics(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_pics, :create, user)
   end
+
+  def create_elite_git(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_git, :create, user)
+  end
 end
