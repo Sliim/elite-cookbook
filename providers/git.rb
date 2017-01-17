@@ -30,19 +30,20 @@ action :create do
   template "#{node['elite'][user]['dotfd']}/gitconfig" do
     owner user
     group node['elite'][user]['group']
-    mode '0640'
-    source 'gitconfig.erb'
+    mode new_resource.mode
+    source new_resource.gitconfig_src
     cookbook new_resource.cookbook
     variables name: new_resource.username,
               email: new_resource.email
   end
 
-  cookbook_file "#{node['elite'][user]['dotfd']}/gitignore" do
+  template "#{node['elite'][user]['dotfd']}/gitignore" do
     owner user
     group node['elite'][user]['group']
-    mode '0640'
-    source 'gitignore'
+    mode new_resource.mode
+    source new_resource.gitignore_src
     cookbook new_resource.cookbook
+    variables files: new_resource.gitignore
   end
 
   elite_dotlink 'gitconfig' do

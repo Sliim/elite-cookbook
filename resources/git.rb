@@ -21,7 +21,29 @@ actions :create
 attribute :user, kind_of: String, name_attribute: true
 attribute :username, kind_of: String
 attribute :email, kind_of: String
+attribute :mode, kind_of: String, default: '0640'
 attribute :cookbook, kind_of: String, default: 'elite'
+attribute :gitconfig_src, kind_of: String, default: 'gitconfig.erb'
+attribute :gitignore_src, kind_of: String, default: 'gitignore.erb'
+attribute :gitignore, kind_of: Array, default: ['*.a',
+                                                '*.o',
+                                                '*.py[co]',
+                                                '*.so',
+                                                '*.sw[nop]',
+                                                '*~',
+                                                '*.elc',
+                                                '*.pyc',
+                                                '.#*',
+                                                '\#*\#',
+                                                '.\#*',
+                                                'auto-save-list',
+                                                'tramp',
+                                                '__pycache__',
+                                                'bzr-orphans',
+                                                '/.emacs.desktop',
+                                                '/.emacs.desktop.lock',
+                                                '/.project',
+                                                '/.ropeproject']
 
 def initialize(*args)
   super

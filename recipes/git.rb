@@ -24,6 +24,10 @@ node['elite']['users'].each do |u|
   elite_git u do
     username node['elite'][u]['name']
     email node['elite'][u]['email']
+    mode node['elite'][u]['mode'] if git_config['mode']
     cookbook git_config['cookbook'] if git_config['cookbook']
+    gitconfig_src git_config['gitconfig_src'] if git_config['gitconfig_src']
+    gitignore_src git_config['gitignore_src'] if git_config['gitignore_src']
+    gitignore git_config['gitignore'] if git_config['gitignore']
   end
 end
