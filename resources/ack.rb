@@ -19,6 +19,16 @@
 actions :create
 
 attribute :user, kind_of: String, name_attribute: true
+attribute :mode, kind_of: String, default: '0640'
+attribute :cookbook, kind_of: String, default: 'elite'
+attribute :source, kind_of: String, default: 'list2file.erb'
+attribute :config, kind_of: Array, default: ['--ignore-dir=.project/',
+                                             '--ignore-dir=var/',
+                                             '--ignore-dir=log/',
+                                             '--ignore-dir=cover/',
+                                             '--ignore-dir=logs/',
+                                             '--ignore-dir=vendor/',
+                                             '--type-set=puppet=.pp,.puppet']
 
 def initialize(*args)
   super

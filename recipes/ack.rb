@@ -21,5 +21,10 @@ include_recipe 'elite::default'
 node['elite']['users'].each do |u|
   ack_config = user_config(u, 'ack')
   next unless ack_config
-  elite_ack u
+  elite_ack u do
+    mode ack_config['mode'] if ack_config['mode']
+    cookbook ack_config['cookbook'] if ack_config['cookbook']
+    source ack_config['source'] if ack_config['source']
+    config ack_config['config'] if ack_config['config']
+  end
 end

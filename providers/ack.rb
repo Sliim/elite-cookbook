@@ -26,11 +26,13 @@ action :create do
   user = new_resource.user
   package 'ack-grep'
 
-  cookbook_file "#{node['elite'][user]['dotfd']}/ackrc" do
+  template "#{node['elite'][user]['dotfd']}/ackrc" do
     owner user
     group node['elite'][user]['group']
-    mode '0640'
-    source 'ackrc'
+    mode new_resource.mode
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables lines: new_resource.config
   end
 
   elite_dotlink 'ackrc' do
