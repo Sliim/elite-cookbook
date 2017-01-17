@@ -43,7 +43,7 @@ action :create do
     mode new_resource.mode
     source new_resource.gitignore_src
     cookbook new_resource.cookbook
-    variables files: new_resource.gitignore
+    variables lines: new_resource.gitignore
   end
 
   elite_dotlink 'gitconfig' do

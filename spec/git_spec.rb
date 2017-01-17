@@ -81,7 +81,7 @@ describe 'elite::git' do
       .with(owner: 'sliim',
             group: 'elite',
             mode: '0640',
-            source: 'gitignore.erb',
+            source: 'list2file.erb',
             cookbook: 'elite')
 
     matches.each do |m|
