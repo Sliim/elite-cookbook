@@ -25,6 +25,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_picture, :create, name)
   end
 
+  def create_elite_bin(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_bin, :create, name)
+  end
+
   def create_elite_user(path)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_user, :create, path)
   end
