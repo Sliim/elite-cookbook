@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+source ~/.zsh.d/plugins/emacs.plugin.zsh
+emacs-client-run "c" "$@"

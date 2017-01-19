@@ -29,6 +29,22 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_bin, :create, name)
   end
 
+  def create_elite_zsh_plugin(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_plugin, :create, name)
+  end
+
+  def create_elite_zsh_completion(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_completion, :create, name)
+  end
+
+  def create_elite_zsh_theme(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_theme, :create, name)
+  end
+
+  def create_elite_desktop_app(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_desktop_app, :create, name)
+  end
+
   def create_elite_user(path)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_user, :create, path)
   end
@@ -61,15 +77,11 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh, :create, user)
   end
 
-  def create_elite_zsh_plugin(name)
-    ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_plugin, :create, name)
+  def create_elite_emacs(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_emacs, :create, user)
   end
 
-  def create_elite_zsh_completion(name)
-    ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_completion, :create, name)
-  end
-
-  def create_elite_zsh_theme(name)
-    ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_theme, :create, name)
+  def create_elite_x(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_x, :create, user)
   end
 end
