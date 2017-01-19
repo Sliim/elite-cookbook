@@ -35,8 +35,9 @@ action :create do
     variables lines: new_resource.config
   end
 
-  elite_dotlink 'ackrc' do
+  elite_dotlink "#{user}-ackrc" do
     owner user
+    file 'ackrc'
   end
 
   new_resource.updated_by_last_action(true)

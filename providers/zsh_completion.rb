@@ -23,7 +23,7 @@ def whyrun_supported?
 end
 
 action :create do
-  user = new_resource.user
+  user = new_resource.owner
 
   directory "#{node['elite'][user]['dotfd']}/zsh.d/completions" do
     owner user

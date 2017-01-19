@@ -59,17 +59,20 @@ action :create do
   end
 
   %w(Xdefaults urxvt.d).each do |link|
-    elite_dotlink link do
+    elite_dotlink "#{user}-#{link}" do
       owner user
+      file link
     end
   end
 
-  elite_bin 'disable-screensave.sh' do
+  elite_bin "#{user}-disable-screensave.sh" do
     owner user
+    script 'disable-screensave.sh'
   end
 
-  elite_desktop_app 'urxvt' do
+  elite_desktop_app "#{user}-urxvt" do
     owner user
+    app 'urxvt'
   end
 
   new_resource.updated_by_last_action(true)

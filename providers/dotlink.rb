@@ -24,15 +24,15 @@ end
 
 action :create do
   owner = new_resource.owner
-  name = new_resource.name
-  name = ".#{name}" if new_resource.dotprefix
-  exists = ::File.exist? "#{node['elite'][owner]['home']}/#{name}"
+  file = new_resource.file
+  file = ".#{file}" if new_resource.dotprefix
+  exists = ::File.exist? "#{node['elite'][owner]['home']}/#{file}"
 
-  link "#{node['elite'][owner]['home']}/#{name}" do
+  link "#{node['elite'][owner]['home']}/#{file}" do
     owner owner
     group node['elite'][owner]['group']
     link_type :symbolic
-    to "#{node['elite'][owner]['dotfd']}/#{new_resource.name}"
+    to "#{node['elite'][owner]['dotfd']}/#{new_resource.file}"
     only_if { !exists || (exists && !new_resource.skip_if_exists) }
   end
 

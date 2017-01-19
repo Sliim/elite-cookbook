@@ -18,6 +18,7 @@
 
 actions :create
 
+attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :source, kind_of: String, default: 'zshrc.erb'

@@ -117,6 +117,9 @@ describe 'elite::zsh' do
   %w(plugin1 plugin2 plugin3).each do |p|
     it "creates elite_zsh_plugin[sliim-#{p}]" do
       expect(subject).to create_elite_zsh_plugin("sliim-#{p}")
+        .with(owner: 'sliim',
+              plugin: p,
+              cookbook: 'wrapper')
     end
 
     it "creates cookbook_file[/home/sliim/.dotfiles/zsh.d/plugins/#{p}.plugin.zsh]" do
@@ -139,6 +142,9 @@ describe 'elite::zsh' do
   %w(comp1 comp2 comp3).each do |c|
     it "creates elite_zsh_completion[sliim-#{c}]" do
       expect(subject).to create_elite_zsh_completion("sliim-#{c}")
+        .with(owner: 'sliim',
+              completion: c,
+              cookbook: 'wrapper2')
     end
 
     it "creates cookbook_file[/home/sliim/.dotfiles/zsh.d/completions/_#{c}]" do
@@ -160,6 +166,9 @@ describe 'elite::zsh' do
 
   it 'creates elite_zsh_theme[sliim-mytheme]' do
     expect(subject).to create_elite_zsh_theme('sliim-mytheme')
+      .with(owner: 'sliim',
+            theme: 'mytheme',
+            cookbook: 'elite')
   end
 
   it 'creates cookbook_file[/home/sliim/.dotfiles/zsh.d/themes/mytheme.theme.zsh]' do
@@ -171,11 +180,15 @@ describe 'elite::zsh' do
             cookbook: 'elite')
   end
 
-  it 'creates elite_dotlink[zshrc]' do
-    expect(subject).to create_elite_dotlink('zshrc')
+  it 'creates elite_dotlink[sliim-zshrc]' do
+    expect(subject).to create_elite_dotlink('sliim-zshrc')
+      .with(owner: 'sliim',
+            file: 'zshrc')
   end
 
-  it 'creates elite_dotlink[zsh.d]' do
-    expect(subject).to create_elite_dotlink('zsh.d')
+  it 'creates elite_dotlink[sliim-zsh.d]' do
+    expect(subject).to create_elite_dotlink('sliim-zsh.d')
+      .with(owner: 'sliim',
+            file: 'zsh.d')
   end
 end

@@ -40,8 +40,10 @@ action :create do
       action :nothing
     end
 
-    elite_dotlink 'local' do
+    elite_dotlink "#{user}-local" do
       skip_if_exists true
+      owner user
+      file 'local'
     end
 
     cookbook_file "#{location}/#{new_resource.app}.desktop" do

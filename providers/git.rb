@@ -46,12 +46,14 @@ action :create do
     variables lines: new_resource.gitignore
   end
 
-  elite_dotlink 'gitconfig' do
+  elite_dotlink "#{user}-gitconfig" do
     owner user
+    file 'gitconfig'
   end
 
-  elite_dotlink 'gitignore' do
+  elite_dotlink "#{user}-gitignore" do
     owner user
+    file 'gitignore'
   end
 
   new_resource.updated_by_last_action(true)

@@ -57,8 +57,11 @@ describe 'elite::bin' do
             mode: '0750')
   end
 
-  it 'creates elite_dotlink[bin]' do
-    expect(subject).to create_elite_dotlink('bin').with(dotprefix: false)
+  it 'creates elite_dotlink[sliim-bin]' do
+    expect(subject).to create_elite_dotlink('sliim-bin')
+      .with(dotprefix: false,
+            owner: 'sliim',
+            file: 'bin')
   end
 
   it 'creates cookbook_file[/home/sliim/.dotfiles/bin/foo]' do

@@ -73,8 +73,10 @@ describe 'elite::ack' do
     end
   end
 
-  it 'creates elite_dotlink[ackrc]' do
-    expect(subject).to create_elite_dotlink('ackrc')
+  it 'creates elite_dotlink[sliim-ackrc]' do
+    expect(subject).to create_elite_dotlink('sliim-ackrc')
+      .with(owner: 'sliim',
+            file: 'ackrc')
   end
 
   it 'creates link[/home/sliim/.ackrc]' do

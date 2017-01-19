@@ -18,6 +18,7 @@
 
 actions :create
 
+attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :username, kind_of: String
 attribute :email, kind_of: String

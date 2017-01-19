@@ -89,11 +89,15 @@ describe 'elite::git' do
     end
   end
 
-  it 'creates elite_dotlink[gitconfig]' do
-    expect(subject).to create_elite_dotlink('gitconfig')
+  it 'creates elite_dotlink[sliim-gitconfig]' do
+    expect(subject).to create_elite_dotlink('sliim-gitconfig')
+      .with(owner: 'sliim',
+            file: 'gitconfig')
   end
 
-  it 'creates elite_dotlink[gitignore]' do
-    expect(subject).to create_elite_dotlink('gitignore')
+  it 'creates elite_dotlink[sliim-gitignore]' do
+    expect(subject).to create_elite_dotlink('sliim-gitignore')
+      .with(owner: 'sliim',
+            file: 'gitignore')
   end
 end

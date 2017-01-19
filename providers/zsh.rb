@@ -55,7 +55,7 @@ action :create do
   new_resource.plugins.each do |cb, plugs|
     plugs.each do |p|
       elite_zsh_plugin "#{user}-#{p}" do
-        user user
+        owner user
         plugin p
         cookbook cb
       end
@@ -66,7 +66,7 @@ action :create do
   new_resource.completions.each do |cb, comps|
     comps.each do |c|
       elite_zsh_completion "#{user}-#{c}" do
-        user user
+        owner user
         completion c
         cookbook cb
       end
@@ -75,7 +75,7 @@ action :create do
   end
 
   elite_zsh_theme "#{user}-#{new_resource.theme}" do
-    user user
+    owner user
     theme new_resource.theme
     cookbook new_resource.cookbook
   end
@@ -93,8 +93,9 @@ action :create do
   end
 
   %w(zshrc zsh.d).each do |l|
-    elite_dotlink l do
+    elite_dotlink "#{user}-#{l}" do
       owner user
+      file l
     end
   end
 

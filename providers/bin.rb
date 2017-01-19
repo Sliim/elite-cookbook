@@ -31,8 +31,10 @@ action :create do
     mode '0750'
   end
 
-  elite_dotlink 'bin' do
+  elite_dotlink "#{user}-bin" do
     dotprefix false
+    owner user
+    file 'bin'
   end
 
   cookbook_file "#{node['elite'][user]['dotfd']}/bin/#{new_resource.script}" do

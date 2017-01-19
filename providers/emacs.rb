@@ -48,18 +48,21 @@ action :create do
     source 'eshell/alias'
   end
 
-  elite_dotlink 'eshell' do
+  elite_dotlink "#{user}-eshell" do
     owner user
+    file 'eshell'
   end
 
   %w(ec ediff-merge-tool).each do |bin|
-    elite_bin bin do
+    elite_bin "#{user}-#{bin}" do
       owner user
+      script bin
     end
   end
 
-  elite_desktop_app 'emacs' do
+  elite_desktop_app 'sliim-emacs' do
     owner user
+    app 'emacs'
   end
 
   new_resource.updated_by_last_action(true)

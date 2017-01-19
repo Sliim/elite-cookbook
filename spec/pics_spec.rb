@@ -44,13 +44,20 @@ describe 'elite::pics' do
             recursive: true)
   end
 
-  it 'creates elite_picture[img1.jpg]' do
-    expect(subject).to create_elite_picture('img1.jpg')
+  it 'creates elite_picture[sliim-img1.jpg]' do
+    expect(subject).to create_elite_picture('sliim-img1.jpg')
+      .with(owner: 'sliim',
+            pic: 'img1.jpg',
+            cookbook: 'elite',
+            source_dir: 'pics/')
   end
 
-  it 'creates elite_dotlink[pics]' do
-    expect(subject).to create_elite_dotlink('pics').with(dotprefix: false,
-                                                         skip_if_exists: true)
+  it 'creates elite_dotlink[sliim-pics]' do
+    expect(subject).to create_elite_dotlink('sliim-pics')
+      .with(dotprefix: false,
+            skip_if_exists: true,
+            owner: 'sliim',
+            file: 'pics')
   end
 
   it 'creates directory[/home/sliim/.dotfiles/pics]' do

@@ -54,8 +54,10 @@ describe 'elite::bash' do
             source: 'bashrc')
   end
 
-  it 'creates elite_dotlink[bashrc]' do
-    expect(subject).to create_elite_dotlink('bashrc')
+  it 'creates elite_dotlink[sliim-bashrc]' do
+    expect(subject).to create_elite_dotlink('sliim-bashrc')
+      .with(owner: 'sliim',
+            file: 'bashrc')
   end
 
   it 'creates link[/home/sliim/.bashrc]' do

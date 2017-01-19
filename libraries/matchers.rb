@@ -29,6 +29,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_bin, :create, name)
   end
 
+  def create_elite_desktop_app(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_desktop_app, :create, name)
+  end
+
   def create_elite_zsh_plugin(name)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_plugin, :create, name)
   end
@@ -39,10 +43,6 @@ if defined?(ChefSpec)
 
   def create_elite_zsh_theme(name)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_theme, :create, name)
-  end
-
-  def create_elite_desktop_app(name)
-    ChefSpec::Matchers::ResourceMatcher.new(:elite_desktop_app, :create, name)
   end
 
   def create_elite_user(path)

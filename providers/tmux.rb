@@ -36,8 +36,9 @@ action :create do
               status: new_resource.status
   end
 
-  elite_dotlink 'tmux.conf' do
+  elite_dotlink "#{user}-tmux.conf" do
     owner user
+    file 'tmux.conf'
   end
 
   new_resource.updated_by_last_action(true)

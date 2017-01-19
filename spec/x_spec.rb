@@ -113,20 +113,32 @@ describe 'elite::x' do
             source: 'urxvt.d')
   end
 
-  it 'creates elite_dotlink[Xdefaults]' do
-    expect(subject).to create_elite_dotlink('Xdefaults')
+  it 'creates elite_dotlink[sliim-Xdefaults]' do
+    expect(subject).to create_elite_dotlink('sliim-Xdefaults')
+      .with(owner: 'sliim',
+            file: 'Xdefaults')
   end
 
-  it 'creates elite_dotlink[urxvt.d]' do
-    expect(subject).to create_elite_dotlink('urxvt.d')
+  it 'creates elite_dotlink[sliim-urxvt.d]' do
+    expect(subject).to create_elite_dotlink('sliim-urxvt.d')
+      .with(owner: 'sliim',
+            file: 'urxvt.d')
   end
 
-  it 'creates elite_bin[disable-screensave.sh]' do
-    expect(subject).to create_elite_bin('disable-screensave.sh')
+  it 'creates elite_bin[sliim-disable-screensave.sh]' do
+    expect(subject).to create_elite_bin('sliim-disable-screensave.sh')
+      .with(owner: 'sliim',
+            script: 'disable-screensave.sh',
+            cookbook: 'elite',
+            source_dir: 'bin/')
   end
 
-  it 'creates elite_desktop_app[urxvt]' do
-    expect(subject).to create_elite_desktop_app('urxvt')
+  it 'creates elite_desktop_app[sliim-urxvt]' do
+    expect(subject).to create_elite_desktop_app('sliim-urxvt')
+      .with(owner: 'sliim',
+            app: 'urxvt',
+            cookbook: 'elite',
+            source_dir: 'applications/')
   end
 
   appdir = '/home/sliim/.dotfiles/local/share/applications'
@@ -139,9 +151,11 @@ describe 'elite::x' do
             recursive: true)
   end
 
-  it 'creates elite_dotlink[local]' do
-    expect(subject).to create_elite_dotlink('local')
-      .with(skip_if_exists: true)
+  it 'creates elite_dotlink[sliim-local]' do
+    expect(subject).to create_elite_dotlink('sliim-local')
+      .with(skip_if_exists: true,
+            owner: 'sliim',
+            file: 'local')
   end
 
   it "creates cookbook_file[#{appdir}/urxvt.desktop]" do

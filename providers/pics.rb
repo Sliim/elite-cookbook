@@ -33,15 +33,12 @@ action :create do
   end
 
   node['elite'][user]['pics'].each do |pic|
-    elite_picture pic do
+    elite_picture "#{user}-#{pic}" do
       owner user
+      pic pic
+      cookbook 'elite'
+      source_dir 'pics/'
     end
-  end
-
-  elite_dotlink 'pics' do
-    owner user
-    dotprefix false
-    skip_if_exists true
   end
 
   new_resource.updated_by_last_action(true)

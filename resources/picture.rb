@@ -19,7 +19,10 @@
 actions :create
 
 attribute :name, kind_of: String
+attribute :pic, kind_of: String, name_attribute: true
 attribute :owner, kind_of: String
+attribute :cookbook, kind_of: String, default: 'elite'
+attribute :source_dir, kind_of: String, default: 'pics/'
 
 def initialize(*args)
   super

@@ -33,8 +33,9 @@ action :create do
     source new_resource.source
   end
 
-  elite_dotlink 'bashrc' do
+  elite_dotlink "#{user}-bashrc" do
     owner user
+    file 'bashrc'
   end
 
   new_resource.updated_by_last_action(true)

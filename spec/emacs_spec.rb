@@ -69,20 +69,34 @@ describe 'elite::emacs' do
             source: 'eshell/alias')
   end
 
-  it 'creates elite_dotlink[eshell]' do
-    expect(subject).to create_elite_dotlink('eshell')
+  it 'creates elite_dotlink[sliim-eshell]' do
+    expect(subject).to create_elite_dotlink('sliim-eshell')
+      .with(owner: 'sliim',
+            file: 'eshell')
   end
 
-  it 'creates elite_bin[ec]' do
-    expect(subject).to create_elite_bin('ec')
+  it 'creates elite_bin[sliim-ec]' do
+    expect(subject).to create_elite_bin('sliim-ec')
+      .with(owner: 'sliim',
+            script: 'ec',
+            cookbook: 'elite',
+            source_dir: 'bin/')
   end
 
-  it 'creates elite_bin[ediff-merge-tool]' do
-    expect(subject).to create_elite_bin('ediff-merge-tool')
+  it 'creates elite_bin[sliim-ediff-merge-tool]' do
+    expect(subject).to create_elite_bin('sliim-ediff-merge-tool')
+      .with(owner: 'sliim',
+            script: 'ediff-merge-tool',
+            cookbook: 'elite',
+            source_dir: 'bin/')
   end
 
-  it 'creates elite_desktop_app[emacs]' do
-    expect(subject).to create_elite_desktop_app('emacs')
+  it 'creates elite_desktop_app[eliim-emacs]' do
+    expect(subject).to create_elite_desktop_app('sliim-emacs')
+      .with(owner: 'sliim',
+            app: 'emacs',
+            cookbook: 'elite',
+            source_dir: 'applications/')
   end
 
   appdir = '/home/sliim/.dotfiles/local/share/applications'

@@ -88,8 +88,10 @@ describe 'elite::tmux' do
     end
   end
 
-  it 'creates elite_dotlink[tmux.conf]' do
-    expect(subject).to create_elite_dotlink('tmux.conf')
+  it 'creates elite_dotlink[sliim-tmux.conf]' do
+    expect(subject).to create_elite_dotlink('sliim-tmux.conf')
+      .with(owner: 'sliim',
+            file: 'tmux.conf')
   end
 
   context 'without rbenv version in right status' do
