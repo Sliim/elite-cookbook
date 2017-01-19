@@ -24,18 +24,10 @@ end
 
 action :create do
   user = new_resource.user
-  package 'zsh'
+  plugins = []
+  completions = []
 
-  template "#{node['elite'][user]['dotfd']}/zshrc" do
-    owner user
-    group node['elite'][user]['group']
-    mode '0640'
-    source new_resource.source
-    variables config: new_resource.config,
-              plugins: new_resource.plugins,
-              completions: new_resource.completions,
-              theme: new_resource.theme
-  end
+  package 'zsh'
 
   directory "#{node['elite'][user]['dotfd']}/zsh.d" do
     owner user
@@ -60,23 +52,44 @@ action :create do
     source 'zsh.d/lib'
   end
 
-  new_resource.plugins.each do |p|
-    elite_zsh_plugin "#{user}-#{p}" do
-      user user
-      plugin p
+  new_resource.plugins.each do |cb, plugs|
+    plugs.each do |p|
+      elite_zsh_plugin "#{user}-#{p}" do
+        user user
+        plugin p
+        cookbook cb
+      end
+      plugins << p
     end
   end
 
-  new_resource.completions.each do |c|
-    elite_zsh_completion "#{user}-#{c}" do
-      user user
-      completion c
+  new_resource.completions.each do |cb, comps|
+    comps.each do |c|
+      elite_zsh_completion "#{user}-#{c}" do
+        user user
+        completion c
+        cookbook cb
+      end
+      completions << c
     end
   end
 
   elite_zsh_theme "#{user}-#{new_resource.theme}" do
     user user
     theme new_resource.theme
+    cookbook new_resource.cookbook
+  end
+
+  template "#{node['elite'][user]['dotfd']}/zshrc" do
+    owner user
+    group node['elite'][user]['group']
+    mode '0640'
+    cookbook new_resource.cookbook
+    source new_resource.source
+    variables config: new_resource.config,
+              plugins: plugins,
+              completions: completions,
+              theme: new_resource.theme
   end
 
   %w(zshrc zsh.d).each do |l|

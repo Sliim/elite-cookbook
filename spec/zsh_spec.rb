@@ -33,8 +33,8 @@ describe 'elite::zsh' do
       node.override['elite']['sliim']['groups'] = %w(elite)
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
       node.override['elite']['sliim']['zsh']['cookbook'] = 'elite'
-      node.override['elite']['sliim']['zsh']['plugins'] = %w(plugin1 plugin2 plugin3)
-      node.override['elite']['sliim']['zsh']['completions'] = %w(comp1 comp2 comp3)
+      node.override['elite']['sliim']['zsh']['plugins']['wrapper'] = %w(plugin1 plugin2 plugin3)
+      node.override['elite']['sliim']['zsh']['completions']['wrapper2'] = %w(comp1 comp2 comp3)
       node.override['elite']['sliim']['zsh']['theme'] = 'mytheme'
       node.override['elite']['sliim']['zsh']['config']['color1'] = '012'
       node.override['elite']['sliim']['zsh']['config']['color2'] = '345'
@@ -73,7 +73,8 @@ describe 'elite::zsh' do
       .with(owner: 'sliim',
             group: 'elite',
             mode: '0640',
-            source: 'zshrc.erb')
+            source: 'zshrc.erb',
+            cookbook: 'elite')
 
     matches.each do |m|
       expect(subject).to render_file(config_file).with_content(m)
@@ -124,7 +125,7 @@ describe 'elite::zsh' do
               group: 'elite',
               mode: '0640',
               source: "zsh.d/plugins/#{p}.plugin.zsh",
-              cookbook: 'elite')
+              cookbook: 'wrapper')
     end
   end
 
@@ -146,7 +147,7 @@ describe 'elite::zsh' do
               group: 'elite',
               mode: '0640',
               source: "zsh.d/completions/_#{c}",
-              cookbook: 'elite')
+              cookbook: 'wrapper2')
     end
   end
 
