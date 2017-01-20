@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Provider:: tmux
+# Provider:: tmux_script
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,32 +23,15 @@ def whyrun_supported?
 end
 
 action :create do
-  user = new_resource.user
-  package 'tmux'
+  user = new_resource.owner
 
-  template "#{node['elite'][user]['dotfd']}/tmux.conf" do
+  template new_resource.path do
     owner user
     group node['elite'][user]['group']
     mode new_resource.mode
     source new_resource.source
     cookbook new_resource.cookbook
-    variables color: new_resource.color,
-              status: new_resource.status
-  end
-
-  elite_dotlink "#{user}-tmux.conf" do
-    owner user
-    file 'tmux.conf'
-  end
-
-  new_resource.scripts.each do |name, script|
-    elite_tmux_script name do
-      owner user
-      path script['path'] if script['path']
-      default_window script['default_window'] if script['default_window']
-      windows script['windows'] if script['windows']
-      workdir script['workdir'] if script['workdir']
-    end
+    variables script: new_resource
   end
 
   new_resource.updated_by_last_action(true)

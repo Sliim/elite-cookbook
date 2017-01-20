@@ -20,7 +20,7 @@ require_relative 'spec_helper'
 
 describe 'elite::tmux' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: %w(elite_tmux),
+    ChefSpec::SoloRunner.new(step_into: %w(elite_tmux elite_tmux_script),
                              platform: 'debian',
                              version: '8.0') do |node|
       node.override['elite']['users'] = %w(sliim foo)
@@ -42,6 +42,24 @@ describe 'elite::tmux' do
       node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = true
       node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = true
       node.override['elite']['sliim']['tmux']['status']['ndenv_version'] = true
+      node.override['elite']['sliim']['tmux']['scripts']['autotmux'] = {
+        'path' => '/tmp/autotmux',
+        'workdir' => '/tmp',
+        'default_window' => '0',
+        'windows' => {
+          '0' => {
+            'name' => 'spec',
+            'win' => {
+              '0' => 'split-window -h {TARGET}',
+              '1' => 'select-pane {TARGET}0'
+            },
+            'cmds' => {
+              '0' => 'htop',
+              '1' => 'nload'
+            }
+          }
+        }
+      }
     end.converge(described_recipe)
   end
 
@@ -81,7 +99,8 @@ describe 'elite::tmux' do
       .with(owner: 'sliim',
             group: 'elite',
             mode: '0640',
-            source: 'tmux.conf.erb')
+            source: 'tmux.conf.erb',
+            cookbook: 'elite')
 
     matches.each do |m|
       expect(subject).to render_file(config_file).with_content(m)
@@ -92,6 +111,36 @@ describe 'elite::tmux' do
     expect(subject).to create_elite_dotlink('sliim-tmux.conf')
       .with(owner: 'sliim',
             file: 'tmux.conf')
+  end
+
+  it 'creates elite_tmux_script[autotmux]' do
+    expect(subject).to create_elite_tmux_script('autotmux')
+      .with(owner: 'sliim',
+            path: '/tmp/autotmux',
+            workdir: '/tmp',
+            default_window: '0',
+            source: 'tmux-script.erb',
+            cookbook: 'elite')
+  end
+
+  it 'creates template[/tmp/autotmux]' do
+    config_file = '/tmp/autotmux'
+    matches = [%(tmux new-session -d -s autotmux -n spec -c /tmp),
+               /tmux split-window -h -t autotmux:0.$/,
+               /tmux select-pane -t autotmux:0.0$/,
+               /tmux-run-cmd "htop" 0 0$/,
+               /tmux-run-cmd "nload" 0 1$/]
+
+    expect(subject).to create_template(config_file)
+      .with(owner: 'sliim',
+            group: 'elite',
+            mode: '0750',
+            source: 'tmux-script.erb',
+            cookbook: 'elite')
+
+    matches.each do |m|
+      expect(subject).to render_file(config_file).with_content(m)
+    end
   end
 
   context 'without rbenv version in right status' do

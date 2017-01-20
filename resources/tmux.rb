@@ -34,11 +34,11 @@ attribute :color, kind_of: Hash, default: { 'pane-border-fg' => 'default',
                                             'message-fg' => 'brightred',
                                             'message-bg' => 'black'
                                           }
-
 attribute :status, kind_of: Hash, default: { 'pyenv_version' => false,
                                              'rbenv_version' => false,
                                              'ndenv_version' => false
                                            }
+attribute :scripts, kind_of: Hash, default: {}
 
 def initialize(*args)
   super

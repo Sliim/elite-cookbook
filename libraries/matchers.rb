@@ -33,6 +33,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_desktop_app, :create, name)
   end
 
+  def create_elite_tmux_script(path)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_tmux_script, :create, path)
+  end
+
   def create_elite_zsh_plugin(name)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_zsh_plugin, :create, name)
   end

@@ -27,5 +27,6 @@ node['elite']['users'].each do |u|
     source tmux_config['source'] if tmux_config['source']
     color tmux_config['color'] if tmux_config['color']
     status tmux_config['status'] if tmux_config['status']
+    scripts tmux_config['scripts'] if tmux_config['scripts']
   end
 end

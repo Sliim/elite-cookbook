@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+source ~/.zsh.d/plugins/tmux.plugin.zsh
+
+tmux ls | grep "<%= @script.name %>:"
+if test $? -eq 0; then
+    tmux attach -t <%= @script.name %>
+else
+    tmux start-server
+
+    <% @script.windows.each do | id, win | %>
+    <% if id.to_s == "0" %>
+    tmux new-session -d -s <%= @script.name %> -n <%= win['name'] %> -c <%= @script.workdir %>
+    <% else %>
+    tmux new-window -t <%= @script.name %>:<%= id %> -n <%= win['name'] %>
+    <% end %>
+    <% win['win'].each do | i, w | %>
+    tmux <%= w.gsub('{TARGET}', "-t #{@script.name}:#{id}.") %>
+    <% end %>
+    <% win['cmds'].each do | pane, cmd | %>
+    tmux-run-cmd "<%= cmd %>" <%= id %> <%= pane %>
+    <% end %>
+    <% end %>
+
+    tmux select-window -t <%= @script.name%>:<%= @script.default_window %>
+    tmux attach-session -t <%= @script.name %>
+fi
