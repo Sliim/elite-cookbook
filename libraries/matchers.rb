@@ -85,6 +85,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_emacs, :create, user)
   end
 
+  def create_elite_terminfo(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_terminfo, :create, user)
+  end
+
   def create_elite_x(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_x, :create, user)
   end
