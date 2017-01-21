@@ -21,6 +21,7 @@ node['elite']['groups'].each do |g|
 end
 
 node['elite']['users'].each do |u|
+  next unless node['elite'].key?(u)
   elite_user u do
     home user_config(u, 'home') if user_config(u, 'home')
     shell user_config(u, 'shell') if user_config(u, 'shell')

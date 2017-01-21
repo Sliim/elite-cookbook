@@ -26,11 +26,11 @@ action :create do
   user = new_resource.user
 
   git "#{node['elite'][user]['home']}/.emacs.d" do
-    not_if { node['elite'][user]['emacs']['repository'].empty? }
+    not_if { new_resource.repository.empty? }
     user user
     group node['elite'][user]['group']
-    repository node['elite'][user]['emacs']['repository']
-    reference node['elite'][user]['emacs']['reference']
+    repository new_resource.repository
+    reference new_resource.reference
     enable_submodules true
     action :sync
   end
@@ -46,6 +46,7 @@ action :create do
     group node['elite'][user]['group']
     mode '0640'
     source 'eshell/alias'
+    cookbook new_resource.cookbook
   end
 
   elite_dotlink "#{user}-eshell" do

@@ -32,12 +32,12 @@ action :create do
     recursive true
   end
 
-  node['elite'][user]['pics'].each do |pic|
+  new_resource.pics.each do |pic|
     elite_picture "#{user}-#{pic}" do
       owner user
       pic pic
-      cookbook 'elite'
-      source_dir 'pics/'
+      cookbook new_resource.cookbook
+      source_dir new_resource.source_dir
     end
   end
 

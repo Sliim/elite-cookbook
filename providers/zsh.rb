@@ -57,7 +57,7 @@ action :create do
       elite_zsh_plugin "#{user}-#{p}" do
         owner user
         plugin p
-        cookbook cb
+        cookbook cb.to_s
       end
       plugins << p
     end
@@ -68,7 +68,7 @@ action :create do
       elite_zsh_completion "#{user}-#{c}" do
         owner user
         completion c
-        cookbook cb
+        cookbook cb.to_s
       end
       completions << c
     end

@@ -28,7 +28,7 @@ describe 'elite::pics' do
       node.override['elite']['sliim']['home'] = '/home/sliim'
       node.override['elite']['sliim']['group'] = 'elite'
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-      node.override['elite']['sliim']['pics'] = ['img1.jpg']
+      node.override['elite']['sliim']['pics']['pics'] = ['img1.jpg']
     end.converge(described_recipe)
   end
 

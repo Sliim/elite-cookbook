@@ -1,8 +1,8 @@
-elite Cookbook
+elite Cookbook - [![Cookbook Version](https://img.shields.io/cookbook/v/elite.svg)](https://community.opscode.com/cookbooks/elite) [![Build Status](https://travis-ci.org/Sliim/elite-cookbook.svg?branch=master)](https://travis-ci.org/Sliim/elite-cookbook) 
 ================
 The Elite Cookbook - Configure elite stuff
 
-[![Cookbook Version](https://img.shields.io/cookbook/v/elite.svg)](https://community.opscode.com/cookbooks/elite) [![Build Status](https://travis-ci.org/sliim-cookbooks/elite.svg?branch=master)](https://travis-ci.org/sliim-cookbooks/elite) 
+This is my personal setup, customizable with Chef.
 
 Requirements
 ------------
@@ -13,10 +13,11 @@ The following platforms and versions are tested and supported using Opscode's te
 Attributes
 ----------
 #### elite::default
-| Key               | Type  |  Description |
-| ----------------- | ----- | ------------ |
-| `[elite][users]`  | Array | Elite users  |
-| `[elite][groups]` | Array | Elite groups |
+| Key                 | Type  |  Description                |
+| ------------------- | ----- | --------------------------- |
+| `[elite][users]`    | Array | Elite users                 |
+| `[elite][groups]`   | Array | Elite groups                |
+| `[elite][packages]` | Array | List of packages to install |
 
 All others elements in the `elite` namespace is dedicated for users configuration.
 
@@ -45,6 +46,46 @@ Include the `elite` recipe in your run_list to setup elite users/groups:
 }
 ```
 
+See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
+
+#### Recipes
+- `elite::ack`
+- `elite::bash`
+- `elite::bin`
+- `elite::cask`
+- `elite::default`
+- `elite::emacs`
+- `elite::git`
+- `elite::packages`
+- `elite::pics`
+- `elite::stuff`
+- `elite::terminfo`
+- `elite::tmux`
+- `elite::x`
+- `elite::zsh`
+
+#### Custom resources
+- `elite_bin`
+- `elite_desktop_app`
+- `elite_dotlink`
+- `elite_picture`
+- `elite_tmux_script`
+- `elite_zsh_plugin`
+- `elite_zsh_completions`
+- `elite_zsh_theme`
+- `elite_ack`
+- `elite_bash`
+- `elite_cask`
+- `elite_emacs`
+- `elite_git`
+- `elite_pics`
+- `elite_stuff`
+- `elite_terminfo`
+- `elite_tmux`
+- `elite_user`
+- `elite_x`
+- `elite_zsh`
+
 Tests
 -----
 
@@ -70,8 +111,11 @@ License and Authors
 -------------------
 Authors: Sliim <sliim@mailoo.org> 
 
+#### Cookbook
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+#### Config, scripts under files/ directory are under GPLv3, see COPYING file

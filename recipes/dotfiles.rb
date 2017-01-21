@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Resource:: stuff
+# Recipe:: dotfiles
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,21 +16,15 @@
 # limitations under the License.
 #
 
-actions :create
+include_recipe 'elite::default'
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :repository, kind_of: String, default: 'https://github.com/Sliim/elite-stuff.git'
-attribute :reference, kind_of: String, default: 'master'
-attribute :install_path, kind_of: String, default: nil
+node['elite']['users'].each do |u|
+  next unless node['elite'][u].key?('dotfd')
 
-# FIXME: Fix resources default values
-load_current_value do
-  install_path "#{node.run_state['elite'][user]['home']}/elite-stuff" if install_path.nil?
-end
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_stuff
+  directory user_config(u, 'dotfd') do
+    owner u
+    group user_config(u, 'group')
+    mode '0750'
+    recursive true
+  end
 end

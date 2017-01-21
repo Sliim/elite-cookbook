@@ -11,10 +11,12 @@ describe 'elite::default' do
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(elite)
       node.override['elite']['elite'] = {
-        home: '/home/elite',
-        shell: '/bin/bash',
-        groups: %w(elite),
-        password: nil
+        'home' => '/home/elite',
+        'dotfd' => '/home/elite/.stuff',
+        'group' => 'elite',
+        'shell' => '/bin/bash',
+        'groups' => %w(elite),
+        'password' => nil
       }
     end.converge(described_recipe)
   end

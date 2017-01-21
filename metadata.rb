@@ -8,8 +8,23 @@ description 'The Elite Cookbook'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version '0.1.0'
 
+recipe 'elite::ack', 'Installs/configures Ack'
+recipe 'elite::bash', 'Configures Bash'
+recipe 'elite::bin', 'Deploy user\'s bin script'
+recipe 'elite::cask', 'Installs/configures Cask'
 recipe 'elite::default', 'Creates elite groups and users'
+recipe 'elite::emacs', 'Installs/configures Emacs'
+recipe 'elite::git', 'Installs/configures Git'
 recipe 'elite::packages', 'Install packages list'
+recipe 'elite::pics', 'Deploy user\'s pics'
+recipe 'elite::stuff', 'Deploy Elite stuff repo'
+recipe 'elite::terminfo', 'Deploy terminfo user\'s directory'
+recipe 'elite::tmux', 'Installs/configures Tmux'
+recipe 'elite::x', 'Installs/configures Xorg'
+recipe 'elite::zsh', 'Installs/configures Zsh'
+
+depends 'apt'
+depends 'git'
 
 supports 'debian', '> 8.0'
 

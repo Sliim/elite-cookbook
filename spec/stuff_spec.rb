@@ -27,6 +27,7 @@ describe 'elite::stuff' do
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['home'] = '/home/sliim'
       node.override['elite']['sliim']['group'] = 'elite'
+      node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
       node.override['elite']['sliim']['stuff']['repository'] = 'https://remote/stuff.git'
       node.override['elite']['sliim']['stuff']['reference'] = 'mybranch'
       node.override['elite']['sliim']['stuff']['install_path'] = '/tmp/stuff'

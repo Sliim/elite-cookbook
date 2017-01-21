@@ -29,6 +29,7 @@ attribute :config, kind_of: Array, default: ['--ignore-dir=.project/',
                                              '--ignore-dir=cover/',
                                              '--ignore-dir=logs/',
                                              '--ignore-dir=vendor/',
+                                             '--ignore-dir=.cask/',
                                              '--type-set=puppet=.pp,.puppet']
 
 def initialize(*args)

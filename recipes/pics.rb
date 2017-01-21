@@ -21,5 +21,9 @@ include_recipe 'elite::default'
 node['elite']['users'].each do |u|
   pics = user_config(u, 'pics')
   next unless pics
-  elite_pics u
+  elite_pics u do
+    cookbook pics['cookbook'] if pics['cookbook']
+    source_dir pics['source_dir'] if pics['source_dir']
+    pics pics['pics'] if pics['pics']
+  end
 end

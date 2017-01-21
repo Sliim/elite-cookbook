@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=rxvt-tmux
+GenericName=rxvt-tmux
+Comment=Terminal emulator with tmux
+TryExec=urxvt-256color -geometry 85x25
+Exec=urxvt-256color -geometry 85x25 -title "S70wN Sh3ll"
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Icon=utilities-terminal
+StartupNotify=true
+Categories=System;TerminalEmulator;

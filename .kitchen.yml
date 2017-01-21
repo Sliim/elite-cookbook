@@ -8,17 +8,66 @@ verifier:
 
 platforms:
   - name: debian-8.2
+    run_list:
+      - recipe[apt]
+      - recipe[git]
 
 suites:
   - name: default
     run_list:
       - recipe[elite]
+      - recipe[elite::dotfiles]
+      - recipe[elite::ack]
+      - recipe[elite::bash]
+      - recipe[elite::cask]
+      - recipe[elite::emacs]
+      - recipe[elite::git]
+      - recipe[elite::packages]
+      - recipe[elite::pics]
+      - recipe[elite::stuff]
+      - recipe[elite::terminfo]
+      - recipe[elite::tmux]
+      - recipe[elite::x]
+      - recipe[elite::zsh]
     attributes:
       elite:
-        users: [h4x0r]
+        users: [root, h4x0r]
         groups: [elite]
+        packages: [tcpdump, emacs-nox]
+        root:
+          home: /root
+          group: root
+          bash: {}
         h4x0r:
           home: /home/h4x0r
-          shell: /bin/sh
+          dotfd: /home/h4x0r/.dotfiles
+          group: elite
+          shell: /bin/zsh
           groups: [elite]
           password: $1$ZqEOrqH1$Xdlls.mpHmHcP4XsQl9Ah.
+          ack: {}
+          cask: {}
+          emacs: {}
+          git: {}
+          stuff:
+            install_path: /home/h4x0r/stuff
+          terminfo: {}
+          x: {}
+          tmux:
+            scripts:
+              test:
+                path: /tmp/tmux-test
+                workdir: /tmp
+                default_window: "0"
+                windows:
+                  "0":
+                    name: kitchen
+                    win:
+                      "0": split-window -h {TARGET}
+                      "1": select-pane {TARGET}0
+                    cmds:
+                      "0": htop
+                      "1": nload
+          zsh: {}
+          pics:
+            pics: [thc.jpg, defcon-green.jpg]
