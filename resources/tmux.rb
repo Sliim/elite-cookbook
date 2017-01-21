@@ -32,11 +32,11 @@ attribute :color, kind_of: Hash, default: { 'pane-border-fg' => 'default',
                                             'status-current-fg' => 'white',
                                             'status-current-bg' => 'black',
                                             'message-fg' => 'brightred',
-                                            'message-bg' => 'black'
+                                            'message-bg' => 'black',
                                           }
 attribute :status, kind_of: Hash, default: { 'pyenv_version' => false,
                                              'rbenv_version' => false,
-                                             'ndenv_version' => false
+                                             'ndenv_version' => false,
                                            }
 attribute :scripts, kind_of: Hash, default: {}
 

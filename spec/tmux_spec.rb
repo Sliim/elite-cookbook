@@ -51,14 +51,14 @@ describe 'elite::tmux' do
             'name' => 'spec',
             'win' => {
               '0' => 'split-window -h {TARGET}',
-              '1' => 'select-pane {TARGET}0'
+              '1' => 'select-pane {TARGET}0',
             },
             'cmds' => {
               '0' => 'htop',
-              '1' => 'nload'
-            }
-          }
-        }
+              '1' => 'nload',
+            },
+          },
+        },
       }
     end.converge(described_recipe)
   end

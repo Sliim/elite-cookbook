@@ -34,17 +34,17 @@ attribute :config, kind_of: Hash, default: { 'urxvt' =>
                                                'boldFont' => 'xft:Bitstream Vera Sans Mono:bold:pixelsize=10:antialias=true:hinting=true',
                                                'boldColors' => 'on',
                                                'color4' => 'White',
-                                               'color12' => 'White'
+                                               'color12' => 'White',
                                              },
                                              'xterm' => {
                                                'foreground' => 'white',
-                                               'background' => 'black'
+                                               'background' => 'black',
                                              },
                                              'dzen2' => {
                                                'font' => 'xft:Bitstream Vera Sans Mono:pixelsize=10:antialias=true:hinting=true',
                                                'foreground' => 'White',
-                                               'background' => 'black'
-                                             }
+                                               'background' => 'black',
+                                             },
                                            }
 
 def initialize(*args)

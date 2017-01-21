@@ -26,7 +26,7 @@ attribute :config, kind_of: Hash, default: { 'pyenv_prompt' => false,
                                              'rbenv_prompt' => false,
                                              'ndenv_prompt' => false,
                                              'color1' => '239',
-                                             'color2' => '085'
+                                             'color2' => '085',
                                            }
 attribute :plugins, kind_of: Hash, default: { elite: %w(common) }
 attribute :completions, kind_of: Hash, default: {}

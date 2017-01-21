@@ -31,7 +31,7 @@ describe 'elite::dotfiles' do
         'group' => 'elite',
         'shell' => '/bin/bash',
         'groups' => %w(elite),
-        'password' => nil
+        'password' => nil,
       }
     end.converge(described_recipe)
   end
