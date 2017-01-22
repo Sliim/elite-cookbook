@@ -28,7 +28,7 @@ depends 'git'
 
 supports 'debian', '> 8.0'
 
-source_url 'https://github.com/sliim-cookbooks/elite' if
+source_url 'https://github.com/Sliim/elite-cookbook' if
   respond_to?(:source_url)
-issues_url 'https://github.com/sliim-cookbooks/elite/issues' if
+issues_url 'https://github.com/Sliim/elite-cookbook/issues' if
     respond_to?(:issues_url)
