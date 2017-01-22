@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Recipe:: dotfiles
+# Spec:: dzen2
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
 # limitations under the License.
 #
 
-include_recipe 'elite::default'
+require_relative 'spec_helper'
 
-node['elite']['users'].each do |u|
-  next unless node['elite'].key?(u)
-  next unless node['elite'][u].key?('dotfd')
+describe 'elite::dzen2' do
+  let(:subject) do
+    ChefSpec::SoloRunner.new(platform: 'debian',
+                             version: '8.0') do |node|
+    end.converge(described_recipe)
+  end
 
-  directory user_config(u, 'dotfd') do
-    owner u
-    group user_config(u, 'group')
-    mode '0750'
-    recursive true
+  it 'installs package[dzen2]' do
+    expect(subject).to install_package('dzen2')
   end
 end

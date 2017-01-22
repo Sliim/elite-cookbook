@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Recipe:: dotfiles
+# Provider:: conky_dzen2
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,16 +16,31 @@
 # limitations under the License.
 #
 
-include_recipe 'elite::default'
+use_inline_resources
 
-node['elite']['users'].each do |u|
-  next unless node['elite'].key?(u)
-  next unless node['elite'][u].key?('dotfd')
+def whyrun_supported?
+  true
+end
 
-  directory user_config(u, 'dotfd') do
-    owner u
-    group user_config(u, 'group')
-    mode '0750'
-    recursive true
+action :create do
+  user = new_resource.user
+
+  template "#{node['elite'][user]['dotfd']}/conky.d/dzen2" do
+    owner user
+    group node['elite'][user]['group']
+    mode '0640'
+    source 'conky.d/dzen2.erb'
+    cookbook 'elite'
+    variables conky: new_resource.panel
   end
+
+  cookbook_file "#{node['elite'][user]['dotfd']}/conky.d/scripts/battery-notify.sh" do
+    owner user
+    group node['elite'][user]['group']
+    mode '0750'
+    source 'conky.d/scripts/battery-notify.sh'
+    cookbook 'elite'
+  end
+
+  new_resource.updated_by_last_action(true)
 end

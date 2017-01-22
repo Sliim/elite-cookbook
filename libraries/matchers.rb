@@ -96,4 +96,12 @@ if defined?(ChefSpec)
   def create_elite_x(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_x, :create, user)
   end
+
+  def create_elite_conky(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_conky, :create, user)
+  end
+
+  def create_elite_conky_dzen2(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_conky_dzen2, :create, user)
+  end
 end

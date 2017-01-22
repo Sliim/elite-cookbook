@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Recipe:: dotfiles
+# Resource:: conky
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,16 +16,13 @@
 # limitations under the License.
 #
 
-include_recipe 'elite::default'
+actions :create
 
-node['elite']['users'].each do |u|
-  next unless node['elite'].key?(u)
-  next unless node['elite'][u].key?('dotfd')
+attribute :name, kind_of: String
+attribute :user, kind_of: String, name_attribute: true
 
-  directory user_config(u, 'dotfd') do
-    owner u
-    group user_config(u, 'group')
-    mode '0750'
-    recursive true
-  end
+def initialize(*args)
+  super
+  @action = :create
+  @resource_name = :elite_conky
 end
