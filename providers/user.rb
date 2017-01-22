@@ -23,10 +23,15 @@ def whyrun_supported?
 end
 
 action :create do
+  home = new_resource.home
+  home = "/home/#{new_resource.name}" if home.empty?
+  home = '/root' if new_resource.name == 'root'
+  node.override['elite'][new_resource.name]['home'] = home
+
   user new_resource.name do
-    home new_resource.home
+    home home
     shell new_resource.shell
-    manage_home !::File.exist?(new_resource.home)
+    manage_home !::File.exist?(home)
     password new_resource.password unless new_resource.password.nil?
   end
 

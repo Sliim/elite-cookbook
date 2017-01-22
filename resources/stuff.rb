@@ -24,11 +24,6 @@ attribute :repository, kind_of: String, default: 'https://github.com/Sliim/elite
 attribute :reference, kind_of: String, default: 'master'
 attribute :install_path, kind_of: String, default: nil
 
-# FIXME: Fix resources default values
-load_current_value do
-  install_path "#{node.run_state['elite'][user]['home']}/elite-stuff" if install_path.nil?
-end
-
 def initialize(*args)
   super
   @action = :create

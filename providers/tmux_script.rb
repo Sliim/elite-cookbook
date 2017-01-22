@@ -24,6 +24,8 @@ end
 
 action :create do
   user = new_resource.owner
+  workdir = new_resource.workdir
+  workdir = node['elite'][owner]['home'] if workdir.empty?
 
   template new_resource.path do
     owner user
@@ -31,7 +33,11 @@ action :create do
     mode new_resource.mode
     source new_resource.source
     cookbook new_resource.cookbook
-    variables script: new_resource
+    variables script: new_resource,
+              workdir: workdir,
+              name: new_resource.name,
+              windows: new_resource.windows,
+              default_window: new_resource.default_window
   end
 
   new_resource.updated_by_last_action(true)

@@ -28,10 +28,6 @@ attribute :source, kind_of: String, default: 'tmux-script.erb'
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :mode, kind_of: String, default: '0750'
 
-load_current_value do
-  workdir node.run_state['elite'][owner]['home'] if workdir.empty?
-end
-
 def initialize(*args)
   super
   @action = :create

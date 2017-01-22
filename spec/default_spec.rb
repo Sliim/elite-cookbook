@@ -11,7 +11,6 @@ describe 'elite::default' do
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(elite)
       node.override['elite']['elite'] = {
-        'home' => '/home/elite',
         'dotfd' => '/home/elite/.stuff',
         'group' => 'elite',
         'shell' => '/bin/bash',

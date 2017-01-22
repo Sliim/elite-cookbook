@@ -23,7 +23,10 @@ def whyrun_supported?
 end
 
 action :create do
-  git new_resource.install_path do
+  install_path = new_resource.install_path
+  install_path = "#{node['elite'][user]['home']}/elite-stuff" if install_path.nil?
+
+  git install_path do
     user new_resource.user
     group node['elite'][new_resource.user]['group']
     repository new_resource.repository
