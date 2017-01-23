@@ -25,7 +25,7 @@ end
 action :create do
   user = new_resource.owner
   workdir = new_resource.workdir
-  workdir = node['elite'][owner]['home'] if workdir.empty?
+  workdir = node['elite'][user]['home'] if workdir.empty?
 
   template new_resource.path do
     owner user
