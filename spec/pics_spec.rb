@@ -36,6 +36,10 @@ describe 'elite::pics' do
     expect(subject).to include_recipe('elite::default')
   end
 
+  it 'includes recipe[elite::dotfiles]' do
+    expect(subject).to include_recipe('elite::dotfiles')
+  end
+
   it 'creates directory[/home/sliim/.dotfiles/pics/scrot]' do
     expect(subject).to create_directory('/home/sliim/.dotfiles/pics/scrot')
       .with(owner: 'sliim',

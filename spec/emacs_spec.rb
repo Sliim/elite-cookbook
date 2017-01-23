@@ -40,6 +40,10 @@ describe 'elite::emacs' do
     expect(subject).to include_recipe('elite::default')
   end
 
+  it 'includes recipe[elite::dotfiles]' do
+    expect(subject).to include_recipe('elite::dotfiles')
+  end
+
   it 'creates elite_emacs[sliim]' do
     expect(subject).to create_elite_emacs('sliim')
       .with(cookbook: 'elite')

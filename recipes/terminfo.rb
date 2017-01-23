@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-include_recipe 'elite::default'
+include_recipe 'elite::dotfiles'
 
 node['elite']['users'].each do |u|
   terminfo_config = user_config(u, 'terminfo')

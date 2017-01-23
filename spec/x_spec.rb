@@ -56,6 +56,10 @@ describe 'elite::x' do
     expect(subject).to include_recipe('elite::default')
   end
 
+  it 'includes recipe[elite::dotfiles]' do
+    expect(subject).to include_recipe('elite::dotfiles')
+  end
+
   it 'creates elite_x[sliim]' do
     expect(subject).to create_elite_x('sliim')
       .with(cookbook: 'elite')

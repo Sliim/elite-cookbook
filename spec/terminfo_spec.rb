@@ -38,6 +38,10 @@ describe 'elite::terminfo' do
     expect(subject).to include_recipe('elite::default')
   end
 
+  it 'includes recipe[elite::dotfiles]' do
+    expect(subject).to include_recipe('elite::dotfiles')
+  end
+
   it 'creates elite_terminfo[sliim]' do
     expect(subject).to create_elite_terminfo('sliim')
       .with(cookbook: 'elite',

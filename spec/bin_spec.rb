@@ -34,6 +34,14 @@ describe 'elite::bin' do
     end.converge(described_recipe)
   end
 
+  it 'includes recipe[elite::default]' do
+    expect(subject).to include_recipe('elite::default')
+  end
+
+  it 'includes recipe[elite::dotfiles]' do
+    expect(subject).to include_recipe('elite::dotfiles')
+  end
+
   it 'creates elite_bin[sliim-foo]' do
     expect(subject).to create_elite_bin('sliim-foo')
       .with(owner: 'sliim',

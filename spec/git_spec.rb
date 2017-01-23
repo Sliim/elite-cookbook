@@ -40,6 +40,10 @@ describe 'elite::git' do
     expect(subject).to include_recipe('elite::default')
   end
 
+  it 'includes recipe[elite::dotfiles]' do
+    expect(subject).to include_recipe('elite::dotfiles')
+  end
+
   it 'creates elite_git[sliim]' do
     expect(subject).to create_elite_git('sliim')
       .with(username: 'Sliim',

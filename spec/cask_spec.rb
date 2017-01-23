@@ -37,6 +37,10 @@ describe 'elite::cask' do
     expect(subject).to include_recipe('elite::default')
   end
 
+  it 'includes recipe[elite::dotfiles]' do
+    expect(subject).to include_recipe('elite::dotfiles')
+  end
+
   it 'creates elite_cask[sliim]' do
     expect(subject).to create_elite_cask('sliim')
       .with(repository: 'https://remote/cask.git',

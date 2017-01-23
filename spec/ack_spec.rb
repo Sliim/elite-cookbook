@@ -42,6 +42,10 @@ describe 'elite::ack' do
     expect(subject).to include_recipe('elite::default')
   end
 
+  it 'includes recipe[elite::dotfiles]' do
+    expect(subject).to include_recipe('elite::dotfiles')
+  end
+
   it 'creates elite_ack[sliim]' do
     expect(subject).to create_elite_ack('sliim')
   end
