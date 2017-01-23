@@ -4,4 +4,4 @@
 # Recipe:: zsh
 # Plugin:: kali
 #
-~/bin/kalihud
+kalihud
