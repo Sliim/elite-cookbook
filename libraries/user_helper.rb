@@ -54,3 +54,14 @@ def user_dotfiles(user)
   node.override['elite'][user]['dotfd'] = dotfiles
   return dotfiles
 end
+
+def user_shell(user)
+  shell = ''
+  if node['elite'][user] && node['elite'][user].key?('shell')
+    shell =  node['elite'][user]['shell']
+  end
+  shell = '/bin/sh' if shell.empty?
+
+  node.override['elite'][user]['shell'] = shell
+  return shell
+end
