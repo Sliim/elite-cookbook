@@ -21,6 +21,13 @@ def user_config(user, key)
   node['elite'][user][key]
 end
 
+def user_group(user)
+  if node['elite'][user] && node['elite'][user].key?('group')
+    return node['elite'][user]['group']
+  end
+  user
+end
+
 def user_home(user)
   if node['elite'][user] && node['elite'][user].key?('home')
     return node['elite'][user]['home']
