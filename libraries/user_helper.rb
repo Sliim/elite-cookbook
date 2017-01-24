@@ -23,19 +23,23 @@ end
 
 def user_group(user)
   group = ''
-  if node['elite'][user] && node['elite'][user].key?('group')
-    group = node['elite'][user]['group']
+  groups = []
+  if node['elite'][user]
+    group = node['elite'][user]['group'] if node['elite'][user].key?('group')
+    groups = node['elite'][user]['groups'] if node['elite'][user].key?('groups')
   end
   group = user if group.empty?
 
+  groups << group unless groups.include?(group)
   node.override['elite'][user]['group'] = group
+  node.override['elite'][user]['groups'] = groups
   group
 end
 
 def user_home(user)
   home = ''
   if node['elite'][user] && node['elite'][user].key?('home')
-    home =  node['elite'][user]['home']
+    home = node['elite'][user]['home']
   end
   home = '/root' if user == 'root'
   home = "/home/#{user}" if home.empty?

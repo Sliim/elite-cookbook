@@ -26,7 +26,6 @@ describe 'elite::dotfiles' do
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(elite)
       node.override['elite']['elite'] = {
-        'group' => 'elite',
         'dotfd' => '/home/elite/.stuff',
         'shell' => '/bin/bash',
         'groups' => %w(elite),

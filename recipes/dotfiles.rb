@@ -23,7 +23,7 @@ node['elite']['users'].each do |u|
 
   directory user_dotfiles u do
     owner u
-    group user_config(u, 'group')
+    group user_group(u)
     mode '0750'
     recursive true
   end
