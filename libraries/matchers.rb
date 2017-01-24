@@ -33,6 +33,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_desktop_app, :create, name)
   end
 
+  def create_elite_sound(name)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_sound, :create, name)
+  end
+
   def create_elite_tmux_script(path)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_tmux_script, :create, path)
   end
@@ -59,6 +63,10 @@ if defined?(ChefSpec)
 
   def create_elite_cask(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_cask, :create, user)
+  end
+
+  def create_elite_configd(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_configd, :create, user)
   end
 
   def create_elite_ack(user)
@@ -103,5 +111,13 @@ if defined?(ChefSpec)
 
   def create_elite_conky_dzen2(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_conky_dzen2, :create, user)
+  end
+
+  def create_elite_dunst(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_dunst, :create, user)
+  end
+
+  def create_elite_stumpwm(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_stumpwm, :create, user)
   end
 end

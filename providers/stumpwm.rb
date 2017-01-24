@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Provider:: x
+# Provider:: stumpwm
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,54 +25,46 @@ end
 action :create do
   user = new_resource.user
 
-  %w(xorg rxvt-unicode-256color xterm xsel scrot feh).each do |pkg|
-    package pkg
-  end
+  package 'stumpwm'
 
-  template "#{user_dotfiles(user)}/Xdefaults" do
+  template "#{user_dotfiles(user)}/stumpwmrc" do
     owner user
     group user_group(user)
     mode '0640'
-    cookbook new_resource.cookbook
     source new_resource.source
-    variables config: new_resource.config
-    notifies :run, 'execute[xrdb-merge]'
+    cookbook new_resource.cookbook
+    variables stumpwm: new_resource,
+              username: user_name(user)
   end
 
-  remote_directory "#{user_dotfiles(user)}/urxvt.d" do
+  remote_directory "#{user_dotfiles(user)}/stumpwm.d" do
     owner user
     group user_group(user)
     mode '0750'
     files_owner user
     files_group user_group(user)
     files_mode '0640'
-    source 'urxvt.d'
+    source 'stumpwm.d'
+    cookbook new_resource.cookbook
   end
 
-  execute 'xrdb-merge' do
-    action :nothing
-    command "xrdb -merge #{user_dotfiles(user)}/Xdefaults"
-    user user
-    group user_group(user)
-    ignore_failure true
-    environment DISPLAY: ':0.0'
-  end
-
-  %w(Xdefaults urxvt.d).each do |link|
-    elite_dotlink "#{user}-#{link}" do
+  %w(stumpwmrc stumpwm.d).each do |dotf|
+    elite_dotlink "#{user}-#{dotf}" do
       owner user
-      file link
+      file dotf
     end
   end
 
-  elite_bin "#{user}-disable-screensave.sh" do
-    owner user
-    script 'disable-screensave.sh'
+  %w(stumpish stumpwm).each do |bin|
+    elite_bin "#{user}-#{bin}" do
+      owner user
+      script bin
+    end
   end
 
-  elite_desktop_app "#{user}-urxvt" do
+  elite_picture "#{user}-#{new_resource.wallpaper}" do
     owner user
-    app 'urxvt'
+    pic new_resource.wallpaper
   end
 
   new_resource.updated_by_last_action(true)

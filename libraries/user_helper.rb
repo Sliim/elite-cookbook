@@ -21,6 +21,17 @@ def user_config(user, key)
   node['elite'][user][key]
 end
 
+def user_name(user)
+  username = ''
+  if node['elite'][user] && node['elite'][user].key?('name')
+    username = node['elite'][user]['name']
+  end
+  username = user.capitalize if username.empty?
+
+  node.override['elite'][user]['name'] = username
+  username
+end
+
 def user_group(user)
   group = ''
   groups = []

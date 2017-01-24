@@ -69,7 +69,7 @@ describe 'elite::x' do
     expect(subject).to install_package('xorg')
   end
 
-  %w(xterm xsel scrot rxvt-unicode-256color).each do |pkg|
+  %w(xterm xsel scrot rxvt-unicode-256color feh).each do |pkg|
     it "installs package[#{pkg}]" do
       expect(subject).to install_package(pkg)
     end

@@ -78,7 +78,7 @@ describe 'elite::default' do
       end.converge(described_recipe)
     end
 
-    it 'creates user[elite] with default user\' shell' do
+    it 'creates user[elite] with default user\'s shell' do
       expect(subject).to create_user('elite')
         .with(shell: '/bin/sh')
     end
