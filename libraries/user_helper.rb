@@ -22,24 +22,35 @@ def user_config(user, key)
 end
 
 def user_group(user)
+  group = ''
   if node['elite'][user] && node['elite'][user].key?('group')
-    return node['elite'][user]['group']
+    group = node['elite'][user]['group']
   end
-  user
+  group = user if group.empty?
+
+  node.override['elite'][user]['group'] = group
+  return group
 end
 
 def user_home(user)
+  home = ''
   if node['elite'][user] && node['elite'][user].key?('home')
-    return node['elite'][user]['home']
+    home =  node['elite'][user]['home']
   end
+  home = '/root' if user == 'root'
+  home = "/home/#{user}" if home.empty?
 
-  return '/root' if user == 'root'
-  "/home/#{user}"
+  node.override['elite'][user]['home'] = home
+  return home
 end
 
 def user_dotfiles(user)
+  dotfiles = ''
   if node['elite'][user] && node['elite'][user].key?('dotfd')
-    return node['elite'][user]['dotfd']
+    dotfiles =  node['elite'][user]['dotfd']
   end
-  "#{user_home user}/.dotfiles"
+  dotfiles = "#{user_home user}/.dotfiles" if dotfiles.empty?
+
+  node.override['elite'][user]['dotfd'] = dotfiles
+  return dotfiles
 end
