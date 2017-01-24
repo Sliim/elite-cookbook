@@ -23,12 +23,12 @@ def whyrun_supported?
 end
 
 action :create do
+  name = new_resource.name
   home = new_resource.home
-  home = "/home/#{new_resource.name}" if home.empty?
-  home = '/root' if new_resource.name == 'root'
-  node.override['elite'][new_resource.name]['home'] = home
+  home = user_home name if home.empty?
+  node.override['elite'][name]['home'] = home
 
-  user new_resource.name do
+  user name do
     home home
     shell new_resource.shell
     manage_home !::File.exist?(home)
@@ -39,7 +39,7 @@ action :create do
     group g do
       action :modify
       append true
-      members [new_resource.name]
+      members [name]
     end
   end
   new_resource.updated_by_last_action(true)

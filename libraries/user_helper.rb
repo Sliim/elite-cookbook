@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Library:: config_helper
+# Library:: user_helper
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,23 @@
 # limitations under the License.
 #
 
-def user_config(user, config)
+def user_config(user, key)
   return nil unless node['elite'][user]
-  node['elite'][user][config]
+  node['elite'][user][key]
+end
+
+def user_home(user)
+  if node['elite'][user] && node['elite'][user].key?('home')
+    return node['elite'][user]['home']
+  end
+
+  return '/root' if user == 'root'
+  "/home/#{user}"
+end
+
+def user_dotfiles(user)
+  if node['elite'][user] && node['elite'][user].key?('dotfd')
+    return node['elite'][user]['dotfd']
+  end
+  "#{user_home user}/.dotfiles"
 end

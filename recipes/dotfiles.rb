@@ -20,9 +20,8 @@ include_recipe 'elite::default'
 
 node['elite']['users'].each do |u|
   next unless node['elite'].key?(u)
-  next unless node['elite'][u].key?('dotfd')
 
-  directory user_config(u, 'dotfd') do
+  directory user_dotfiles u do
     owner u
     group user_config(u, 'group')
     mode '0750'

@@ -26,9 +26,8 @@ describe 'elite::dotfiles' do
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(elite)
       node.override['elite']['elite'] = {
-        'home' => '/home/elite',
-        'dotfd' => '/home/elite/.stuff',
         'group' => 'elite',
+        'dotfd' => '/home/elite/.stuff',
         'shell' => '/bin/bash',
         'groups' => %w(elite),
         'password' => nil,
@@ -46,5 +45,29 @@ describe 'elite::dotfiles' do
             group: 'elite',
             mode: '0750',
             recursive: true)
+  end
+
+  context 'without dotfd' do
+    let(:subject) do
+      ChefSpec::SoloRunner.new(platform: 'debian',
+                               version: '8.0') do |node|
+        node.override['elite']['groups'] = %w(elite)
+        node.override['elite']['users'] = %w(elite)
+        node.override['elite']['elite'] = {
+          'group' => 'elite',
+          'shell' => '/bin/bash',
+          'groups' => %w(elite),
+          'password' => nil,
+        }
+      end.converge(described_recipe)
+    end
+
+    it 'creates directory[/home/elite/.dotfiles]' do
+      expect(subject).to create_directory('/home/elite/.dotfiles')
+        .with(owner: 'elite',
+              group: 'elite',
+              mode: '0750',
+              recursive: true)
+    end
   end
 end

@@ -11,7 +11,7 @@ describe 'elite::default' do
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(elite)
       node.override['elite']['elite'] = {
-        'dotfd' => '/home/elite/.stuff',
+        'home' => '/home/myhome',
         'group' => 'elite',
         'shell' => '/bin/bash',
         'groups' => %w(elite),
@@ -30,12 +30,35 @@ describe 'elite::default' do
 
   it 'creates user[elite]' do
     expect(subject).to create_user('elite').with(
-      home: '/home/elite',
+      home: '/home/myhome',
       shell: '/bin/bash')
   end
 
   it 'modifies group[elite]' do
     expect(subject).to modify_group('elite').with(
       members: %w(elite))
+  end
+
+  context 'without home' do
+    let(:subject) do
+      ChefSpec::SoloRunner.new(step_into: ['elite_user'],
+                               platform: 'debian',
+                               version: '8.0') do |node|
+        node.override['elite']['groups'] = %w(elite)
+        node.override['elite']['users'] = %w(elite)
+        node.override['elite']['elite'] = {
+          'group' => 'elite',
+          'shell' => '/bin/bash',
+          'groups' => %w(elite),
+          'password' => nil,
+        }
+      end.converge(described_recipe)
+    end
+
+    it 'creates user[elite]' do
+      expect(subject).to create_user('elite')
+        .with(home: '/home/elite',
+              shell: '/bin/bash')
+    end
   end
 end
