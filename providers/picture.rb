@@ -24,9 +24,9 @@ end
 
 action :create do
   user = new_resource.owner
-  directory "#{node['elite'][user]['dotfd']}/pics" do
+  directory "#{user_dotfiles(user)}/pics" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
   end
 
@@ -37,9 +37,9 @@ action :create do
     skip_if_exists true
   end
 
-  cookbook_file "#{node['elite'][user]['dotfd']}/pics/#{new_resource.pic}" do
+  cookbook_file "#{user_dotfiles(user)}/pics/#{new_resource.pic}" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0640'
     cookbook new_resource.cookbook
     source "#{new_resource.source_dir}#{new_resource.pic}"

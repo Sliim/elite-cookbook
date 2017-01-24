@@ -26,13 +26,13 @@ action :create do
   owner = new_resource.owner
   file = new_resource.file
   file = ".#{file}" if new_resource.dotprefix
-  exists = ::File.exist? "#{node['elite'][owner]['home']}/#{file}"
+  exists = ::File.exist? "#{user_home(owner)}/#{file}"
 
-  link "#{node['elite'][owner]['home']}/#{file}" do
+  link "#{user_home(owner)}/#{file}" do
     owner owner
-    group node['elite'][owner]['group']
+    group user_group(owner)
     link_type :symbolic
-    to "#{node['elite'][owner]['dotfd']}/#{new_resource.file}"
+    to "#{user_dotfiles(owner)}/#{new_resource.file}"
     only_if { !exists || (exists && !new_resource.skip_if_exists) }
   end
 

@@ -27,9 +27,9 @@ action :create do
 
   package 'git'
 
-  template "#{node['elite'][user]['dotfd']}/gitconfig" do
+  template "#{user_dotfiles(user)}/gitconfig" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode new_resource.mode
     source new_resource.gitconfig_src
     cookbook new_resource.cookbook
@@ -37,9 +37,9 @@ action :create do
               email: new_resource.email
   end
 
-  template "#{node['elite'][user]['dotfd']}/gitignore" do
+  template "#{user_dotfiles(user)}/gitignore" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode new_resource.mode
     source new_resource.gitignore_src
     cookbook new_resource.cookbook

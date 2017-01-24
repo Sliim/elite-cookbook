@@ -23,12 +23,13 @@ def whyrun_supported?
 end
 
 action :create do
+  user = new_resource.user
   install_path = new_resource.install_path
-  install_path = "#{node['elite'][user]['home']}/elite-stuff" if install_path.nil?
+  install_path = "#{user_home(user)}/elite-stuff" if install_path.nil?
 
   git install_path do
-    user new_resource.user
-    group node['elite'][new_resource.user]['group']
+    user user
+    group user_group(user)
     repository new_resource.repository
     reference new_resource.reference
     action :sync

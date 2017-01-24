@@ -25,9 +25,9 @@ end
 action :create do
   user = new_resource.owner
 
-  directory "#{node['elite'][user]['dotfd']}/bin" do
+  directory "#{user_dotfiles(user)}/bin" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
   end
 
@@ -37,9 +37,9 @@ action :create do
     file 'bin'
   end
 
-  cookbook_file "#{node['elite'][user]['dotfd']}/bin/#{new_resource.script}" do
+  cookbook_file "#{user_dotfiles(user)}/bin/#{new_resource.script}" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
     cookbook new_resource.cookbook
     source new_resource.source_dir + new_resource.script

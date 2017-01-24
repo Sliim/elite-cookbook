@@ -28,9 +28,9 @@ action :create do
   package 'conky'
 
   ['conky.d', 'conky.d/var', 'conky.d/scripts'].each do |dir|
-    directory "#{node['elite'][user]['dotfd']}/#{dir}" do
+    directory "#{user_dotfiles(user)}/#{dir}" do
       owner user
-      group node['elite'][user]['group']
+      group user_group(user)
       mode '0750'
     end
   end

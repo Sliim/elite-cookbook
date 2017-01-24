@@ -26,9 +26,9 @@ action :create do
   user = new_resource.user
   package 'tmux'
 
-  template "#{node['elite'][user]['dotfd']}/tmux.conf" do
+  template "#{user_dotfiles(user)}/tmux.conf" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode new_resource.mode
     source new_resource.source
     cookbook new_resource.cookbook

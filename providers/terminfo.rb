@@ -25,12 +25,12 @@ end
 action :create do
   user = new_resource.user
 
-  remote_directory "#{node['elite'][user]['dotfd']}/terminfo" do
+  remote_directory "#{user_dotfiles(user)}/terminfo" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
     files_owner user
-    files_group node['elite'][user]['group']
+    files_group user_group(user)
     files_mode '0640'
     source new_resource.source_dir
     cookbook new_resource.cookbook

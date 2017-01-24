@@ -25,11 +25,11 @@ end
 action :create do
   user = new_resource.owner
   workdir = new_resource.workdir
-  workdir = node['elite'][user]['home'] if workdir.empty?
+  workdir = user_home(user) if workdir.empty?
 
   template new_resource.path do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode new_resource.mode
     source new_resource.source
     cookbook new_resource.cookbook

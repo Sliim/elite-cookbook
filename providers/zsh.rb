@@ -29,25 +29,25 @@ action :create do
 
   package 'zsh'
 
-  directory "#{node['elite'][user]['dotfd']}/zsh.d" do
+  directory "#{user_dotfiles(user)}/zsh.d" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
   end
 
-  cookbook_file "#{node['elite'][user]['dotfd']}/zsh.d/init.zsh" do
+  cookbook_file "#{user_dotfiles(user)}/zsh.d/init.zsh" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0640'
     source 'zsh.d/init.zsh'
   end
 
-  remote_directory "#{node['elite'][user]['dotfd']}/zsh.d/lib" do
+  remote_directory "#{user_dotfiles(user)}/zsh.d/lib" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
     files_owner user
-    files_group node['elite'][user]['group']
+    files_group user_group(user)
     files_mode '0640'
     source 'zsh.d/lib'
   end
@@ -80,9 +80,9 @@ action :create do
     cookbook new_resource.cookbook
   end
 
-  template "#{node['elite'][user]['dotfd']}/zshrc" do
+  template "#{user_dotfiles(user)}/zshrc" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0640'
     cookbook new_resource.cookbook
     source new_resource.source

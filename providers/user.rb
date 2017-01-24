@@ -26,11 +26,15 @@ action :create do
   name = new_resource.name
   home = new_resource.home
   home = user_home name if home.empty?
+  shell = new_resource.shell
+  shell = user_shell name if shell.empty?
+
   node.override['elite'][name]['home'] = home
+  node.override['elite'][name]['shell'] = shell
 
   user name do
     home home
-    shell new_resource.shell
+    shell shell
     manage_home !::File.exist?(home)
     password new_resource.password unless new_resource.password.nil?
   end

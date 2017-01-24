@@ -25,18 +25,18 @@ end
 action :create do
   user = new_resource.user
 
-  template "#{node['elite'][user]['dotfd']}/conky.d/dzen2" do
+  template "#{user_dotfiles(user)}/conky.d/dzen2" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0640'
     source 'conky.d/dzen2.erb'
     cookbook 'elite'
     variables conky: new_resource.panel
   end
 
-  cookbook_file "#{node['elite'][user]['dotfd']}/conky.d/scripts/battery-notify.sh" do
+  cookbook_file "#{user_dotfiles(user)}/conky.d/scripts/battery-notify.sh" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
     source 'conky.d/scripts/battery-notify.sh'
     cookbook 'elite'

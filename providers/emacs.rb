@@ -25,25 +25,25 @@ end
 action :create do
   user = new_resource.user
 
-  git "#{node['elite'][user]['home']}/.emacs.d" do
+  git "#{user_home(user)}/.emacs.d" do
     not_if { new_resource.repository.empty? }
     user user
-    group node['elite'][user]['group']
+    group user_group(user)
     repository new_resource.repository
     reference new_resource.reference
     enable_submodules true
     action :sync
   end
 
-  directory "#{node['elite'][user]['dotfd']}/eshell" do
+  directory "#{user_dotfiles(user)}/eshell" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
   end
 
-  cookbook_file "#{node['elite'][user]['dotfd']}/eshell/alias" do
+  cookbook_file "#{user_dotfiles(user)}/eshell/alias" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0640'
     source 'eshell/alias'
     cookbook new_resource.cookbook

@@ -29,9 +29,9 @@ action :create do
     package pkg
   end
 
-  template "#{node['elite'][user]['dotfd']}/Xdefaults" do
+  template "#{user_dotfiles(user)}/Xdefaults" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0640'
     cookbook new_resource.cookbook
     source new_resource.source
@@ -39,21 +39,21 @@ action :create do
     notifies :run, 'execute[xrdb-merge]'
   end
 
-  remote_directory "#{node['elite'][user]['dotfd']}/urxvt.d" do
+  remote_directory "#{user_dotfiles(user)}/urxvt.d" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
     files_owner user
-    files_group node['elite'][user]['group']
+    files_group user_group(user)
     files_mode '0640'
     source 'urxvt.d'
   end
 
   execute 'xrdb-merge' do
     action :nothing
-    command "xrdb -merge #{node['elite'][user]['dotfd']}/Xdefaults"
+    command "xrdb -merge #{user_dotfiles(user)}/Xdefaults"
     user user
-    group node['elite'][user]['group']
+    group user_group(user)
     ignore_failure true
     environment DISPLAY: ':0.0'
   end

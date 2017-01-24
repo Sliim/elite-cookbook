@@ -23,9 +23,11 @@ def whyrun_supported?
 end
 
 action :create do
-  git "#{node['elite'][new_resource.user]['home']}/.cask" do
-    user new_resource.user
-    group node['elite'][new_resource.user]['group']
+  user new_resource.user
+
+  git "#{user_home(user)}/.cask" do
+    user user
+    group user_group(user)
     repository new_resource.repository
     reference new_resource.reference
     action :sync

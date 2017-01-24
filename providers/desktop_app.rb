@@ -25,18 +25,18 @@ end
 action :create do
   if node.recipe?('elite::x')
     user = new_resource.owner
-    location = "#{node['elite'][user]['dotfd']}/local/share/applications"
+    location = "#{user_dotfiles(user)}/local/share/applications"
 
     directory location do
       owner user
-      group node['elite'][user]['group']
+      group user_group(user)
       mode '0750'
       recursive true
       notifies :run, 'execute[chown-local-user-dir]', :delayed
     end
 
     execute 'chown-local-user-dir' do
-      command "chown -R #{user}:#{node['elite'][user]['group']} #{node['elite'][user]['dotfd']}/local"
+      command "chown -R #{user}:#{user_group(user)} #{user_dotfiles(user)}/local"
       action :nothing
     end
 
@@ -48,7 +48,7 @@ action :create do
 
     cookbook_file "#{location}/#{new_resource.app}.desktop" do
       owner user
-      group node['elite'][user]['group']
+      group user_group(user)
       mode '0640'
       cookbook new_resource.cookbook
       source "#{new_resource.source_dir}#{new_resource.app}.desktop"

@@ -25,9 +25,9 @@ end
 action :create do
   user = new_resource.user
 
-  directory "#{node['elite'][user]['dotfd']}/pics/scrot" do
+  directory "#{user_dotfiles(user)}/pics/scrot" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0750'
     recursive true
   end

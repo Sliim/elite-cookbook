@@ -25,9 +25,9 @@ end
 action :create do
   user = new_resource.user
 
-  cookbook_file "#{node['elite'][user]['dotfd']}/bashrc" do
+  cookbook_file "#{user_dotfiles(user)}/bashrc" do
     owner user
-    group node['elite'][user]['group']
+    group user_group(user)
     mode '0640'
     cookbook new_resource.cookbook
     source new_resource.source
