@@ -23,7 +23,7 @@ def whyrun_supported?
 end
 
 action :create do
-  user new_resource.user
+  user = new_resource.user
 
   git "#{user_home(user)}/.cask" do
     user user

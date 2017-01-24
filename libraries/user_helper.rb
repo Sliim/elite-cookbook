@@ -29,7 +29,7 @@ def user_group(user)
   group = user if group.empty?
 
   node.override['elite'][user]['group'] = group
-  return group
+  group
 end
 
 def user_home(user)
@@ -41,18 +41,18 @@ def user_home(user)
   home = "/home/#{user}" if home.empty?
 
   node.override['elite'][user]['home'] = home
-  return home
+  home
 end
 
 def user_dotfiles(user)
   dotfiles = ''
   if node['elite'][user] && node['elite'][user].key?('dotfd')
-    dotfiles =  node['elite'][user]['dotfd']
+    dotfiles = node['elite'][user]['dotfd']
   end
   dotfiles = "#{user_home user}/.dotfiles" if dotfiles.empty?
 
   node.override['elite'][user]['dotfd'] = dotfiles
-  return dotfiles
+  dotfiles
 end
 
 def user_shell(user)
@@ -63,5 +63,5 @@ def user_shell(user)
   shell = '/bin/sh' if shell.empty?
 
   node.override['elite'][user]['shell'] = shell
-  return shell
+  shell
 end
