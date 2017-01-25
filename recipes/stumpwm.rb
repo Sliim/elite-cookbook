@@ -26,9 +26,9 @@ node['elite']['users'].each do |u|
     cookbook stumpwm['cookbook'] if stumpwm['cookbook']
     source stumpwm['source'] if stumpwm['source']
     wallpaper stumpwm['wallpaper'] if stumpwm['wallpaper']
-    prefix_key stumpwm['prefix-key'] if stumpwm['prefix-key']
-    pre_commands stumpwm['pre-commands'] if stumpwm['pre-commands']
-    post_commands stumpwm['post-commands'] if stumpwm['post-commands']
+    prefix_key stumpwm['prefix_key'] if stumpwm['prefix_key']
+    pre_commands stumpwm['pre_commands'] if stumpwm['pre_commands']
+    post_commands stumpwm['post_commands'] if stumpwm['post_commands']
     color stumpwm['color'] if stumpwm['color']
   end
 end

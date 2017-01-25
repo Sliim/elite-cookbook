@@ -31,17 +31,17 @@ describe 'elite::stumpwm' do
       node.override['elite']['sliim']['groups'] = %w(elite)
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
       node.override['elite']['sliim']['stumpwm']['wallpaper'] = 'wallpaper-01.jpg'
-      node.override['elite']['sliim']['stumpwm']['prefix-key'] = 's-f'
-      node.override['elite']['sliim']['stumpwm']['pre-commands'] = ['run-something']
-      node.override['elite']['sliim']['stumpwm']['post-commands'] = ['run-another-thing']
-      node.override['elite']['sliim']['stumpwm']['color']['fg-color'] = 'Black'
-      node.override['elite']['sliim']['stumpwm']['color']['bg-color'] = 'White'
-      node.override['elite']['sliim']['stumpwm']['color']['focus-color'] = 'Black'
-      node.override['elite']['sliim']['stumpwm']['color']['border-color'] = 'grey15'
-      node.override['elite']['sliim']['stumpwm']['color']['float-focus-color'] = 'White'
-      node.override['elite']['sliim']['stumpwm']['color']['float-unfocus-color'] = 'Black'
-      node.override['elite']['sliim']['stumpwm']['color']['grab-pointer-foreground'] = 'White'
-      node.override['elite']['sliim']['stumpwm']['color']['grab-pointer-background'] = 'Black'
+      node.override['elite']['sliim']['stumpwm']['prefix_key'] = 's-f'
+      node.override['elite']['sliim']['stumpwm']['pre_commands'] = ['run-something']
+      node.override['elite']['sliim']['stumpwm']['post_commands'] = ['run-another-thing']
+      node.override['elite']['sliim']['stumpwm']['color']['fg'] = 'Black'
+      node.override['elite']['sliim']['stumpwm']['color']['bg'] = 'White'
+      node.override['elite']['sliim']['stumpwm']['color']['focus'] = 'Black'
+      node.override['elite']['sliim']['stumpwm']['color']['border'] = 'grey15'
+      node.override['elite']['sliim']['stumpwm']['color']['float_focus'] = 'White'
+      node.override['elite']['sliim']['stumpwm']['color']['float_unfocus'] = 'Black'
+      node.override['elite']['sliim']['stumpwm']['color']['grab_pointer_fg'] = 'White'
+      node.override['elite']['sliim']['stumpwm']['color']['grab_pointer_bg'] = 'Black'
     end.converge(described_recipe)
   end
 

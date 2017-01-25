@@ -23,16 +23,16 @@ attribute :user, kind_of: String, name_attribute: true
 attribute :mode, kind_of: String, default: '0640'
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :source, kind_of: String, default: 'tmux.conf.erb'
-attribute :color, kind_of: Hash, default: { 'pane-border-fg' => 'default',
-                                            'pane-border-bg' => 'default',
-                                            'pane-active-border-fg' => 'white',
-                                            'pane-active-border-bg' => 'default',
-                                            'status-fg' => 'default',
-                                            'status-bg' => 'black',
-                                            'status-current-fg' => 'white',
-                                            'status-current-bg' => 'black',
-                                            'message-fg' => 'brightred',
-                                            'message-bg' => 'black',
+attribute :color, kind_of: Hash, default: { 'pane_border_fg' => 'default',
+                                            'pane_border_bg' => 'default',
+                                            'pane_active_border_fg' => 'white',
+                                            'pane_active_border_bg' => 'default',
+                                            'status_fg' => 'default',
+                                            'status_bg' => 'black',
+                                            'status_current_fg' => 'white',
+                                            'status_current_bg' => 'black',
+                                            'message_fg' => 'brightred',
+                                            'message_bg' => 'black',
                                           }
 attribute :status, kind_of: Hash, default: { 'pyenv_version' => false,
                                              'rbenv_version' => false,

@@ -26,14 +26,14 @@ attribute :wallpaper, kind_of: String, default: 'thc.jpg'
 attribute :prefix_key, kind_of: String, default: 's-q'
 attribute :pre_commands, kind_of: Array, default: []
 attribute :post_commands, kind_of: Array, default: []
-attribute :color, kind_of: Hash, default: { 'fg-color' => 'White',
-                                            'bg-color' => 'Black',
-                                            'focus-color' => 'White',
-                                            'border-color' => 'grey15',
-                                            'float-focus-color' => 'White',
-                                            'float-unfocus-color' => 'gray15',
-                                            'grab-pointer-foreground' => 'White',
-                                            'grab-pointer-background' => 'Black',
+attribute :color, kind_of: Hash, default: { 'fg_color' => 'White',
+                                            'bg_color' => 'Black',
+                                            'focus_color' => 'White',
+                                            'border_color' => 'grey15',
+                                            'float_focus_color' => 'White',
+                                            'float_unfocus_color' => 'gray15',
+                                            'grab_pointer_foreground' => 'White',
+                                            'grab_pointer_background' => 'Black',
                                           }
 
 def initialize(*args)

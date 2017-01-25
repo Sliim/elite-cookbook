@@ -29,8 +29,8 @@ describe 'elite::slim' do
       node.override['elite']['slim']['session'] = 'devsession'
       node.override['elite']['slim']['additional_themes'] = {
         'airlines' => {
-          'git-repository' => 'https://github.com/aur-archive/slim-theme-airlines',
-          'git-reference' => 'master',
+          'repository' => 'https://github.com/aur-archive/slim-theme-airlines',
+          'reference' => 'master',
         },
       }
     end.converge(described_recipe)

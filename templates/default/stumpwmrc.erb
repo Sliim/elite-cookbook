@@ -31,12 +31,12 @@
   `(dolist (s *screen-list*)
      (setf (,val s) (alloc-color s ,color))))
 
-(utl-set-color screen-fg-color "<%= @stumpwm.color['fg-color'] %>")
-(utl-set-color screen-bg-color "<%= @stumpwm.color['bg-color'] %>")
-(utl-set-color screen-focus-color "<%= @stumpwm.color['focus-color'] %>")
-(utl-set-color screen-border-color "<%= @stumpwm.color['border-color'] %>")
-(utl-set-color screen-float-focus-color "<%= @stumpwm.color['float-focus-color'] %>")
-(utl-set-color screen-float-unfocus-color "<%= @stumpwm.color['float-unfocus-color'] %>")
+(utl-set-color screen-fg-color "<%= @stumpwm.color['fg'] %>")
+(utl-set-color screen-bg-color "<%= @stumpwm.color['bg'] %>")
+(utl-set-color screen-focus-color "<%= @stumpwm.color['focus'] %>")
+(utl-set-color screen-border-color "<%= @stumpwm.color['border'] %>")
+(utl-set-color screen-float-focus-color "<%= @stumpwm.color['float_focus'] %>")
+(utl-set-color screen-float-unfocus-color "<%= @stumpwm.color['float_unfocus'] %>")
 (update-colors-all-screens)
 
 (set-contrib-dir "~/.stumpwm.d")
@@ -60,7 +60,7 @@
       *mouse-focus-policy* :click
       *grab-pointer-character* 40
       *grab-pointer-character-mask* 41
-      *grab-pointer-foreground* (lookup-color (current-screen) "<%= @stumpwm.color['grab-pointer-foreground'] %>")
-      *grab-pointer-background* (lookup-color (current-screen) "<%= @stumpwm.color['grab-pointer-background'] %>"))
+      *grab-pointer-foreground* (lookup-color (current-screen) "<%= @stumpwm.color['grab_pointer_fg'] %>")
+      *grab-pointer-background* (lookup-color (current-screen) "<%= @stumpwm.color['grab_pointer_bg'] %>"))
 
 (set-font "-*bitstream-courier 10 pitch-medium-r-normal-*-10-*-*-*-*-*-*-*")

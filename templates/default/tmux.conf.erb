@@ -26,24 +26,24 @@ set -g display-time 3500
 set -g monitor-activity on
 set -g visual-activity on
 
-set -g pane-border-fg "<%= @color['pane-border-fg'] %>"
-set -g pane-border-bg "<%= @color['pane-border-bg'] %>"
-set -g pane-active-border-fg "<%= @color['pane-active-border-fg'] %>"
-set -g pane-active-border-bg "<%= @color['pane-active-border-bg'] %>"
+set -g pane-border-fg "<%= @color['pane_border_fg'] %>"
+set -g pane-border-bg "<%= @color['pane_border_bg'] %>"
+set -g pane-active-border-fg "<%= @color['pane_active_border_fg'] %>"
+set -g pane-active-border-bg "<%= @color['pane_active_border_bg'] %>"
 
 set -g automatic-rename on
 set-window-option -g status-attr dim
 set-window-option -g status-interval 1
-set-window-option -g status-fg "<%= @color['status-fg'] %>"
-set-window-option -g status-bg "<%= @color['status-bg'] %>"
+set-window-option -g status-fg "<%= @color['status_fg'] %>"
+set-window-option -g status-bg "<%= @color['status_bg'] %>"
 
-set-window-option -g window-status-format "#[fg=<%= @color['status-fg'] %>]#I#F#W#[default]"
-set-window-option -g window-status-current-format "#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>,bold][#[fg=<%= @color['status-current-fg'] %>,bg=<%= @color['status-current-bg'] %>]#I#F#W#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>]]#[default]"
-set-window-option -g status-left "#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>][#[fg=<%= @color['status-current-fg'] %>,bg=<%= @color['status-current-bg'] %>]#S#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>]]"
+set-window-option -g window-status-format "#[fg=<%= @color['status_fg'] %>]#I#F#W#[default]"
+set-window-option -g window-status-current-format "#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>,bold][#[fg=<%= @color['status_current_fg'] %>,bg=<%= @color['status_current_bg'] %>]#I#F#W#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>]]#[default]"
+set-window-option -g status-left "#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>][#[fg=<%= @color['status_current_fg'] %>,bg=<%= @color['status_current_bg'] %>]#S#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>]]"
 set-window-option -g status-right-length 100
-set-window-option -g status-right "#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>]<% if @status['rbenv_version'] -%> [#[fg=<%= @color['status-current-fg'] %>,bg=<%= @color['status-current-bg'] %>]Ruby: #(cat $RBENV_ROOT/version)#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>]]<% end -%><% if @status['pyenv_version'] -%> [#[fg=<%= @color['status-current-fg'] %>,bg=<%= @color['status-current-bg'] %>]Python: #(cat ~/.pyenv/version)#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>]]<% end -%><% if @status['ndenv_version'] -%> [#[fg=<%= @color['status-current-fg'] %>,bg=<%= @color['status-current-bg'] %>]Node: #(cat ~/.ndenv/version)#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>]]<% end -%> [#[fg=<%= @color['status-current-fg'] %>,bg=<%= @color['status-current-bg'] %>]%Y-%m-%d#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>]] [#[fg=<%= @color['status-current-fg'] %>,bg=<%= @color['status-current-bg'] %>]%H:%M#[fg=<%= @color['status-fg'] %>,bg=<%= @color['status-bg'] %>]]"
+set-window-option -g status-right "#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>]<% if @status['rbenv_version'] -%> [#[fg=<%= @color['status_current_fg'] %>,bg=<%= @color['status_current_bg'] %>]Ruby: #(cat $RBENV_ROOT/version)#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>]]<% end -%><% if @status['pyenv_version'] -%> [#[fg=<%= @color['status_current_fg'] %>,bg=<%= @color['status_current_bg'] %>]Python: #(cat ~/.pyenv/version)#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>]]<% end -%><% if @status['ndenv_version'] -%> [#[fg=<%= @color['status_current_fg'] %>,bg=<%= @color['status_current_bg'] %>]Node: #(cat ~/.ndenv/version)#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>]]<% end -%> [#[fg=<%= @color['status_current_fg'] %>,bg=<%= @color['status_current_bg'] %>]%Y-%m-%d#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>]] [#[fg=<%= @color['status_current_fg'] %>,bg=<%= @color['status_current_bg'] %>]%H:%M#[fg=<%= @color['status_fg'] %>,bg=<%= @color['status_bg'] %>]]"
 
-set-window-option -g message-fg "<%= @color['message-fg'] %>"
-set-window-option -g message-bg "<%= @color['message-bg'] %>"
+set-window-option -g message-fg "<%= @color['message_fg'] %>"
+set-window-option -g message-bg "<%= @color['message_bg'] %>"
 
 bind R source-file ~/.tmux.conf \; display-message " Config reloaded..".

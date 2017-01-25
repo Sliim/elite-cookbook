@@ -29,16 +29,16 @@ describe 'elite::tmux' do
       node.override['elite']['sliim']['group'] = 'elite'
       node.override['elite']['sliim']['groups'] = %w(elite)
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-      node.override['elite']['sliim']['tmux']['color']['pane-border-fg'] = 'pbf-color'
-      node.override['elite']['sliim']['tmux']['color']['pane-border-bg'] = 'pbb-color'
-      node.override['elite']['sliim']['tmux']['color']['pane-active-border-fg'] = 'pabf-color'
-      node.override['elite']['sliim']['tmux']['color']['pane-active-border-bg'] = 'pabb-color'
-      node.override['elite']['sliim']['tmux']['color']['status-fg'] = 'sf-color'
-      node.override['elite']['sliim']['tmux']['color']['status-bg'] = 'sb-color'
-      node.override['elite']['sliim']['tmux']['color']['status-current-fg'] = 'scf-color'
-      node.override['elite']['sliim']['tmux']['color']['status-current-bg'] = 'scb-color'
-      node.override['elite']['sliim']['tmux']['color']['message-fg'] = 'mf-color'
-      node.override['elite']['sliim']['tmux']['color']['message-bg'] = 'mb-color'
+      node.override['elite']['sliim']['tmux']['color']['pane_border_fg'] = 'pbf-color'
+      node.override['elite']['sliim']['tmux']['color']['pane_border_bg'] = 'pbb-color'
+      node.override['elite']['sliim']['tmux']['color']['pane_active_border_fg'] = 'pabf-color'
+      node.override['elite']['sliim']['tmux']['color']['pane_active_border_bg'] = 'pabb-color'
+      node.override['elite']['sliim']['tmux']['color']['status_fg'] = 'sf-color'
+      node.override['elite']['sliim']['tmux']['color']['status_bg'] = 'sb-color'
+      node.override['elite']['sliim']['tmux']['color']['status_current_fg'] = 'scf-color'
+      node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
+      node.override['elite']['sliim']['tmux']['color']['message_fg'] = 'mf-color'
+      node.override['elite']['sliim']['tmux']['color']['message_bg'] = 'mb-color'
       node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = true
       node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = true
       node.override['elite']['sliim']['tmux']['status']['ndenv_version'] = true
@@ -158,10 +158,10 @@ describe 'elite::tmux' do
         node.override['elite']['sliim']['group'] = 'elite'
         node.override['elite']['sliim']['groups'] = %w(elite)
         node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-        node.override['elite']['sliim']['tmux']['color']['status-fg'] = 'sf-color'
-        node.override['elite']['sliim']['tmux']['color']['status-bg'] = 'sb-color'
-        node.override['elite']['sliim']['tmux']['color']['status-current-fg'] = 'scf-color'
-        node.override['elite']['sliim']['tmux']['color']['status-current-bg'] = 'scb-color'
+        node.override['elite']['sliim']['tmux']['color']['status_fg'] = 'sf-color'
+        node.override['elite']['sliim']['tmux']['color']['status_bg'] = 'sb-color'
+        node.override['elite']['sliim']['tmux']['color']['status_current_fg'] = 'scf-color'
+        node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
         node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = false
         node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = true
       end.converge(described_recipe)
@@ -184,10 +184,10 @@ describe 'elite::tmux' do
         node.override['elite']['sliim']['group'] = 'elite'
         node.override['elite']['sliim']['groups'] = %w(elite)
         node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-        node.override['elite']['sliim']['tmux']['color']['status-fg'] = 'sf-color'
-        node.override['elite']['sliim']['tmux']['color']['status-bg'] = 'sb-color'
-        node.override['elite']['sliim']['tmux']['color']['status-current-fg'] = 'scf-color'
-        node.override['elite']['sliim']['tmux']['color']['status-current-bg'] = 'scb-color'
+        node.override['elite']['sliim']['tmux']['color']['status_fg'] = 'sf-color'
+        node.override['elite']['sliim']['tmux']['color']['status_bg'] = 'sb-color'
+        node.override['elite']['sliim']['tmux']['color']['status_current_fg'] = 'scf-color'
+        node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
         node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = true
         node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = false
       end.converge(described_recipe)
@@ -210,10 +210,10 @@ describe 'elite::tmux' do
         node.override['elite']['sliim']['group'] = 'elite'
         node.override['elite']['sliim']['groups'] = %w(elite)
         node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-        node.override['elite']['sliim']['tmux']['color']['status-fg'] = 'sf-color'
-        node.override['elite']['sliim']['tmux']['color']['status-bg'] = 'sb-color'
-        node.override['elite']['sliim']['tmux']['color']['status-current-fg'] = 'scf-color'
-        node.override['elite']['sliim']['tmux']['color']['status-current-bg'] = 'scb-color'
+        node.override['elite']['sliim']['tmux']['color']['status_fg'] = 'sf-color'
+        node.override['elite']['sliim']['tmux']['color']['status_bg'] = 'sb-color'
+        node.override['elite']['sliim']['tmux']['color']['status_current_fg'] = 'scf-color'
+        node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
         node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = false
         node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = false
       end.converge(described_recipe)

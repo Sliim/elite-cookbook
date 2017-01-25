@@ -39,8 +39,8 @@ node['elite']['slim']['additional_themes'].each do |theme, info|
   git "/usr/share/slim/themes/#{theme}" do
     user 'root'
     group 'root'
-    repository info['git-repository']
-    reference info['git-reference']
+    repository info['repository']
+    reference info['reference']
     action :sync
   end
 end
