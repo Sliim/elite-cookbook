@@ -25,8 +25,6 @@ end
 action :create do
   user = new_resource.user
 
-  package 'configd'
-
   directory "#{user_dotfiles(user)}/config" do
     owner user
     group user_group(user)

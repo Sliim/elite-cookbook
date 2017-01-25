@@ -24,10 +24,11 @@ describe 'elite::dotfiles' do
     ChefSpec::SoloRunner.new(platform: 'debian',
                              version: '8.0') do |node|
       node.override['elite']['groups'] = %w(elite)
-      node.override['elite']['users'] = %w(elite)
-      node.override['elite']['elite'] = {
-        'dotfd' => '/home/elite/.stuff',
+      node.override['elite']['users'] = %w(sliim)
+      node.override['elite']['sliim'] = {
+        'dotfd' => '/home/sliim/.stuff',
         'shell' => '/bin/bash',
+        'group' => 'elite',
         'groups' => %w(elite),
         'password' => nil,
       }
@@ -38,9 +39,9 @@ describe 'elite::dotfiles' do
     expect(subject).to include_recipe('elite::default')
   end
 
-  it 'creates directory[/home/elite/.stuff]' do
-    expect(subject).to create_directory('/home/elite/.stuff')
-      .with(owner: 'elite',
+  it 'creates directory[/home/sliim/.stuff]' do
+    expect(subject).to create_directory('/home/sliim/.stuff')
+      .with(owner: 'sliim',
             group: 'elite',
             mode: '0750',
             recursive: true)
@@ -51,8 +52,8 @@ describe 'elite::dotfiles' do
       ChefSpec::SoloRunner.new(platform: 'debian',
                                version: '8.0') do |node|
         node.override['elite']['groups'] = %w(elite)
-        node.override['elite']['users'] = %w(elite)
-        node.override['elite']['elite'] = {
+        node.override['elite']['users'] = %w(sliim)
+        node.override['elite']['sliim'] = {
           'group' => 'elite',
           'shell' => '/bin/bash',
           'groups' => %w(elite),
@@ -61,9 +62,9 @@ describe 'elite::dotfiles' do
       end.converge(described_recipe)
     end
 
-    it 'creates directory[/home/elite/.dotfiles]' do
-      expect(subject).to create_directory('/home/elite/.dotfiles')
-        .with(owner: 'elite',
+    it 'creates directory[/home/sliim/.dotfiles]' do
+      expect(subject).to create_directory('/home/sliim/.dotfiles')
+        .with(owner: 'sliim',
               group: 'elite',
               mode: '0750',
               recursive: true)

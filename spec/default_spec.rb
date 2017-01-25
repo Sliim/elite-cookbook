@@ -8,35 +8,35 @@ describe 'elite::default' do
     ChefSpec::SoloRunner.new(step_into: ['elite_user'],
                              platform: 'debian',
                              version: '8.0') do |node|
-      node.override['elite']['groups'] = %w(h4x0r)
-      node.override['elite']['users'] = %w(elite)
-      node.override['elite']['elite'] = {
+      node.override['elite']['groups'] = %w(elite)
+      node.override['elite']['users'] = %w(sliim)
+      node.override['elite']['sliim'] = {
         'home' => '/home/myhome',
-        'group' => 'h4x0r',
+        'group' => 'elite',
         'shell' => '/bin/bash',
-        'groups' => %w(h4x0r),
+        'groups' => %w(elite),
         'password' => nil,
       }
     end.converge(described_recipe)
   end
 
   it 'creates group[elite]' do
-    expect(subject).to create_group('h4x0r')
+    expect(subject).to create_group('elite')
   end
 
-  it 'creates elite_user[elite]' do
-    expect(subject).to create_elite_user('elite')
+  it 'creates elite_user[sliim]' do
+    expect(subject).to create_elite_user('sliim')
   end
 
-  it 'creates user[elite]' do
-    expect(subject).to create_user('elite').with(
+  it 'creates user[sliim]' do
+    expect(subject).to create_user('sliim').with(
       home: '/home/myhome',
       shell: '/bin/bash')
   end
 
-  it 'modifies group[h4x0r]' do
-    expect(subject).to modify_group('h4x0r').with(
-      members: %w(elite))
+  it 'modifies group[elite]' do
+    expect(subject).to modify_group('elite').with(
+      members: %w(sliim))
   end
 
   context 'without home' do
@@ -44,10 +44,10 @@ describe 'elite::default' do
       ChefSpec::SoloRunner.new(step_into: ['elite_user'],
                                platform: 'debian',
                                version: '8.0') do |node|
-        node.override['elite']['groups'] = %w(h4x0r)
-        node.override['elite']['users'] = %w(elite)
-        node.override['elite']['elite'] = {
-          'group' => 'h4x0r',
+        node.override['elite']['groups'] = %w(elite)
+        node.override['elite']['users'] = %w(sliim)
+        node.override['elite']['sliim'] = {
+          'group' => 'elite',
           'shell' => '/bin/bash',
           'groups' => %w(elite),
           'password' => nil,
@@ -55,9 +55,9 @@ describe 'elite::default' do
       end.converge(described_recipe)
     end
 
-    it 'creates user[elite]' do
-      expect(subject).to create_user('elite')
-        .with(home: '/home/elite')
+    it 'creates user[sliim]' do
+      expect(subject).to create_user('sliim')
+        .with(home: '/home/sliim')
     end
   end
 
@@ -66,20 +66,19 @@ describe 'elite::default' do
       ChefSpec::SoloRunner.new(step_into: ['elite_user'],
                                platform: 'debian',
                                version: '8.0') do |node|
-        node.override['elite']['groups'] = %w(h4x0r)
-        node.override['elite']['users'] = %w(elite)
-        node.override['elite']['elite'] = {
-          'home' => '/home/myhome',
+        node.override['elite']['groups'] = %w(elite)
+        node.override['elite']['users'] = %w(sliim)
+        node.override['elite']['sliim'] = {
           'shell' => '',
-          'group' => 'h4x0r',
+          'group' => 'elite',
           'groups' => %w(elite),
           'password' => nil,
         }
       end.converge(described_recipe)
     end
 
-    it 'creates user[elite] with default user\'s shell' do
-      expect(subject).to create_user('elite')
+    it 'creates user[sliim] with default user\'s shell' do
+      expect(subject).to create_user('sliim')
         .with(shell: '/bin/sh')
     end
   end
@@ -89,19 +88,18 @@ describe 'elite::default' do
       ChefSpec::SoloRunner.new(step_into: ['elite_user'],
                                platform: 'debian',
                                version: '8.0') do |node|
-        node.override['elite']['groups'] = %w(h4x0r)
-        node.override['elite']['users'] = %w(elite)
-        node.override['elite']['elite'] = {
-          'home' => '/home/myhome',
-          'group' => 'h4x0r',
+        node.override['elite']['groups'] = %w(elite)
+        node.override['elite']['users'] = %w(sliim)
+        node.override['elite']['sliim'] = {
+          'group' => 'elite',
           'groups' => %w(elite),
           'password' => nil,
         }
       end.converge(described_recipe)
     end
 
-    it 'creates user[elite] with default resource\'s default shell attribute' do
-      expect(subject).to create_user('elite')
+    it 'creates user[sliim] with default resource\'s default shell attribute' do
+      expect(subject).to create_user('sliim')
         .with(shell: '/bin/zsh')
     end
   end

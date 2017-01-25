@@ -37,7 +37,7 @@ def user_group(user)
   groups = []
   if node['elite'][user]
     group = node['elite'][user]['group'] if node['elite'][user].key?('group')
-    groups = node['elite'][user]['groups'] if node['elite'][user].key?('groups')
+    groups = node['elite'][user]['groups'].dup if node['elite'][user].key?('groups')
   end
   group = user if group.empty?
 
