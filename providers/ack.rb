@@ -24,7 +24,6 @@ end
 
 action :create do
   user = new_resource.user
-  package 'ack-grep'
 
   template "#{user_dotfiles(user)}/ackrc" do
     owner user

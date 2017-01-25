@@ -24,7 +24,6 @@ end
 
 action :create do
   user = new_resource.user
-  package 'tmux'
 
   template "#{user_dotfiles(user)}/tmux.conf" do
     owner user

@@ -18,6 +18,10 @@
 
 include_recipe 'elite::dotfiles'
 
+['dunst', 'alsa-utils', 'libnotify-bin'].each do |pkg|
+  package pkg
+end
+
 node['elite']['users'].each do |u|
   dunst = user_config(u, 'dunst')
   next unless dunst

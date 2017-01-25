@@ -18,6 +18,8 @@
 
 include_recipe 'elite::dotfiles'
 
+package 'conky'
+
 node['elite']['users'].each do |u|
   conky_config = user_config(u, 'conky')
   next unless conky_config

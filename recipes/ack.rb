@@ -18,6 +18,8 @@
 
 include_recipe 'elite::dotfiles'
 
+package 'ack-grep'
+
 node['elite']['users'].each do |u|
   ack_config = user_config(u, 'ack')
   next unless ack_config

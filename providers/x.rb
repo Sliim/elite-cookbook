@@ -25,10 +25,6 @@ end
 action :create do
   user = new_resource.user
 
-  %w(xorg rxvt-unicode-256color xterm xsel scrot feh).each do |pkg|
-    package pkg
-  end
-
   template "#{user_dotfiles(user)}/Xdefaults" do
     owner user
     group user_group(user)

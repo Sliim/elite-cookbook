@@ -18,6 +18,8 @@
 
 include_recipe 'elite::dotfiles'
 
+package 'tmux'
+
 node['elite']['users'].each do |u|
   tmux_config = user_config(u, 'tmux')
   next unless tmux_config

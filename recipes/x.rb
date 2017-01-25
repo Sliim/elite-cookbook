@@ -18,6 +18,10 @@
 
 include_recipe 'elite::dotfiles'
 
+%w(xorg rxvt-unicode-256color xterm xsel scrot feh).each do |pkg|
+  package pkg
+end
+
 node['elite']['users'].each do |u|
   x_config = user_config(u, 'x')
   next unless x_config

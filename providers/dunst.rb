@@ -31,10 +31,6 @@ action :create do
 
   elite_configd user
 
-  ['dunst', 'alsa-utils', 'libnotify-bin'].each do |pkg|
-    package pkg
-  end
-
   directory "#{user_dotfiles(user)}/config/dunst" do
     owner user
     group user_group(user)

@@ -25,8 +25,6 @@ end
 action :create do
   user = new_resource.user
 
-  package 'git'
-
   template "#{user_dotfiles(user)}/gitconfig" do
     owner user
     group user_group(user)

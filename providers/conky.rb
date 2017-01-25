@@ -25,8 +25,6 @@ end
 action :create do
   user = new_resource.user
 
-  package 'conky'
-
   ['conky.d', 'conky.d/var', 'conky.d/scripts'].each do |dir|
     directory "#{user_dotfiles(user)}/#{dir}" do
       owner user

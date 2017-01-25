@@ -18,6 +18,8 @@
 
 include_recipe 'elite::dotfiles'
 
+package 'zsh'
+
 node['elite']['users'].each do |u|
   zsh_config = user_config(u, 'zsh')
   next unless zsh_config

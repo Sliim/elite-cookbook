@@ -25,8 +25,6 @@ end
 action :create do
   user = new_resource.user
 
-  package 'stumpwm'
-
   template "#{user_dotfiles(user)}/stumpwmrc" do
     owner user
     group user_group(user)

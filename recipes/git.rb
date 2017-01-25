@@ -18,6 +18,8 @@
 
 include_recipe 'elite::dotfiles'
 
+package 'git'
+
 node['elite']['users'].each do |u|
   git_config = user_config(u, 'git')
   next unless git_config

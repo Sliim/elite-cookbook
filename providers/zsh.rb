@@ -27,8 +27,6 @@ action :create do
   plugins = []
   completions = []
 
-  package 'zsh'
-
   directory "#{user_dotfiles(user)}/zsh.d" do
     owner user
     group user_group(user)
