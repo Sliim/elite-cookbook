@@ -40,7 +40,7 @@ describe 'elite::dunst' do
     expect(subject).to include_recipe('elite::dotfiles')
   end
 
-  ['dunst', 'alsa-utils', 'libnotify-bin', 'aplay'].each do |p|
+  ['dunst', 'alsa-utils', 'libnotify-bin'].each do |p|
     it "installs package[#{p}]" do
       expect(subject).to install_package(p)
     end

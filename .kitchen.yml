@@ -29,11 +29,20 @@ suites:
       - recipe[elite::tmux]
       - recipe[elite::x]
       - recipe[elite::zsh]
+      - recipe[elite::slim]
+      - recipe[elite::dunst]
+      - recipe[elite::dzen2]
+      - recipe[elite::conky]
+      - recipe[elite::conky_dzen2]
+      - recipe[elite::stumpwm]
     attributes:
       elite:
         users: [root, h4x0r]
         groups: [elite]
         packages: [tcpdump, emacs-nox]
+        slim:
+          user: h4x0r
+          session: stumpwm
         root:
           home: /root
           group: root
@@ -71,3 +80,6 @@ suites:
           zsh: {}
           pics:
             pics: [thc.jpg, defcon-green.jpg]
+          conky: {}
+          dunst: {}
+          stumpwm: {}

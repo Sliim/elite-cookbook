@@ -27,5 +27,5 @@ describe file '/root/.zsh.d' do
 end
 
 describe user 'h4x0r' do
-  it { should have_login_shell '/bin/zsh' }
+  its(:shell) { should eq '/bin/zsh' }
 end

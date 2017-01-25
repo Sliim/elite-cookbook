@@ -33,7 +33,7 @@ action :create do
   elite_dotlink "#{user}-sounds" do
     owner user
     file 'sounds'
-    dotprefix false
+    dotprefix true
     skip_if_exists true
   end
 

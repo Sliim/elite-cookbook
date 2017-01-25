@@ -31,7 +31,7 @@ action :create do
 
   elite_configd user
 
-  ['dunst', 'alsa-utils', 'libnotify-bin', 'aplay'].each do |pkg|
+  ['dunst', 'alsa-utils', 'libnotify-bin'].each do |pkg|
     package pkg
   end
 

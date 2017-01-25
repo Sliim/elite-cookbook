@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+echo "[$1][$2]>$3" 2>&1 >> ~/.notifications.log
+
+case "$5" in
+"NORMAL")
+    aplay ~/.sounds/bip.wav&
+    ;;
+"CRITICAL")
+    aplay ~/.sounds/alert.wav&
+    ;;
+esac
