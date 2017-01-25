@@ -7,7 +7,7 @@ describe file '/home/h4x0r/.dotfiles' do
 end
 
 describe file '/root/.dotfiles' do
-  it { should_not be_directory }
+  it { should be_directory }
 end
 
 describe command 'ack-grep --help' do
