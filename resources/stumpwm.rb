@@ -35,6 +35,8 @@ attribute :color, kind_of: Hash, default: { 'fg_color' => 'White',
                                             'grab_pointer_foreground' => 'White',
                                             'grab_pointer_background' => 'Black',
                                           }
+attribute :programs, kind_of: Hash, default: {}
+attribute :sessions, kind_of: Hash, default: {}
 
 def initialize(*args)
   super

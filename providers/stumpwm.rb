@@ -46,6 +46,22 @@ action :create do
     cookbook new_resource.cookbook
   end
 
+  template "#{user_dotfiles(user)}/stumpwm.d/program.lisp" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source 'stumpwm.d/program.lisp.erb'
+    variables programs: new_resource.programs
+  end
+
+  template "#{user_dotfiles(user)}/stumpwm.d/session.lisp" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source 'stumpwm.d/session.lisp.erb'
+    variables sessions: new_resource.sessions
+  end
+
   %w(stumpwmrc stumpwm.d).each do |dotf|
     elite_dotlink "#{user}-#{dotf}" do
       owner user

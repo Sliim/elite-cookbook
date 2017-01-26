@@ -32,5 +32,7 @@ node['elite']['users'].each do |u|
     pre_commands stumpwm['pre_commands'] if stumpwm['pre_commands']
     post_commands stumpwm['post_commands'] if stumpwm['post_commands']
     color stumpwm['color'] if stumpwm['color']
+    programs stumpwm['programs'] if stumpwm['programs']
+    sessions stumpwm['sessions'] if stumpwm['sessions']
   end
 end
