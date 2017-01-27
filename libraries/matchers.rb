@@ -117,6 +117,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_dunst, :create, user)
   end
 
+  def create_elite_gtk(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_gtk, :create, user)
+  end
+
   def create_elite_stumpwm(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_stumpwm, :create, user)
   end
