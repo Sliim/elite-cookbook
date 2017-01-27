@@ -19,6 +19,14 @@ Attributes
 | `[elite][groups]`   | Array | Elite groups                |
 | `[elite][packages]` | Array | List of packages to install |
 
+#### elite::slim
+| Key                                | Type   |  Description                |
+| ---------------------------------- | ------ | --------------------------- |
+| `[elite][slim][theme]`             | String | Theme name                  |
+| `[elite][slim][user]`              | String | Default username            |
+| `[elite][slim][session]`           | String | X Session                   |
+| `[elite][slim][additional_themes]` | Hash   | List of additional themes   |
+
 All others elements in the `elite` namespace is dedicated for users configuration.
 
 Usage
@@ -53,12 +61,19 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::bash`
 - `elite::bin`
 - `elite::cask`
+- `elite::conky`
+- `elite::conky_dzen2`
 - `elite::default`
+- `elite::dunst`
+- `elite::dzen2`
 - `elite::emacs`
 - `elite::git`
+- `elite::gtk`
 - `elite::packages`
 - `elite::pics`
+- `elite::slim`
 - `elite::stuff`
+- `elite::stumpwm`
 - `elite::terminfo`
 - `elite::tmux`
 - `elite::x`
@@ -66,9 +81,11 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 
 #### Custom resources
 - `elite_bin`
+- `elite_configd`
 - `elite_desktop_app`
 - `elite_dotlink`
 - `elite_picture`
+- `elite_sound`
 - `elite_tmux_script`
 - `elite_zsh_plugin`
 - `elite_zsh_completions`
@@ -76,10 +93,15 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite_ack`
 - `elite_bash`
 - `elite_cask`
+- `elite_conky`
+- `elite_conky_dzen2`
+- `elite_dunst`
 - `elite_emacs`
 - `elite_git`
+- `elite_gtk`
 - `elite_pics`
 - `elite_stuff`
+- `elite_stumpwm`
 - `elite_terminfo`
 - `elite_tmux`
 - `elite_user`

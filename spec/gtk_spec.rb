@@ -147,7 +147,7 @@ describe 'elite::gtk' do
             group: 'elite')
   end
 
-  ['gtkrc-2.0', 'theme', 'icons'].each do |f|
+  ['gtkrc-2.0', 'themes', 'icons'].each do |f|
     it "creates elite_dotlink[sliim-#{f}]" do
       expect(subject).to create_elite_dotlink("sliim-#{f}")
         .with(owner: 'sliim',
