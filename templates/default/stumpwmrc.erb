@@ -39,14 +39,6 @@
 (utl-set-color screen-float-unfocus-color "<%= @stumpwm.color['float_unfocus'] %>")
 (update-colors-all-screens)
 
-(set-contrib-dir "~/.stumpwm.d")
-
-(load-module "command")
-(load-module "session")
-(load-module "program")
-(load-module "kbd")
-(load-module "gnome-keyring")
-
 (setf *shell-program* "/usr/bin/zsh"
       *timeout-wait* 10
       *startup-message* "Welcome <%= @username %>!"
@@ -63,3 +55,80 @@
       *grab-pointer-background* (lookup-color (current-screen) "<%= @stumpwm.color['grab_pointer_bg'] %>"))
 
 (set-font "<%= @stumpwm.font %>")
+
+;; Gnome keyring
+(let* ((output (run-shell-command "/usr/bin/gnome-keyring-daemon --start" t))
+       (lines (loop :for i = 0 :then (1+ j)
+                    :as j = (position #\linefeed output :start i)
+                    :collect (subseq output i j)
+                    :while j)))
+  (dolist (line lines)
+    (when (> (length line) 0)
+      (let ((env-var (loop :for i = 0 :then (1+ j)
+                           :as j = (position #\= line :start i)
+                           :collect (subseq line i j)
+                           :while j)))
+
+        (sb-posix:setenv (car env-var) (cadr env-var) 1)))))
+
+;; Modules
+<% @modules.each do |m| %>
+(load-module "<%= m %>")
+<% end %>
+
+;; KBD
+(defparameter *shift-map* (make-sparse-keymap))
+(define-key *root-map* (kbd "ISO_Level3_Shift") '*shift-map*)
+<% @kbd.each do |type, kbd| %>
+<% kbd.each do |k, cmd| %>
+(define-key <%= type %> (kbd "<%= k %>") "<%= cmd %>")
+<% end %>
+<% end %>
+
+
+;; Commands
+(defcommand toggle-mouse-focus () ()
+  "Toggle between :click, :ignore or :sloppy for mouse-focus-policy."
+  (let ((new-value nil))
+    (cond
+      ((eq *mouse-focus-policy* :click)
+       (setf new-value :ignore))
+      ((eq *mouse-focus-policy* :ignore)
+       (setf new-value :sloppy))
+      ((eq *mouse-focus-policy* :sloppy)
+       (setf new-value :click)))
+    (setf *mouse-focus-policy* new-value)
+    (message "*mouse-focus-policy* => ~s" new-value)))
+
+<% @commands.each do |cmd, sh_cmd| %>
+(defcommand <%= cmd %> () ()
+  "<%= cmd.capitalize %> command."
+  (run-shell-command "<%= sh_cmd %>"))
+
+<% end %>
+
+;; Programs
+<% @programs.each do |program, config| %>
+(defprogram-shortcut <%= program %>
+  :key (kbd "<%= config['kbd'] %>")
+  :command "<%= config['command'] %>"
+  :props '<%= config['props'] %>
+  )
+
+<% end %>
+
+;; Sessions
+(stumpwm:run-commands "grename elite"
+<% @sessions.each do |session, _config| %>
+                      "gnew <%= session %>"
+<% end %>
+                      "gselect 1")
+<% count = 1 %>
+<% @sessions.each do |session, config| %>
+
+(defcommand <%= session %>-session () ()
+  "<%= config['desc'] %>"
+  (stumpwm:run-commands "gselect <%= count+=1 %>")
+  (run-or-raise "<%= config['command'] %>" '<%= config['props'] %>))
+(define-key *top-map* (kbd "<%= config['kbd'] %>") "<%= session %>-session")
+<% end %>

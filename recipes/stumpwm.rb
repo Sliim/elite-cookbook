@@ -36,5 +36,8 @@ node['elite']['users'].each do |u|
     programs stumpwm['programs'] if stumpwm['programs']
     sessions stumpwm['sessions'] if stumpwm['sessions']
     commands stumpwm['commands'] if stumpwm['commands']
+    kbd stumpwm['kbd'] if stumpwm['kbd']
+    contrib stumpwm['contrib'] if stumpwm['contrib']
+    modules stumpwm['modules'] if stumpwm['modules']
   end
 end

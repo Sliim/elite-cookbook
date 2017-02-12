@@ -22,24 +22,6 @@ describe file '/home/h4x0r/.stumpwm.d' do
   it { should be_grouped_into 'elite' }
 end
 
-describe file '/home/h4x0r/.stumpwm.d/command.lisp' do
-  it { should be_file }
-  it { should be_owned_by 'h4x0r' }
-  it { should be_grouped_into 'elite' }
-end
-
-describe file '/home/h4x0r/.stumpwm.d/program.lisp' do
-  it { should be_file }
-  it { should be_owned_by 'h4x0r' }
-  it { should be_grouped_into 'elite' }
-end
-
-describe file '/home/h4x0r/.stumpwm.d/session.lisp' do
-  it { should be_file }
-  it { should be_owned_by 'h4x0r' }
-  it { should be_grouped_into 'elite' }
-end
-
 describe file '/home/h4x0r/bin/stumpish' do
   it { should be_file }
   it { should be_executable }

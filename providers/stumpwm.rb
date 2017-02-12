@@ -32,42 +32,28 @@ action :create do
     source new_resource.source
     cookbook new_resource.cookbook
     variables stumpwm: new_resource,
-              username: user_name(user)
+              username: user_name(user),
+              commands: new_resource.commands,
+              programs: new_resource.programs,
+              sessions: new_resource.sessions,
+              kbd: new_resource.kbd,
+              modules: new_resource.modules
   end
 
-  remote_directory "#{user_dotfiles(user)}/stumpwm.d" do
-    owner user
-    group user_group(user)
-    mode '0750'
-    files_owner user
-    files_group user_group(user)
-    files_mode '0640'
-    source 'stumpwm.d'
-    cookbook new_resource.cookbook
-  end
+  if new_resource.contrib
+    directory "#{user_dotfiles(user)}/stumpwm.d" do
+      owner user
+      group user_group(user)
+      mode '0750'
+    end
 
-  template "#{user_dotfiles(user)}/stumpwm.d/program.lisp" do
-    owner user
-    group user_group(user)
-    mode '0640'
-    source 'stumpwm.d/program.lisp.erb'
-    variables programs: new_resource.programs
-  end
-
-  template "#{user_dotfiles(user)}/stumpwm.d/session.lisp" do
-    owner user
-    group user_group(user)
-    mode '0640'
-    source 'stumpwm.d/session.lisp.erb'
-    variables sessions: new_resource.sessions
-  end
-
-  template "#{user_dotfiles(user)}/stumpwm.d/command.lisp" do
-    owner user
-    group user_group(user)
-    mode '0640'
-    source 'stumpwm.d/command.lisp.erb'
-    variables commands: new_resource.commands
+    git "#{user_dotfiles(user)}/stumpwm.d/contrib" do
+      user user
+      group user_group(user)
+      repository 'https://github.com/stumpwm/stumpwm-contrib'
+      reference 'master'
+      action :sync
+    end
   end
 
   %w(stumpwmrc stumpwm.d).each do |dotf|
