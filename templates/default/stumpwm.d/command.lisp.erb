@@ -20,7 +20,7 @@
     (message "*mouse-focus-policy* => ~s" new-value)))
 
 <% @commands.each do |cmd, sh_cmd| %>
-(defcommand <%= cmd %>
+(defcommand <%= cmd %> () ()
   "<%= cmd.capitalize %> command."
   (run-shell-command "<%= sh_cmd %>"))
 

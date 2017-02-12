@@ -46,7 +46,6 @@
 (load-module "program")
 (load-module "kbd")
 (load-module "gnome-keyring")
-(load-module "panel")
 
 (setf *shell-program* "/usr/bin/zsh"
       *timeout-wait* 10
@@ -63,4 +62,4 @@
       *grab-pointer-foreground* (lookup-color (current-screen) "<%= @stumpwm.color['grab_pointer_fg'] %>")
       *grab-pointer-background* (lookup-color (current-screen) "<%= @stumpwm.color['grab_pointer_bg'] %>"))
 
-(set-font "-*bitstream-courier 10 pitch-medium-r-normal-*-10-*-*-*-*-*-*-*")
+(set-font "<%= @stumpwm.font %>")

@@ -22,6 +22,7 @@ attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :source, kind_of: String, default: 'stumpwmrc.erb'
+attribute :font, kind_of: String, default: '-*bitstream-courier 10 pitch-medium-r-normal-*-10-*-*-*-*-*-*-*'
 attribute :wallpaper, kind_of: String, default: 'thc.jpg'
 attribute :prefix_key, kind_of: String, default: 's-q'
 attribute :pre_commands, kind_of: Array, default: []
