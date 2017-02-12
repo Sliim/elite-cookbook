@@ -55,7 +55,7 @@ action :create do
     owner user
     group user_group(user)
     mode '0640'
-    source "gtk/themes/#{new_resource.theme_name}/#{new_resource.theme_rc}"
+    source "gtk/themes/#{new_resource.theme_rc}"
     cookbook new_resource.cookbook
     variables gtk: new_resource
     only_if { %w(Cyanized Redified Greenified Orangified).include? new_resource.theme_name }
