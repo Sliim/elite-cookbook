@@ -33,7 +33,7 @@ describe 'elite::gtk' do
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
       node.override['elite']['sliim']['gtk']['font_name'] = 'font-name'
       node.override['elite']['sliim']['gtk']['theme_name'] = 'Cyanized'
-      node.override['elite']['sliim']['gtk']['theme_rc'] = 'gtkrc.erb'
+      node.override['elite']['sliim']['gtk']['theme_rc'] = 'Cyanized/gtkrc.erb'
       node.override['elite']['sliim']['gtk']['icon_theme_name'] = 'icon-theme-name'
       node.override['elite']['sliim']['gtk']['toolbar_style'] = 'TOOLBAR'
       node.override['elite']['sliim']['gtk']['toolbar_icon_size'] = '42'

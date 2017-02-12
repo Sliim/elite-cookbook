@@ -115,7 +115,7 @@ describe 'elite::stumpwm' do
                /\(run-shell-command "urxvt"\)/,
                /\(run-shell-command "urxvt"\)/,
                /\(load-module "mymod"\)$/,
-               /^\(define-key \*root-map\* \(kbd "t"\) "urxvt"\)$/
+               /^\(define-key \*root-map\* \(kbd "t"\) "urxvt"\)$/,
               ]
 
     expect(subject).to create_template(config_file)
