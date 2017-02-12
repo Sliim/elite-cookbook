@@ -37,6 +37,7 @@ attribute :color, kind_of: Hash, default: { 'fg_color' => 'White',
                                           }
 attribute :programs, kind_of: Hash, default: {}
 attribute :sessions, kind_of: Hash, default: {}
+attribute :commands, kind_of: Hash, default: {}
 
 def initialize(*args)
   super

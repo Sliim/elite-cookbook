@@ -62,6 +62,14 @@ action :create do
     variables sessions: new_resource.sessions
   end
 
+  template "#{user_dotfiles(user)}/stumpwm.d/command.lisp" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source 'stumpwm.d/command.lisp.erb'
+    variables commands: new_resource.commands
+  end
+
   %w(stumpwmrc stumpwm.d).each do |dotf|
     elite_dotlink "#{user}-#{dotf}" do
       owner user

@@ -34,5 +34,6 @@ node['elite']['users'].each do |u|
     color stumpwm['color'] if stumpwm['color']
     programs stumpwm['programs'] if stumpwm['programs']
     sessions stumpwm['sessions'] if stumpwm['sessions']
+    commands stumpwm['commands'] if stumpwm['commands']
   end
 end
