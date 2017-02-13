@@ -37,3 +37,7 @@ XTerm.background: <%= @config['xterm']['background'] %>
 dzen2.font:       <%= @config['dzen2']['font'] %>
 dzen2.foreground: <%= @config['dzen2']['foreground'] %>
 dzen2.background: <%= @config['dzen2']['background'] %>
+
+<% @config['rofi'].each do |k,v| %>
+rofi.<%= k %>: <%= v %>
+<% end %>

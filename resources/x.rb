@@ -45,6 +45,7 @@ attribute :config, kind_of: Hash, default: { 'urxvt' =>
                                                'foreground' => 'White',
                                                'background' => 'black',
                                              },
+                                             'rofi' => {},
                                            }
 
 def initialize(*args)

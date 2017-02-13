@@ -49,6 +49,8 @@ describe 'elite::x' do
       node.override['elite']['sliim']['x']['config']['dzen2']['font'] = 'font'
       node.override['elite']['sliim']['x']['config']['dzen2']['foreground'] = 'dzen2-fg'
       node.override['elite']['sliim']['x']['config']['dzen2']['background'] = 'dzen2-bg'
+      node.override['elite']['sliim']['x']['config']['rofi']['width'] = '42'
+      node.override['elite']['sliim']['x']['config']['rofi']['lines'] = '3'
     end.converge(described_recipe)
   end
 
@@ -93,7 +95,9 @@ describe 'elite::x' do
                /^XTerm.foreground:\s+xterm-fg$/,
                /^dzen2.font:\s+font$/,
                /^dzen2.foreground:\s+dzen2-fg$/,
-               /^dzen2.background:\s+dzen2-bg$/]
+               /^dzen2.background:\s+dzen2-bg$/,
+               /^rofi.width:\s42$/,
+               /^rofi.lines:\s3$/]
 
     expect(subject).to create_template(config_file)
       .with(owner: 'sliim',
