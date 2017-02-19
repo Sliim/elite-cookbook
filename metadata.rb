@@ -33,6 +33,7 @@ recipe 'elite::zsh', 'Installs/configures Zsh'
 depends 'apt'
 depends 'git'
 depends 'dunst'
+depends 'locales'
 
 supports 'debian', '> 8.0'
 
