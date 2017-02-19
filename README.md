@@ -13,11 +13,12 @@ The following platforms and versions are tested and supported using Opscode's te
 Attributes
 ----------
 #### elite::default
-| Key                 | Type  |  Description                |
-| ------------------- | ----- | --------------------------- |
-| `[elite][users]`    | Array | Elite users                 |
-| `[elite][groups]`   | Array | Elite groups                |
-| `[elite][packages]` | Array | List of packages to install |
+| Key                 | Type  |  Description                         |
+| ------------------- | ----- | ------------------------------------ |
+| `[elite][users]`    | Array | Elite users                          |
+| `[elite][groups]`   | Array | Elite groups                         |
+| `[elite][packages]` | Array | List of packages to install          |
+| `[elite][locales]`  | Array | List of locales to add on the system |
 
 #### elite::slim
 | Key                                | Type   |  Description                |
