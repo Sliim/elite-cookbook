@@ -32,6 +32,17 @@ def user_name(user)
   username
 end
 
+def user_email(user)
+  email = ''
+  if node['elite'][user] && node['elite'][user].key?('email')
+    email = node['elite'][user]['email']
+  end
+  email = "#{user}@#{node['hostname']}" if email.empty?
+
+  node.override['elite'][user]['email'] = email
+  email
+end
+
 def user_group(user)
   group = ''
   groups = []

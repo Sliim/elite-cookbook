@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Recipe:: dotfiles
+# Resource:: dotfiles
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,16 +16,18 @@
 # limitations under the License.
 #
 
-include_recipe 'elite::default'
+actions :create
 
-node['elite']['users'].each do |u|
-  next unless node['elite'].key?(u)
-  dotfiles = user_config(u, 'dotfiles') || {}
-  elite_dotfiles u do
-    mode dotfiles['mode'] if dotfiles['mode']
-    cookbook dotfiles['cookbook'] if dotfiles['cookbook']
-    source dotfiles['source'] if dotfiles['source']
-    ignore dotfiles['ignore'] if dotfiles['ignore']
-    init_repo dotfiles['init_repo'] if dotfiles['init_repo']
-  end
+attribute :name, kind_of: String
+attribute :user, kind_of: String, name_attribute: true
+attribute :mode, kind_of: String, default: '0640'
+attribute :cookbook, kind_of: String, default: 'elite'
+attribute :source, kind_of: String, default: 'list2file.erb'
+attribute :ignore, kind_of: Array, default: []
+attribute :init_repo, kind_of: [TrueClass, FalseClass], default: false
+
+def initialize(*args)
+  super
+  @action = :create
+  @resource_name = :elite_dotfiles
 end

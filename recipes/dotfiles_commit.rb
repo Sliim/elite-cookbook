@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Recipe:: dotfiles
+# Recipe:: dotfiles_commit
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,16 +16,27 @@
 # limitations under the License.
 #
 
-include_recipe 'elite::default'
+include_recipe 'elite::dotfiles'
 
 node['elite']['users'].each do |u|
   next unless node['elite'].key?(u)
-  dotfiles = user_config(u, 'dotfiles') || {}
-  elite_dotfiles u do
-    mode dotfiles['mode'] if dotfiles['mode']
-    cookbook dotfiles['cookbook'] if dotfiles['cookbook']
-    source dotfiles['source'] if dotfiles['source']
-    ignore dotfiles['ignore'] if dotfiles['ignore']
-    init_repo dotfiles['init_repo'] if dotfiles['init_repo']
+  next unless node['elite'][u].key?('init_repo') && node['elite'][u]['init_repo']
+
+  execute 'dpkg -l > packages.txt' do
+    cwd user_dotfiles(u)
+    user u
+    group user_group(u)
+  end
+
+  execute 'git add -A' do
+    cwd user_dotfiles(u)
+    user u
+    group user_group(u)
+  end
+
+  execute 'git commit -m "Chef provisionning" --allow-empty' do
+    cwd user_dotfiles(u)
+    user u
+    group user_group(u)
   end
 end
