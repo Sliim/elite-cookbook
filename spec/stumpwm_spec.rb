@@ -164,14 +164,6 @@ describe 'elite::stumpwm' do
             source_dir: 'bin/')
   end
 
-  it 'creates elite_bin[sliim-stumpwm]' do
-    expect(subject).to create_elite_bin('sliim-stumpwm')
-      .with(owner: 'sliim',
-            script: 'stumpwm',
-            cookbook: 'elite',
-            source_dir: 'bin/')
-  end
-
   it 'creates elite_picture[sliim-wallpaper-01.jpg]' do
     expect(subject).to create_elite_picture('sliim-wallpaper-01.jpg')
       .with(owner: 'sliim',

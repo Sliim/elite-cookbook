@@ -63,11 +63,9 @@ action :create do
     end
   end
 
-  %w(stumpish stumpwm).each do |bin|
-    elite_bin "#{user}-#{bin}" do
-      owner user
-      script bin
-    end
+  elite_bin "#{user}-stumpish" do
+    owner user
+    script 'stumpish'
   end
 
   elite_picture "#{user}-#{new_resource.wallpaper}" do
