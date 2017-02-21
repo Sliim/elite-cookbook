@@ -24,9 +24,21 @@ end
 
 action :create do
   user = new_resource.user
+  ['emacs.d', 'emacs-apps'].each do |d|
+    execute "cask-install-#{user}-#{d}" do
+      cwd "#{user_home(user)}/.#{d}"
+      command 'cask install'
+      environment 'PATH' => "#{ENV['PATH']}:#{user_home(user)}/.cask/bin",
+                  'HOME' => user_home(user)
+      user user
+      group user_group(user)
+      action :nothing
+    end
+  end
 
   git "#{user_home(user)}/.emacs.d" do
     not_if { new_resource.repository.empty? }
+    notifies :run, "execute[cask-install-#{user}-emacs.d]"
     user user
     group user_group(user)
     repository new_resource.repository
@@ -72,6 +84,7 @@ action :create do
       group user_group(user)
       repository new_resource.apps_repository
       reference new_resource.apps_reference
+      notifies :run, "execute[cask-install-#{user}-emacs-apps]"
       action :sync
     end
 
