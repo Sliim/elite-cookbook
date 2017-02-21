@@ -29,13 +29,6 @@ describe file '/home/h4x0r/bin/stumpish' do
   it { should be_grouped_into 'elite' }
 end
 
-describe file '/home/h4x0r/bin/stumpwm' do
-  it { should be_file }
-  it { should be_executable }
-  it { should be_owned_by 'h4x0r' }
-  it { should be_grouped_into 'elite' }
-end
-
 describe file '/usr/share/xsessions/stumpwm.desktop' do
   it { should be_file }
   it { should be_mode 0644 }

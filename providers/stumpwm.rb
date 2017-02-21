@@ -54,13 +54,16 @@ action :create do
       reference 'master'
       action :sync
     end
+
+    elite_dotlink "#{user}-stumpwm.d" do
+      owner user
+      file 'stumpwm.d'
+    end
   end
 
-  %w(stumpwmrc stumpwm.d).each do |dotf|
-    elite_dotlink "#{user}-#{dotf}" do
-      owner user
-      file dotf
-    end
+  elite_dotlink "#{user}-stumpwmrc" do
+    owner user
+    file 'stumpwmrc'
   end
 
   elite_bin "#{user}-stumpish" do

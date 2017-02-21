@@ -10,6 +10,12 @@ Requirements
 The following platforms and versions are tested and supported using Opscode's test-kitchen.
 - `Debian 8`
 
+#### Cookbook dependencies
+- [apt](https://supermarket.chef.io/cookbooks/apt)
+- [git](https://supermarket.chef.io/cookbooks/git)
+- [dunst](https://supermarket.chef.io/cookbooks/dunst)
+- [locales](https://github.com/redguide/locales/tree/v0.4.0)
+
 Attributes
 ----------
 #### elite::default
@@ -65,13 +71,17 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::conky`
 - `elite::conky_dzen2`
 - `elite::default`
+- `elite::dotfiles`
+- `elite::dotfiles_commit`
 - `elite::dunst`
 - `elite::dzen2`
 - `elite::emacs`
 - `elite::git`
 - `elite::gtk`
+- `elite::locales`
 - `elite::packages`
 - `elite::pics`
+- `elite::rofi`
 - `elite::slim`
 - `elite::stuff`
 - `elite::stumpwm`
@@ -84,6 +94,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite_bin`
 - `elite_configd`
 - `elite_desktop_app`
+- `elite_dotfiles`
 - `elite_dotlink`
 - `elite_picture`
 - `elite_sound`

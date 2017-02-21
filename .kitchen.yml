@@ -16,13 +16,13 @@ suites:
   - name: default
     run_list:
       - recipe[elite]
+      - recipe[elite::packages]
       - recipe[elite::dotfiles]
       - recipe[elite::ack]
       - recipe[elite::bash]
       - recipe[elite::cask]
       - recipe[elite::emacs]
       - recipe[elite::git]
-      - recipe[elite::packages]
       - recipe[elite::pics]
       - recipe[elite::stuff]
       - recipe[elite::terminfo]
@@ -36,11 +36,13 @@ suites:
       - recipe[elite::conky_dzen2]
       - recipe[elite::stumpwm]
       - recipe[elite::gtk]
+      - recipe[elite::locales]
     attributes:
       elite:
         users: [root, h4x0r]
         groups: [elite]
         packages: [tcpdump, emacs-nox]
+        locales: [fr_FR.UTF-8]
         slim:
           user: h4x0r
           session: stumpwm
@@ -57,7 +59,15 @@ suites:
           password: $1$ZqEOrqH1$Xdlls.mpHmHcP4XsQl9Ah.
           ack: {}
           cask: {}
-          emacs: {}
+          dotfiles:
+            init_repo: true
+          emacs:
+            repository: https://github.com/Sliim/emacs.d
+            apps_repository: https://github.com/Sliim/emacs-apps
+            apps:
+              dired:
+                desktop:
+                  Name: dired
           git: {}
           stuff:
             install_path: /home/h4x0r/stuff
@@ -83,5 +93,6 @@ suites:
             pics: [thc.jpg, defcon-green.jpg]
           conky: {}
           dunst: {}
-          stumpwm: {}
+          stumpwm:
+            contrib: true
           gtk: {}

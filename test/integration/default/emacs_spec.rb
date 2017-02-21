@@ -17,7 +17,13 @@ describe file '/home/h4x0r/.emacs.d/.git/modules' do
 end
 
 describe file '/root/.emacs.d' do
-  it { should_not be_file }
+  it { should_not be_directory }
+end
+
+describe file '/home/h4x0r/.emacs.d/.cask' do
+  it { should be_directory }
+  it { should be_owned_by 'h4x0r' }
+  it { should be_grouped_into 'elite' }
 end
 
 describe file '/home/h4x0r/.eshell' do
@@ -46,6 +52,25 @@ describe file '/home/h4x0r/bin/ediff-merge-tool' do
 end
 
 describe file '/home/h4x0r/.local/share/applications/emacs.desktop' do
+  it { should be_file }
+  it { should be_mode 0640 }
+  it { should be_owned_by 'h4x0r' }
+  it { should be_grouped_into 'elite' }
+end
+
+describe file '/home/h4x0r/.emacs-apps' do
+  it { should be_directory }
+  it { should be_owned_by 'h4x0r' }
+  it { should be_grouped_into 'elite' }
+end
+
+describe file '/home/h4x0r/.emacs-apps/.git' do
+  it { should be_directory }
+  it { should be_owned_by 'h4x0r' }
+  it { should be_grouped_into 'elite' }
+end
+
+describe file '/home/h4x0r/.local/share/applications/dired.desktop' do
   it { should be_file }
   it { should be_mode 0640 }
   it { should be_owned_by 'h4x0r' }

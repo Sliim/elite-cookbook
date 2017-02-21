@@ -3,6 +3,26 @@ elite CHANGELOG
 
 This file is used to list changes made in each version of the elite cookbook.
 
+0.4.0
+-----
+- Changes:
+  - `elite::x` take now rofi configuration
+  - New zsh plugin: `ascii`
+  - Removed `stumpwm` bin script
+  - `elite::dotfiles` improvements
+  - `elite::emacs` can now configures emacs-apps
+  - Install cask dependencies when emacs repos synced
+- New dependencies:
+  - `locales` cookbook
+- New attributes:
+  - `[elite][locales]`
+- New recipes:
+  - `elite::rofi` - Install rofi
+  - `elite::locales` - Install locales
+  - `elite::dotfiles_commit` - Commit in the user's dotfiles repo
+- New lwrp:
+  - `elite_dotfiles` - Manage user's dotfiles
+
 0.3.0
 -----
 - Move ~/.config user directory in dotfiles if already exist
