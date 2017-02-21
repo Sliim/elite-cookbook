@@ -95,7 +95,7 @@ describe 'elite::emacs' do
             source_dir: 'bin/')
   end
 
-  it 'creates elite_desktop_app[eliim-emacs]' do
+  it 'creates elite_desktop_app[sliim-emacs]' do
     expect(subject).to create_elite_desktop_app('sliim-emacs')
       .with(owner: 'sliim',
             app: 'emacs',
@@ -106,5 +106,46 @@ describe 'elite::emacs' do
   appdir = '/home/sliim/.dotfiles/local/share/applications'
   it "does not create cookbook_file[#{appdir}/emacs.desktop]" do
     expect(subject).to_not create_cookbook_file("#{appdir}/emacs.desktop")
+  end
+
+  context 'with apps' do
+    let(:subject) do
+      ChefSpec::SoloRunner.new(step_into: %w(elite_emacs),
+                               platform: 'debian',
+                               version: '8.0') do |node|
+        node.override['elite']['users'] = %w(sliim foo)
+        node.override['elite']['groups'] = %w(elite)
+        node.override['elite']['sliim']['name'] = 'Sliim'
+        node.override['elite']['sliim']['email'] = 'sliim@mailoo.org'
+        node.override['elite']['sliim']['home'] = '/home/sliim'
+        node.override['elite']['sliim']['group'] = 'elite'
+        node.override['elite']['sliim']['groups'] = %w(elite)
+        node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
+        node.override['elite']['sliim']['emacs']['apps_repository'] = 'https://apps.git'
+        node.override['elite']['sliim']['emacs']['apps_reference'] = 'myapps'
+        node.override['elite']['sliim']['emacs']['apps']['dired'] = {
+          'desktop' => {
+            'Name' => 'dired',
+            'Icon' => 'emacs',
+          },
+        }
+      end.converge(described_recipe)
+    end
+
+    it 'syncs git[/home/sliim/.emacs-apps]' do
+      expect(subject).to sync_git('/home/sliim/.emacs-apps')
+        .with(user: 'sliim',
+              group: 'elite',
+              repository: 'https://apps.git',
+              reference: 'myapps')
+    end
+
+    it 'creates elite_desktop_app[sliim-dired]' do
+      expect(subject).to create_elite_desktop_app('sliim-dired')
+        .with(owner: 'sliim',
+              app: 'dired',
+              cookbook: 'elite',
+              config: { 'Name' => 'dired', 'Icon' => 'emacs' })
+    end
   end
 end

@@ -66,5 +66,26 @@ action :create do
     app 'emacs'
   end
 
+  unless new_resource.apps.empty?
+    git "#{user_home(user)}/.emacs-apps" do
+      user user
+      group user_group(user)
+      repository new_resource.apps_repository
+      reference new_resource.apps_reference
+      action :sync
+    end
+
+    new_resource.apps.each do |name, app|
+      desktop = app['desktop']
+
+      elite_desktop_app "sliim-#{name}" do
+        not_if { desktop.nil? }
+        owner user
+        app name
+        config desktop
+      end
+    end
+  end
+
   new_resource.updated_by_last_action(true)
 end

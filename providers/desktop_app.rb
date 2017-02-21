@@ -46,12 +46,23 @@ action :create do
       file 'local'
     end
 
-    cookbook_file "#{location}/#{new_resource.app}.desktop" do
-      owner user
-      group user_group(user)
-      mode '0640'
-      cookbook new_resource.cookbook
-      source "#{new_resource.source_dir}#{new_resource.app}.desktop"
+    if new_resource.config
+      template "#{location}/#{new_resource.app}.desktop" do
+        owner user
+        group user_group(user)
+        mode '0640'
+        cookbook new_resource.cookbook
+        source 'app.desktop.erb'
+        variables app: new_resource.config
+      end
+    else
+      cookbook_file "#{location}/#{new_resource.app}.desktop" do
+        owner user
+        group user_group(user)
+        mode '0640'
+        cookbook new_resource.cookbook
+        source "#{new_resource.source_dir}#{new_resource.app}.desktop"
+      end
     end
 
     new_resource.updated_by_last_action(true)

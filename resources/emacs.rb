@@ -23,6 +23,9 @@ attribute :user, kind_of: String, name_attribute: true
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :repository, kind_of: String, default: 'https://github.com/Sliim/emacs.d.git'
 attribute :reference, kind_of: String, default: 'master'
+attribute :apps_repository, kind_of: String, default: 'https://github.com/Sliim/emacs-apps.git'
+attribute :apps_reference, kind_of: String, default: 'master'
+attribute :apps, kind_of: Hash, default: {}
 
 def initialize(*args)
   super

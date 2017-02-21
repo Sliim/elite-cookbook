@@ -25,5 +25,8 @@ node['elite']['users'].each do |u|
     cookbook emacs_config['cookbook'] if emacs_config['cookbook']
     repository emacs_config['repository'] if emacs_config['repository']
     reference emacs_config['reference'] if emacs_config['reference']
+    apps_repository emacs_config['apps_repository'] if emacs_config['apps_repository']
+    apps_reference emacs_config['apps_reference'] if emacs_config['apps_reference']
+    apps emacs_config['apps'] if emacs_config['apps']
   end
 end
