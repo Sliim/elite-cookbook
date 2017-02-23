@@ -42,6 +42,7 @@ attribute :commands, kind_of: Hash, default: {}
 attribute :kbd, kind_of: Hash, default: {}
 attribute :contrib, kind_of: [TrueClass, FalseClass], default: false
 attribute :modules, kind_of: Array, default: []
+attribute :webjumps, kind_of: Hash, default: {}
 
 def initialize(*args)
   super

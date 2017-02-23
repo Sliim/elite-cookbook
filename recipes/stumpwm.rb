@@ -39,5 +39,6 @@ node['elite']['users'].each do |u|
     kbd stumpwm['kbd'] if stumpwm['kbd']
     contrib stumpwm['contrib'] if stumpwm['contrib']
     modules stumpwm['modules'] if stumpwm['modules']
+    webjumps stumpwm['webjumps'] if stumpwm['webjumps']
   end
 end

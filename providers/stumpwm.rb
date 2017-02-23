@@ -37,7 +37,8 @@ action :create do
               programs: new_resource.programs,
               sessions: new_resource.sessions,
               kbd: new_resource.kbd,
-              modules: new_resource.modules
+              modules: new_resource.modules,
+              webjumps: new_resource.webjumps
   end
 
   if new_resource.contrib

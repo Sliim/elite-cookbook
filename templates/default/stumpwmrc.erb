@@ -71,6 +71,34 @@
 
         (sb-posix:setenv (car env-var) (cadr env-var) 1)))))
 
+;; Sources: https://lists.nongnu.org/archive/html/stumpwm-devel/2012-05/msg00026.html
+(defvar *browser* "firefox")
+(defcommand browser () ()
+  "Start browser is already running, in which case focus it."
+  (let* ((browser-name (or *browser* "firefox"))
+         (browser-class (string-capitalize (file-namestring browser-name))))
+    (run-or-raise browser-name `(:class ,browser-class))))
+
+(defcommand url (url) ((:rest "URL"))
+  "Open URL in the browser in the current group"
+  (check-type url string)
+  (let* ((browser-name (or *browser* "firefox")))
+    (flet ((run-browser (&rest args)
+             (run-prog browser-name :search t :args args :wait nil)))
+      (run-browser url))))
+(defmacro make-web-jump (name url-prefix)
+  `(defcommand ,name (search)
+    ((:rest ,(concatenate 'string (symbol-name name) ": ")))
+    (let* ((url-prefix ,url-prefix))
+      (unless (search "~A" url-prefix)
+        (setq url-prefix (concat url-prefix "~A")))
+      (url (format nil url-prefix (substitute #\Space #\+ search))))))
+
+;; Web jumps
+<% @webjumps.each do |title, url| %>
+(make-web-jump <%= title %> "<%= url %>")
+<% end %>
+
 ;; Modules
 <% @modules.each do |m| %>
 (load-module "<%= m %>")
@@ -84,7 +112,6 @@
 (define-key <%= type %> (kbd "<%= k %>") "<%= cmd %>")
 <% end %>
 <% end %>
-
 
 ;; Commands
 (defcommand toggle-mouse-focus () ()

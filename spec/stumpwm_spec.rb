@@ -58,6 +58,7 @@ describe 'elite::stumpwm' do
       node.override['elite']['sliim']['stumpwm']['kbd']['*root-map*']['t'] = 'urxvt'
       node.override['elite']['sliim']['stumpwm']['contrib'] = true
       node.override['elite']['sliim']['stumpwm']['modules'] = %w(mymod)
+      node.override['elite']['sliim']['stumpwm']['webjumps']['cookbooks'] = 'https://supermarket.chef.io/cookbooks/'
     end.converge(described_recipe)
   end
 
@@ -116,6 +117,7 @@ describe 'elite::stumpwm' do
                /\(run-shell-command "urxvt"\)/,
                /\(load-module "mymod"\)$/,
                /^\(define-key \*root-map\* \(kbd "t"\) "urxvt"\)$/,
+               %r{^\(make-web-jump cookbooks "https://supermarket.chef.io/cookbooks/"\)$},
               ]
 
     expect(subject).to create_template(config_file)
