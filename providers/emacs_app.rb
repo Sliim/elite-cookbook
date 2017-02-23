@@ -52,6 +52,21 @@ action :create do
       owner user
       file 'elfeed.el'
     end
+  when 'jabber'
+    accounts = config['accounts']
+    template "#{user_dotfiles(user)}/jabber.el" do
+      not_if { accounts.nil? }
+      owner user
+      group user_group(user)
+      mode '0640'
+      source 'emacs-apps/jabber.el.erb'
+      variables accounts: accounts
+    end
+
+    elite_dotlink "#{user}-jabber.el" do
+      owner user
+      file 'jabber.el'
+    end
   end
 
   new_resource.updated_by_last_action(true)
