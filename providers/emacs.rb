@@ -88,14 +88,11 @@ action :create do
       action :sync
     end
 
-    new_resource.apps.each do |name, app|
-      desktop = app['desktop']
-
-      elite_desktop_app "sliim-#{name}" do
-        not_if { desktop.nil? }
+    new_resource.apps.each do |name, config|
+      elite_emacs_app "#{user}-#{name}" do
         owner user
         app name
-        config desktop
+        config config
       end
     end
   end
