@@ -18,8 +18,8 @@ elite-notify-send() {
     [ $? -eq 0 ] && notify-send $@ }
 
 typeset -Ag znotify
-typeset "znotify[on_success]"='elite-notify-send "$TMUX_WIN $command_name" "$command_name is completed within $elapsed_time sec." -i terminal -u normal'
-typeset "znotify[on_failure]"='elite-notify-send "$TMUX_WIN $command_name" "$command_name failed with exitcode $command_status in $elapsed_time sec." -i terminal -u critical'
+typeset "znotify[on_success]"='elite-notify-send "$TMUX_WIN $command_name" "$command_name is completed within $elapsed_time sec." -i utilities-terminal -u normal'
+typeset "znotify[on_failure]"='elite-notify-send "$TMUX_WIN $command_name" "$command_name failed with exitcode $command_status in $elapsed_time sec." -i utilities-terminal -u critical'
 typeset "znotify[ignore]"="vim ssh man less top emacs em eshell builtin tail more su"
 typeset "znotify[threshold]"='30'
 typeset "znotify[_command]"='0'

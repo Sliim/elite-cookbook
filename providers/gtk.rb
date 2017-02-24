@@ -67,17 +67,6 @@ action :create do
     mode '0750'
   end
 
-  cookbook_file "#{Chef::Config[:file_cache_path]}/icons.tar.gz" do
-    source "gtk/icons/#{new_resource.icon_theme_name}.tar.gz"
-    cookbook new_resource.cookbook
-  end
-
-  execute "tar --keep-newer-files -xzf #{Chef::Config[:file_cache_path]}/icons.tar.gz" do
-    cwd "#{user_dotfiles(user)}/icons"
-    user user
-    group user_group(user)
-  end
-
   %w(gtkrc-2.0 icons themes).each do |dotf|
     elite_dotlink "#{user}-#{dotf}" do
       owner user

@@ -135,18 +135,6 @@ describe 'elite::gtk' do
             mode: '0750')
   end
 
-  it 'creates cookbook_file[/var/chef/cache/icons.tar.gz]' do
-    expect(subject).to create_cookbook_file('/var/chef/cache/icons.tar.gz')
-      .with(source: 'gtk/icons/icon-theme-name.tar.gz')
-  end
-
-  it 'runs execute[tar --keep-newer-files -xzf /var/chef/cache/icons.tar.gz]' do
-    expect(subject).to run_execute('tar --keep-newer-files -xzf /var/chef/cache/icons.tar.gz')
-      .with(cwd: '/home/sliim/.dotfiles/icons',
-            user: 'sliim',
-            group: 'elite')
-  end
-
   ['gtkrc-2.0', 'themes', 'icons'].each do |f|
     it "creates elite_dotlink[sliim-#{f}]" do
       expect(subject).to create_elite_dotlink("sliim-#{f}")
