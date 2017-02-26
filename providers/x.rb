@@ -54,7 +54,19 @@ action :create do
     environment DISPLAY: ':0.0'
   end
 
-  %w(Xdefaults urxvt.d).each do |link|
+  template "#{user_dotfiles(user)}/dmrc" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    cookbook new_resource.cookbook
+    source 'ini.erb'
+    variables config: { Desktop:
+                          { Session: new_resource.default_session,
+                            Language: node['locales']['default'] },
+                      }
+  end
+
+  %w(Xdefaults urxvt.d dmrc).each do |link|
     elite_dotlink "#{user}-#{link}" do
       owner user
       file link

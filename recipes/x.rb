@@ -29,5 +29,6 @@ node['elite']['users'].each do |u|
     cookbook x_config['cookbook'] if x_config['cookbook']
     source x_config['source'] if x_config['source']
     config x_config['config'] if x_config['config']
+    default_session x_config['default_session'] if x_config['default_session']
   end
 end

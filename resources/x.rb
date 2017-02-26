@@ -22,6 +22,7 @@ attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :source, kind_of: String, default: 'Xdefaults.erb'
+attribute :default_session, kind_of: String, default: 'stumpwm'
 attribute :config, kind_of: Hash, default: { 'urxvt' =>
                                              {
                                                'transparent' => false,
