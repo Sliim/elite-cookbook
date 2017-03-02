@@ -25,6 +25,7 @@ attribute :repository, kind_of: String, default: 'https://github.com/Sliim/emacs
 attribute :reference, kind_of: String, default: 'master'
 attribute :apps_repository, kind_of: String, default: 'https://github.com/Sliim/emacs-apps.git'
 attribute :apps_reference, kind_of: String, default: 'master'
+attribute :apps_dependencies, kind_of: Array, default: []
 attribute :apps, kind_of: Hash, default: {}
 
 def initialize(*args)

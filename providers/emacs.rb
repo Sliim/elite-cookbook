@@ -88,6 +88,16 @@ action :create do
       action :sync
     end
 
+    template "#{user_home(user)}/.emacs-apps/Cask" do
+      not_if { new_resource.apps_dependencies.empty? }
+      owner user
+      group user_group(user)
+      mode '0640'
+      cookbook new_resource.cookbook
+      source 'emacs-apps/Cask.erb'
+      variables deps: new_resource.apps_dependencies
+    end
+
     new_resource.apps.each do |name, config|
       elite_emacs_app "#{user}-#{name}" do
         owner user
