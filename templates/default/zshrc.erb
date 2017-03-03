@@ -4,6 +4,8 @@
 # Template:: zsh
 #
 
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 export ZSH=$HOME/.zsh.d
 export CASE_SENSITIVE="true"
 export DISABLE_AUTO_TITLE="true"
