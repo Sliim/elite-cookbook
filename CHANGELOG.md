@@ -3,6 +3,16 @@ elite CHANGELOG
 
 This file is used to list changes made in each version of the elite cookbook.
 
+0.5.0
+-----
+- Changes:
+  - `elite::stumpwm` - configure webjumps
+  - `elite::gtk` - Fixed gtk icons
+  - `elite::x` - Configures user's default X session
+  - `elite::zsh` - Fixed msf plugin
+  - `elite::zsh` - Fixed emacs Tramp support
+- New lwrp:
+  - `elite_emacs_apps` - configures emacs apps
 0.4.0
 -----
 - Changes:

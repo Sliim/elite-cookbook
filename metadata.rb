@@ -6,7 +6,7 @@ maintainer_email 'sliim@mailoo.org'
 license 'Apache 2.0'
 description 'The Elite Cookbook'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.4.0'
+version '0.5.0'
 
 recipe 'elite::ack', 'Installs/configures Ack'
 recipe 'elite::bash', 'Configures Bash'
