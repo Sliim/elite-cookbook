@@ -13,6 +13,7 @@ The following platforms and versions are tested and supported using Opscode's te
 #### Cookbook dependencies
 - [apt](https://supermarket.chef.io/cookbooks/apt)
 - [git](https://supermarket.chef.io/cookbooks/git)
+- [docker](https://supermarket.chef.io/cookbooks/docker)
 - [dunst](https://supermarket.chef.io/cookbooks/dunst)
 - [locales](https://github.com/redguide/locales/tree/v0.4.0)
 
@@ -33,6 +34,12 @@ Attributes
 | `[elite][slim][user]`              | String | Default username            |
 | `[elite][slim][session]`           | String | X Session                   |
 | `[elite][slim][additional_themes]` | Hash   | List of additional themes   |
+
+#### elite::docker_host
+| Key                              | Type   |  Description                                                                                                            |
+| -------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------- |
+| `[elite][docker_host][users]`    | String | Users to add in the `docker` group. (default: `[]`)                                                                     |
+| `[elite][docker_host][ctop_url]` | String | `ctop` binary download url. (default: `https://github.com/bcicen/ctop/releases/download/v0.5.1/ctop-0.5.1-linux-amd64`) |
 
 All others elements in the `elite` namespace is dedicated for users configuration.
 
@@ -71,6 +78,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::conky`
 - `elite::conky_dzen2`
 - `elite::default`
+- `elite::docker_host`
 - `elite::dotfiles`
 - `elite::dotfiles_commit`
 - `elite::dunst`
