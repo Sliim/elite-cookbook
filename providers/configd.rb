@@ -25,8 +25,8 @@ end
 action :create do
   user = new_resource.user
 
-  execute 'move-user-configd-dir' do
-    command "mv #{user_home(user)}/.config #{user_dotfiles(user)}/config"
+  execute 'move+link-user-configd-dir' do
+    command "mv #{user_home(user)}/.config #{user_dotfiles(user)}/config && ln -s #{user_dotfiles(user)}/config #{user_home(user)}/.config"
     action :run
     only_if { ::File.directory? "#{user_home(user)}/.config" }
   end
