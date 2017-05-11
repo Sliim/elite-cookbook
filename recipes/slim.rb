@@ -44,3 +44,17 @@ node['elite']['slim']['additional_themes'].each do |theme, info|
     action :sync
   end
 end
+
+file '/etc/X11/default-display-manager' do
+  content '/usr/bin/slim'
+  mode '0644'
+  owner 'root'
+  group 'root'
+end
+
+link '/lib/systemd/system/display-manager.service' do
+  link_type :symbolic
+  to '/lib/systemd/system/slim.service'
+  owner 'root'
+  group 'root'
+end

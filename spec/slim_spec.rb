@@ -73,4 +73,20 @@ describe 'elite::slim' do
             repository: 'https://github.com/aur-archive/slim-theme-airlines',
             reference: 'master')
   end
+
+  it 'creates file[/etc/X11/default-display-manager]' do
+    expect(subject).to create_file('/etc/X11/default-display-manager')
+      .with(content: '/usr/bin/slim',
+            owner: 'root',
+            group: 'root',
+            mode: '0644')
+  end
+
+  it 'creates link[/lib/systemd/system/display-manager.service]' do
+    expect(subject).to create_link('/lib/systemd/system/display-manager.service')
+      .with(link_type: :symbolic,
+            to: '/lib/systemd/system/slim.service',
+            owner: 'root',
+            group: 'root')
+  end
 end
