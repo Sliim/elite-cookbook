@@ -21,6 +21,19 @@ include_recipe 'elite::dotfiles'
 node['elite']['users'].each do |u|
   bin = user_config(u, 'bin')
   next unless bin
+
+  directory "#{user_dotfiles(u)}/bin" do
+    owner u
+    group user_group(u)
+    mode '0750'
+  end
+
+  elite_dotlink "#{u}-bin" do
+    dotprefix false
+    owner u
+    file 'bin'
+  end
+
   next unless bin.key?('scripts')
 
   bin['scripts'].each do |b|

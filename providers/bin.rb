@@ -25,18 +25,6 @@ end
 action :create do
   user = new_resource.owner
 
-  directory "#{user_dotfiles(user)}/bin" do
-    owner user
-    group user_group(user)
-    mode '0750'
-  end
-
-  elite_dotlink "#{user}-bin" do
-    dotprefix false
-    owner user
-    file 'bin'
-  end
-
   cookbook_file "#{user_dotfiles(user)}/bin/#{new_resource.script}" do
     owner user
     group user_group(user)
