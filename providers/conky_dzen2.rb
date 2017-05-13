@@ -31,7 +31,8 @@ action :create do
     mode '0640'
     source 'conky.d/dzen2.erb'
     cookbook 'elite'
-    variables conky: new_resource.panel
+    variables conky: new_resource.panel,
+              home: user_home(user)
   end
 
   cookbook_file "#{user_dotfiles(user)}/conky.d/scripts/battery-notify.sh" do
