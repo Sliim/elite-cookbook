@@ -30,6 +30,8 @@ describe 'elite::stumpwm' do
       node.override['elite']['sliim']['group'] = 'elite'
       node.override['elite']['sliim']['groups'] = %w(elite)
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
+      node.override['elite']['sliim']['pics']['cookbook'] = 'elite'
+      node.override['elite']['sliim']['pics']['source_dir'] = 'pics/'
       node.override['elite']['sliim']['stumpwm']['font'] = 'font'
       node.override['elite']['sliim']['stumpwm']['wallpaper'] = 'wallpaper-01.jpg'
       node.override['elite']['sliim']['stumpwm']['prefix_key'] = 's-f'

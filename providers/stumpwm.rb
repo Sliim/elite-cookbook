@@ -72,9 +72,14 @@ action :create do
     script 'stumpish'
   end
 
-  elite_picture "#{user}-#{new_resource.wallpaper}" do
-    owner user
-    pic new_resource.wallpaper
+  pics = user_config(user, 'pics')
+  if pics
+    elite_picture "#{user}-#{new_resource.wallpaper}" do
+      owner user
+      pic new_resource.wallpaper
+      cookbook pics['cookbook'] if pics['cookbook']
+      source_dir pics['source_dir'] if pics['source_dir']
+    end
   end
 
   new_resource.updated_by_last_action(true)
