@@ -22,6 +22,6 @@ ${if_existing /proc/net/route <%= @conky['ethernet_interface'] %>}^fg(\#<%= @con
 ^fg(\#<%= @conky['color4'] %>)${cpu cpu<%= c %>}^fg(\#<%= @conky['color3'] %>)% <% end %> \
 ^fg(\#<%= @conky['color4'] %>)${acpitemp}^fg(\#<%= @conky['color3'] %>)°C^fg(\#<%= @conky['color2'] %>)]\
 <% unless @conky['battery'].empty? %>^fg(\#<%= @conky['color2'] %>) [☰ ^fg(\#<%= @conky['color4'] %>)${battery_percent <%= @conky['battery'] %>}^fg(\#<%= @conky['color3'] %>)%^fg(\#<%= @conky['color2'] %>)]<% end %>\
-^fg(\#<%= @conky['color2'] %>) [✉ ^fg(\#<%= @conky['color4'] %>)${execi 600 mu find flag:unread 2>/dev/null | wc -l}^fg(\#<%= @conky['color2'] %>)]\
+${if_existing ~/Maildir}^fg(\#<%= @conky['color2'] %>) [✉ ^fg(\#<%= @conky['color4'] %>)${execi 600 mu find flag:unread 2>/dev/null | wc -l}^fg(\#<%= @conky['color2'] %>)]${endif}\
 ^fg(\#<%= @conky['color2'] %>) [♪ ^fg(\#<%= @conky['color4'] %>)${exec amixer -c 0 get Master toggle | tail -1 | awk '{print $4}' | sed "s/[^0-9]//g";}^fg(\#<%= @conky['color3'] %>)%^fg(\#<%= @conky['color2'] %>)] \
 ^fg(\#<%= @conky['color2'] %>) [^fg(\#<%= @conky['color4'] %>)${time %Y}-${time %m}-${time %d}^fg(\#<%= @conky['color2'] %>)] [^fg(\#<%= @conky['color4'] %>)${time %H}:${time %M}:${time %S}^fg(\#<%= @conky['color2'] %>)]
