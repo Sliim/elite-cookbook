@@ -64,8 +64,6 @@ action :create do
         source "#{new_resource.source_dir}#{new_resource.app}.desktop"
       end
     end
-
-    new_resource.updated_by_last_action(true)
   else
     Chef::Log.warn('Node doesn\'t includes elite::x recipe. Skip desktop application')
   end

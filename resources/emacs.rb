@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_emacs
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -27,9 +29,3 @@ attribute :apps_repository, kind_of: String, default: 'https://github.com/Sliim/
 attribute :apps_reference, kind_of: String, default: 'master'
 attribute :apps_dependencies, kind_of: Array, default: []
 attribute :apps, kind_of: Hash, default: {}
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_emacs
-end

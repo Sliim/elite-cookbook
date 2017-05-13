@@ -82,6 +82,4 @@ action :create do
     owner user
     app 'urxvt'
   end
-
-  new_resource.updated_by_last_action(true)
 end

@@ -17,14 +17,10 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_terminfo
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :source_dir, kind_of: String, default: 'terminfo'
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_terminfo
-end

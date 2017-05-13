@@ -17,15 +17,11 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_stuff
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :repository, kind_of: String, default: 'https://github.com/Sliim/elite-stuff.git'
 attribute :reference, kind_of: String, default: 'master'
 attribute :install_path, kind_of: String, default: nil
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_stuff
-end

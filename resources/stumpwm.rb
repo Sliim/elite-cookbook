@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_stumpwm
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -43,9 +45,3 @@ attribute :kbd, kind_of: Hash, default: {}
 attribute :contrib, kind_of: [TrueClass, FalseClass], default: false
 attribute :modules, kind_of: Array, default: []
 attribute :webjumps, kind_of: Hash, default: {}
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_stumpwm
-end

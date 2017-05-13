@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_gtk
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -39,9 +41,3 @@ attribute :color, kind_of: Hash, default: { 'bg_color' => '#0C0C0E',
                                             'link_color' => '#496B8D',
                                             'panel_bg' => '#0C0C0E',
                                           }
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_gtk
-end

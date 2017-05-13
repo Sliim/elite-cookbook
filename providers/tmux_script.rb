@@ -39,6 +39,4 @@ action :create do
               windows: new_resource.windows,
               default_window: new_resource.default_window
   end
-
-  new_resource.updated_by_last_action(true)
 end

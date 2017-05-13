@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_zsh
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -31,9 +33,3 @@ attribute :config, kind_of: Hash, default: { 'pyenv_prompt' => false,
 attribute :plugins, kind_of: Hash, default: { elite: %w(common) }
 attribute :completions, kind_of: Hash, default: {}
 attribute :theme, kind_of: String, default: 'elite'
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_zsh
-end

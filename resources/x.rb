@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_x
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -48,9 +50,3 @@ attribute :config, kind_of: Hash, default: { 'urxvt' =>
                                              },
                                              'rofi' => {},
                                            }
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_x
-end

@@ -17,13 +17,9 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_dunst
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :vars, kind_of: Hash, default: nil
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_dunst
-end

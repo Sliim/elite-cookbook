@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_tmux
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -39,9 +41,3 @@ attribute :status, kind_of: Hash, default: { 'pyenv_version' => false,
                                              'ndenv_version' => false,
                                            }
 attribute :scripts, kind_of: Hash, default: {}
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_tmux
-end

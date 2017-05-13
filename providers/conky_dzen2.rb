@@ -42,6 +42,4 @@ action :create do
     source 'conky.d/scripts/battery-notify.sh'
     cookbook 'elite'
   end
-
-  new_resource.updated_by_last_action(true)
 end

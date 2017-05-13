@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_ack
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -31,9 +33,3 @@ attribute :config, kind_of: Array, default: ['--ignore-dir=.project/',
                                              '--ignore-dir=vendor/',
                                              '--ignore-dir=.cask/',
                                              '--type-set=puppet=.pp,.puppet']
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_ack
-end

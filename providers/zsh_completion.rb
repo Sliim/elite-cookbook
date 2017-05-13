@@ -38,6 +38,4 @@ action :create do
     source "zsh.d/completions/_#{new_resource.completion}"
     cookbook new_resource.cookbook
   end
-
-  new_resource.updated_by_last_action(true)
 end

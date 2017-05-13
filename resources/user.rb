@@ -17,15 +17,11 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_user
 
 attribute :name, kind_of: String
 attribute :home, kind_of: String, default: ''
 attribute :shell, kind_of: String, default: '/bin/zsh'
 attribute :password, kind_of: String, default: nil
 attribute :groups, kind_of: Array, default: []
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_user
-end

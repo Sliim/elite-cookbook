@@ -35,6 +35,4 @@ action :create do
     to "#{user_dotfiles(owner)}/#{new_resource.file}"
     only_if { !exists || (exists && !new_resource.skip_if_exists) }
   end
-
-  new_resource.updated_by_last_action(true)
 end

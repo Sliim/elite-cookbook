@@ -40,6 +40,4 @@ action :create do
     owner user
     file 'terminfo'
   end
-
-  new_resource.updated_by_last_action(true)
 end

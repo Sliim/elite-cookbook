@@ -58,6 +58,4 @@ action :create do
       sound s
     end
   end
-
-  new_resource.updated_by_last_action(true)
 end

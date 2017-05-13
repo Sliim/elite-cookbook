@@ -60,6 +60,4 @@ action :create do
       variables lines: new_resource.ignore
     end
   end
-
-  new_resource.updated_by_last_action(true)
 end

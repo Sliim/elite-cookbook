@@ -96,6 +96,4 @@ action :create do
       file l
     end
   end
-
-  new_resource.updated_by_last_action(true)
 end

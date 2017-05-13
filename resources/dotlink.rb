@@ -17,15 +17,11 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_dotlink
 
 attribute :name, kind_of: String
 attribute :file, kind_of: String, name_attribute: true
 attribute :owner, kind_of: String
 attribute :dotprefix, kind_of: [TrueClass, FalseClass], default: true
 attribute :skip_if_exists, kind_of: [TrueClass, FalseClass], default: false
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_dotlink
-end

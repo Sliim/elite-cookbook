@@ -37,6 +37,4 @@ action :create do
     owner user
     file 'conky.d'
   end
-
-  new_resource.updated_by_last_action(true)
 end

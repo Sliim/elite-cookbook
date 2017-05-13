@@ -40,6 +40,4 @@ action :create do
       source_dir new_resource.source_dir
     end
   end
-
-  new_resource.updated_by_last_action(true)
 end

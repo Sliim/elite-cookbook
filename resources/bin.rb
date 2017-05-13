@@ -17,15 +17,11 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_bin
 
 attribute :name, kind_of: String
 attribute :script, kind_of: String, name_attribute: true
 attribute :owner, kind_of: String
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :source_dir, kind_of: String, default: 'bin/'
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_bin
-end

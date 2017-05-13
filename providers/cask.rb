@@ -32,6 +32,4 @@ action :create do
     reference new_resource.reference
     action :sync
   end
-
-  new_resource.updated_by_last_action(true)
 end

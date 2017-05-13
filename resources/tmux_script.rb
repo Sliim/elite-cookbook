@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_tmux_script
 
 attribute :name, kind_of: String
 attribute :path, kind_of: String
@@ -27,9 +29,3 @@ attribute :default_window, kind_of: String, default: '0'
 attribute :source, kind_of: String, default: 'tmux-script.erb'
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :mode, kind_of: String, default: '0750'
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_tmux_script
-end

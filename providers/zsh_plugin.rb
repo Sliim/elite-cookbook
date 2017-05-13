@@ -38,6 +38,4 @@ action :create do
     source "zsh.d/plugins/#{new_resource.plugin}.plugin.zsh"
     cookbook new_resource.cookbook
   end
-
-  new_resource.updated_by_last_action(true)
 end

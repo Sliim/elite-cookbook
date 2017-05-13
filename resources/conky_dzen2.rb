@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_conky_dzen2
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -30,8 +32,3 @@ attribute :panel, kind_of: Hash, default: { 'default_color' => 'FFFFFF',
                                             'ethernet_interface' => 'eth0',
                                             'wireless_interface' => 'wlan0',
                                           }
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_conky_dzen2
-end

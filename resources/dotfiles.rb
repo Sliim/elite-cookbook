@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_dotfiles
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -25,9 +27,3 @@ attribute :cookbook, kind_of: String, default: 'elite'
 attribute :source, kind_of: String, default: 'list2file.erb'
 attribute :ignore, kind_of: Array, default: []
 attribute :init_repo, kind_of: [TrueClass, FalseClass], default: false
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_dotfiles
-end

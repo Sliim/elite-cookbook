@@ -17,14 +17,10 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_emacs_app
 
 attribute :name, kind_of: String
 attribute :owner, kind_of: String
 attribute :app, kind_of: String
 attribute :config, kind_of: Hash, default: {}
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_emacs_app
-end

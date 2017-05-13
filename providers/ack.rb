@@ -38,6 +38,4 @@ action :create do
     owner user
     file 'ackrc'
   end
-
-  new_resource.updated_by_last_action(true)
 end

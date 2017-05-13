@@ -17,14 +17,10 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_cask
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :repository, kind_of: String, default: 'https://github.com/cask/cask.git'
 attribute :reference, kind_of: String, default: 'master'
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_cask
-end

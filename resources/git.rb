@@ -17,6 +17,8 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_git
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
@@ -45,9 +47,3 @@ attribute :gitignore, kind_of: Array, default: ['*.a',
                                                 '/.emacs.desktop.lock',
                                                 '/.project',
                                                 '/.ropeproject']
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_git
-end

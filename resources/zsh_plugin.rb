@@ -17,14 +17,10 @@
 #
 
 actions :create
+default_action :create
+resource_name :elite_zsh_plugin
 
 attribute :name, kind_of: String
 attribute :plugin, kind_of: String, name_attribute: true
 attribute :owner, kind_of: String
 attribute :cookbook, kind_of: String, default: 'elite'
-
-def initialize(*args)
-  super
-  @action = :create
-  @resource_name = :elite_zsh_plugin
-end

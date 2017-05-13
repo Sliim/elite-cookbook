@@ -81,6 +81,4 @@ action :create do
       source_dir pics['source_dir'] if pics['source_dir']
     end
   end
-
-  new_resource.updated_by_last_action(true)
 end
