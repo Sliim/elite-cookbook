@@ -158,10 +158,10 @@ describe 'elite::x' do
             file: 'urxvt.d')
   end
 
-  it 'creates elite_bin[sliim-disable-screensave.sh]' do
-    expect(subject).to create_elite_bin('sliim-disable-screensave.sh')
+  it 'creates elite_bin[sliim-disable-screensaver]' do
+    expect(subject).to create_elite_bin('sliim-disable-screensaver')
       .with(owner: 'sliim',
-            script: 'disable-screensave.sh',
+            script: 'disable-screensaver',
             cookbook: 'elite',
             source_dir: 'bin/')
   end

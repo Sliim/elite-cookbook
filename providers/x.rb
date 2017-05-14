@@ -73,9 +73,9 @@ action :create do
     end
   end
 
-  elite_bin "#{user}-disable-screensave.sh" do
+  elite_bin "#{user}-disable-screensaver" do
     owner user
-    script 'disable-screensave.sh'
+    script 'disable-screensaver'
   end
 
   elite_desktop_app "#{user}-urxvt" do

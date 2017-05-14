@@ -24,7 +24,7 @@ describe file '/home/h4x0r/.urxvt.d' do
   it { should be_grouped_into 'elite' }
 end
 
-describe file '/home/h4x0r/bin/disable-screensave.sh' do
+describe file '/home/h4x0r/bin/disable-screensaver' do
   it { should be_file }
   it { should be_mode 0750 }
   it { should be_owned_by 'h4x0r' }
