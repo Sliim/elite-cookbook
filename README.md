@@ -87,6 +87,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::emacs`
 - `elite::git`
 - `elite::gtk`
+- `elite::irssi`
 - `elite::locales`
 - `elite::packages`
 - `elite::pics`
@@ -121,6 +122,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite_emacs`
 - `elite_git`
 - `elite_gtk`
+- `elite_irssi`
 - `elite_pics`
 - `elite_stuff`
 - `elite_stumpwm`
