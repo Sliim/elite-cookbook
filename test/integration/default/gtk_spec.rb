@@ -32,9 +32,3 @@ describe file '/home/h4x0r/.icons' do
   it { should be_owned_by 'h4x0r' }
   it { should be_grouped_into 'elite' }
 end
-
-describe file '/home/h4x0r/.icons/ACYL' do
-  it { should be_directory }
-  it { should be_mode 0755 }
-  it { should be_owned_by 'h4x0r' }
-end
