@@ -75,6 +75,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::bash`
 - `elite::bin`
 - `elite::cask`
+- `elite::chef`
 - `elite::conky`
 - `elite::conky_dzen2`
 - `elite::default`
@@ -113,6 +114,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite_ack`
 - `elite_bash`
 - `elite_cask`
+- `elite_chef`
 - `elite_conky`
 - `elite_conky_dzen2`
 - `elite_dunst`

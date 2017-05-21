@@ -77,6 +77,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_ack, :create, user)
   end
 
+  def create_elite_chef(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_chef, :create, user)
+  end
+
   def create_elite_dotfiles(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_dotfiles, :create, user)
   end
