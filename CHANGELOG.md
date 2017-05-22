@@ -3,6 +3,24 @@ elite CHANGELOG
 
 This file is used to list changes made in each version of the elite cookbook.
 
+0.6.0
+-----
+- Dotfiles improvements
+- Changes:
+  - `elite_configd` - Move .config/ directory if exists
+  - `elite::slim` - Set slim as default dm
+  - `elite::bin` - Create bin/ in recipe instead of provider
+  - `elite::stumpwm` - Deploy wallpaper from pics attributes
+- New recipes:
+  - `elite::docker_host` - Setup Docker host server
+  - `elite::chef` - Configure Chef/ChefDK/Stove
+  - `elite::irssi` - Configure Irssi
+  - `elite::pentestenv` - Configure pentest-env
+- New lwrp:
+  - `elite_chef`
+  - `elite_irssi`
+  - `elite_pentestenv`
+
 0.5.0
 -----
 - Changes:
