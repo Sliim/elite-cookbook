@@ -13,3 +13,11 @@ describe file '/usr/share/slim' do
   it { should be_owned_by 'root' }
   it { should be_grouped_into 'root' }
 end
+
+describe file '/etc/X11/default-display-manager' do
+  its(:content) { should eq '/usr/bin/slim' }
+end
+
+describe file '/lib/systemd/system/display-manager.service' do
+  it { should be_linked_to '/lib/systemd/system/slim.service' }
+end

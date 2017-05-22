@@ -44,6 +44,9 @@ suites:
       - recipe[elite::locales]
       - recipe[elite::chef]
       - recipe[elite::irssi]
+      # - recipe[elite::rofi]
+      - recipe[elite::docker_host]
+
     attributes:
       elite:
         users: [root, h4x0r]
@@ -53,6 +56,8 @@ suites:
         slim:
           user: h4x0r
           session: stumpwm
+        docker_host:
+          users: [h4x0r]
         root:
           home: /root
           group: root
@@ -72,11 +77,16 @@ suites:
           emacs:
             repository: https://github.com/Sliim/emacs.d
             apps_repository: https://github.com/Sliim/emacs-apps
+            apps_dependencies: [magit]
             apps:
               dired:
                 desktop:
                   Name: dired
+              magit:
+                desktop:
+                  Name: Magit
           git: {}
+          rofi: {}
           stuff:
             install_path: /home/h4x0r/stuff
           terminfo: {}
