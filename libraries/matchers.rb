@@ -85,6 +85,10 @@ if defined?(ChefSpec)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_dotfiles, :create, user)
   end
 
+  def create_elite_pentestenv(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_pentestenv, :create, user)
+  end
+
   def create_elite_pics(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_pics, :create, user)
   end

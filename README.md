@@ -90,6 +90,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::irssi`
 - `elite::locales`
 - `elite::packages`
+- `elite::pentestenv`
 - `elite::pics`
 - `elite::rofi`
 - `elite::slim`
@@ -123,6 +124,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite_git`
 - `elite_gtk`
 - `elite_irssi`
+- `elite_pentestenv`
 - `elite_pics`
 - `elite_stuff`
 - `elite_stumpwm`

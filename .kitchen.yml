@@ -46,6 +46,7 @@ suites:
       - recipe[elite::irssi]
       # - recipe[elite::rofi]
       - recipe[elite::docker_host]
+      - recipe[elite::pentestenv]
 
     attributes:
       elite:
@@ -107,6 +108,15 @@ suites:
                       "0": htop
                       "1": nload
           zsh: {}
+          pentestenv:
+            repository: https://github.com/Sliim/pentest-env.git
+            config:
+              instance: [kali]
+              targets: [mrrobot]
+              kali:
+                vbox:
+                  customize:
+                    memory: 1024
           pics:
             pics: [thc.jpg, defcon-green.jpg]
           conky: {}
