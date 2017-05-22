@@ -13,6 +13,7 @@ This file is used to list changes made in each version of the elite cookbook.
   - `elite::zsh` - Fixed emacs Tramp support
 - New lwrp:
   - `elite_emacs_apps` - configures emacs apps
+  
 0.4.0
 -----
 - Changes:
