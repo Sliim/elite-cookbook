@@ -12,7 +12,7 @@ else
     <% if id.to_s == "0" %>
     tmux new-session -d -s <%= @name %> -n <%= win['name'] %> -c <%= @workdir %>
     <% else %>
-    tmux new-window -t <%= @name %>:<%= id %> -n <%= win['name'] %>
+    tmux new-window -t <%= @name %>:<%= id %> -n <%= win['name'] %> -c <%= @workdir %>
     <% end %>
     <% win['win'].each do | i, w | %>
     tmux <%= w.gsub('{TARGET}', "-t #{@name}:#{id}.") %>
