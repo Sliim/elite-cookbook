@@ -149,7 +149,10 @@
 <% @sessions.each do |session, _config| %>
                       "gnew <%= session %>"
 <% end %>
-                      "gselect 1")
+<% @sessions_cmds.each do |cmd| %>
+                      "<%= cmd %>"
+<% end %>
+                      )
 <% count = 1 %>
 <% @sessions.each do |session, config| %>
 
