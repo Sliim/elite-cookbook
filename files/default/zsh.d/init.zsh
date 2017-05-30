@@ -1,5 +1,6 @@
 #!/bin/zsh
-export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+grep $HOME/bin <<<$PATH>/dev/null || export PATH=$HOME/bin:$PATH
+grep $HOME/.local/bin <<<$PATH>/dev/null || export PATH=$HOME/.local/bin:$PATH
 
 for config_file ($ZSH/lib/*.zsh); do
     source $config_file
