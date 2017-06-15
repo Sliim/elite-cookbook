@@ -23,6 +23,7 @@ end
 
 group 'docker' do
   action [:create, :modify]
+  system true
   append true
   members node['elite']['docker_host']['users']
 end
