@@ -18,7 +18,13 @@ else
     tmux <%= w.gsub('{TARGET}', "-t #{@name}:#{id}.") %>
     <% end %>
     <% win['cmds'].each do | pane, cmd | %>
+    <% if cmd.instance_of? ::Chef::Node::ImmutableArray %>
+    <% cmd.each do |c| %>
+    tmux-run-cmd "<%= c %>" <%= id %> <%= pane %>
+    <% end %>
+    <% else %>
     tmux-run-cmd "<%= cmd %>" <%= id %> <%= pane %>
+    <% end %>
     <% end %>
     <% end %>
 

@@ -52,10 +52,12 @@ describe 'elite::tmux' do
             'win' => {
               '0' => 'split-window -h {TARGET}',
               '1' => 'select-pane {TARGET}0',
+              '2' => 'split-window -h {TARGET}'
             },
             'cmds' => {
               '0' => 'htop',
               '1' => 'nload',
+              '2' => ['pwd', 'ls -la']
             },
           },
         },
@@ -133,7 +135,9 @@ describe 'elite::tmux' do
                /tmux split-window -h -t autotmux:0.$/,
                /tmux select-pane -t autotmux:0.0$/,
                /tmux-run-cmd "htop" 0 0$/,
-               /tmux-run-cmd "nload" 0 1$/]
+               /tmux-run-cmd "nload" 0 1$/,
+               /tmux-run-cmd "pwd" 0 2$/,
+               /tmux-run-cmd "ls -la" 0 2$/]
 
     expect(subject).to create_template(config_file)
       .with(owner: 'sliim',
