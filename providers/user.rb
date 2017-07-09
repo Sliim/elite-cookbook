@@ -44,6 +44,7 @@ action :create do
       action :modify
       append true
       members [name]
+      ignore_failure true
     end
   end
 end
