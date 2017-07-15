@@ -52,12 +52,12 @@ describe 'elite::tmux' do
             'win' => {
               '0' => 'split-window -h {TARGET}',
               '1' => 'select-pane {TARGET}0',
-              '2' => 'split-window -h {TARGET}'
+              '2' => 'split-window -h {TARGET}',
             },
             'cmds' => {
               '0' => 'htop',
               '1' => 'nload',
-              '2' => ['pwd', 'ls -la']
+              '2' => ['pwd', 'ls -la'],
             },
           },
         },
