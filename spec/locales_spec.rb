@@ -21,7 +21,7 @@ require_relative 'spec_helper'
 describe 'elite::locales' do
   let(:subject) do
     ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '8.0') do |node|
+                             version: '9.0') do |node|
       node.override['elite']['locales'] = ['fr_FR.UTF-8', 'en_US.UTF-8']
     end.converge(described_recipe)
   end

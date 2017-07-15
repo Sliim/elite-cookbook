@@ -22,7 +22,7 @@ describe 'elite::ack' do
   let(:subject) do
     ChefSpec::SoloRunner.new(step_into: %w(elite_ack elite_dotlink),
                              platform: 'debian',
-                             version: '8.0') do |node|
+                             version: '9.0') do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['home'] = '/home/sliim'

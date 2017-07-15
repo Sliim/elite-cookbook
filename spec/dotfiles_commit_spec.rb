@@ -22,7 +22,7 @@ require 'chefspec/berkshelf'
 describe 'elite::dotfiles_commit' do
   let(:subject) do
     ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '8.0') do |node|
+                             version: '9.0') do |node|
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(sliim)
       node.override['elite']['sliim'] = {

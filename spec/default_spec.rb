@@ -7,7 +7,7 @@ describe 'elite::default' do
   let(:subject) do
     ChefSpec::SoloRunner.new(step_into: ['elite_user'],
                              platform: 'debian',
-                             version: '8.0') do |node|
+                             version: '9.0') do |node|
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(sliim)
       node.override['elite']['sliim'] = {
@@ -43,7 +43,7 @@ describe 'elite::default' do
     let(:subject) do
       ChefSpec::SoloRunner.new(step_into: ['elite_user'],
                                platform: 'debian',
-                               version: '8.0') do |node|
+                               version: '9.0') do |node|
         node.override['elite']['groups'] = %w(elite)
         node.override['elite']['users'] = %w(sliim)
         node.override['elite']['sliim'] = {
@@ -65,7 +65,7 @@ describe 'elite::default' do
     let(:subject) do
       ChefSpec::SoloRunner.new(step_into: ['elite_user'],
                                platform: 'debian',
-                               version: '8.0') do |node|
+                               version: '9.0') do |node|
         node.override['elite']['groups'] = %w(elite)
         node.override['elite']['users'] = %w(sliim)
         node.override['elite']['sliim'] = {
@@ -87,7 +87,7 @@ describe 'elite::default' do
     let(:subject) do
       ChefSpec::SoloRunner.new(step_into: ['elite_user'],
                                platform: 'debian',
-                               version: '8.0') do |node|
+                               version: '9.0') do |node|
         node.override['elite']['groups'] = %w(elite)
         node.override['elite']['users'] = %w(sliim)
         node.override['elite']['sliim'] = {

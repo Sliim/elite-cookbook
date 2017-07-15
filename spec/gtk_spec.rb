@@ -23,7 +23,7 @@ describe 'elite::gtk' do
     ChefSpec::SoloRunner.new(step_into: %w(elite_gtk),
                              file_cache_path: '/var/chef/cache',
                              platform: 'debian',
-                             version: '8.0') do |node|
+                             version: '9.0') do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['email'] = 'sliim@mailoo.org'
