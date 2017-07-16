@@ -39,6 +39,8 @@ describe 'elite::tmux' do
       node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
       node.override['elite']['sliim']['tmux']['color']['message_fg'] = 'mf-color'
       node.override['elite']['sliim']['tmux']['color']['message_bg'] = 'mb-color'
+      node.override['elite']['sliim']['tmux']['status']['commands'] = {'Uptime:' => 'uptime',
+                                                                       'User:' => 'whoami'}
       node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = true
       node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = true
       node.override['elite']['sliim']['tmux']['status']['ndenv_version'] = true
@@ -99,7 +101,7 @@ describe 'elite::tmux' do
                /status-left "#\[fg=sf-color,bg=sb-color\]\[#\[fg=scf-color,bg=scb-color\]#S#\[fg=sf-color,bg=sb-color\]\]"$/,
                /window-status-format "#\[fg=sf-color\]#I#F#W#\[default\]"$/,
                /window-status-current-format "#\[fg=sf-color,bg=sb-color,bold\]\[#\[fg=scf-color,bg=scb-color\]#I#F#W#\[fg=sf-color,bg=sb-color\]\]#\[default\]"$/,
-               %r{status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]Ruby: #\(cat \$RBENV_ROOT/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]Python: #\(cat ~/.pyenv/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]Node: #\(cat ~/.ndenv/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$}]
+               %r{status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]Uptime: #\(uptime\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]User: #\(whoami\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]Ruby: #\(cat \$RBENV_ROOT/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]Python: #\(cat ~/.pyenv/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]Node: #\(cat ~/.ndenv/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$}]
 
     expect(subject).to create_template(config_file)
       .with(owner: 'sliim',

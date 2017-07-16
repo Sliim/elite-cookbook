@@ -36,7 +36,8 @@ attribute :color, kind_of: Hash, default: { 'pane_border_fg' => 'default',
                                             'message_fg' => 'brightred',
                                             'message_bg' => 'black',
                                           }
-attribute :status, kind_of: Hash, default: { 'pyenv_version' => false,
+attribute :status, kind_of: Hash, default: { 'commands' => {},
+                                             'pyenv_version' => false,
                                              'rbenv_version' => false,
                                              'ndenv_version' => false,
                                            }
