@@ -24,9 +24,9 @@ describe 'elite::slim' do
                              version: '9.0') do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
-      node.override['elite']['slim']['user'] = 'sliim'
-      node.override['elite']['slim']['theme'] = 'airlines'
-      node.override['elite']['slim']['session'] = 'devsession'
+      node.override['elite']['slim']['config']['default_user'] = 'sliim'
+      node.override['elite']['slim']['config']['current_theme'] = 'airlines'
+      node.override['elite']['slim']['config']['login_cmd'] = 'exec /bin/bash -login /etc/X11/Xsession devsession'
       node.override['elite']['slim']['additional_themes'] = {
         'airlines' => {
           'repository' => 'https://github.com/aur-archive/slim-theme-airlines',
@@ -48,7 +48,7 @@ describe 'elite::slim' do
                /^current_theme\s+airlines$/]
 
     expect(subject).to create_template(config_file)
-      .with(source: 'slim.conf.erb',
+      .with(source: 'hash2file_space.erb',
             owner: 'root',
             group: 'root',
             mode: '0644')

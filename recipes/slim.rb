@@ -22,10 +22,8 @@ template '/etc/slim.conf' do
   owner 'root'
   group 'root'
   mode '0644'
-  source 'slim.conf.erb'
-  variables user: node['elite']['slim']['user'],
-            session: node['elite']['slim']['session'],
-            theme: node['elite']['slim']['theme']
+  source 'hash2file_space.erb'
+  variables config: node['elite']['slim']['config']
 end
 
 directory '/usr/share/slim/themes' do
