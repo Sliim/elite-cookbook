@@ -39,6 +39,7 @@ describe 'elite::tmux' do
       node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
       node.override['elite']['sliim']['tmux']['color']['message_fg'] = 'mf-color'
       node.override['elite']['sliim']['tmux']['color']['message_bg'] = 'mb-color'
+      node.override['elite']['sliim']['tmux']['status']['interval'] = 2
       node.override['elite']['sliim']['tmux']['status']['commands'] = {'Uptime:' => 'uptime',
                                                                        'User:' => 'whoami'}
       node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = true
@@ -94,6 +95,7 @@ describe 'elite::tmux' do
                /pane-border-bg "pbb-color"$/,
                /pane-active-border-fg "pabf-color"$/,
                /pane-active-border-bg "pabb-color"$/,
+               /status-interval 2$/,
                /status-fg "sf-color"$/,
                /status-bg "sb-color"$/,
                /message-fg "mf-color"$/,
