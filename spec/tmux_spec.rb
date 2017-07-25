@@ -40,8 +40,8 @@ describe 'elite::tmux' do
       node.override['elite']['sliim']['tmux']['color']['message_fg'] = 'mf-color'
       node.override['elite']['sliim']['tmux']['color']['message_bg'] = 'mb-color'
       node.override['elite']['sliim']['tmux']['status']['interval'] = 2
-      node.override['elite']['sliim']['tmux']['status']['commands'] = {'Uptime:' => 'uptime',
-                                                                       'User:' => 'whoami'}
+      node.override['elite']['sliim']['tmux']['status']['commands'] = { 'Uptime:' => 'uptime',
+                                                                        'User:' => 'whoami' }
       node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = true
       node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = true
       node.override['elite']['sliim']['tmux']['status']['ndenv_version'] = true
