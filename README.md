@@ -16,6 +16,8 @@ The following platforms and versions are tested and supported using Opscode's te
 - [docker](https://supermarket.chef.io/cookbooks/docker)
 - [dunst](https://supermarket.chef.io/cookbooks/dunst)
 - [locales](https://github.com/redguide/locales/tree/v0.4.0)
+- [chef-dk](https://github.com/RoboticCheese/chef-dk-chef)
+- [poise-python](https://supermarket.chef.io/cookbooks/poise-python)
 
 Attributes
 ----------
@@ -40,6 +42,11 @@ Attributes
 | -------------------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------- |
 | `[elite][docker_host][users]`    | String | Users to add in the `docker` group. (default: `[]`)                                                                     |
 | `[elite][docker_host][ctop_url]` | String | `ctop` binary download url. (default: `https://github.com/bcicen/ctop/releases/download/v0.5.1/ctop-0.5.1-linux-amd64`) |
+
+#### elite::python
+| Key               | Type  |  Description                                       |
+| ----------------- | ----- | -------------------------------------------------- |
+| `[elite][python]` | Array | Pythons to install, see [spec](spec/python_spec.rb) file for example |
 
 All others elements in the `elite` namespace is dedicated for users configuration.
 
@@ -92,6 +99,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::packages`
 - `elite::pentestenv`
 - `elite::pics`
+- `elite::python`
 - `elite::rofi`
 - `elite::slim`
 - `elite::stuff`
