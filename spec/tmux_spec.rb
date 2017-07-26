@@ -42,9 +42,6 @@ describe 'elite::tmux' do
       node.override['elite']['sliim']['tmux']['status']['interval'] = 2
       node.override['elite']['sliim']['tmux']['status']['commands'] = { 'Uptime:' => 'uptime',
                                                                         'User:' => 'whoami' }
-      node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = true
-      node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = true
-      node.override['elite']['sliim']['tmux']['status']['ndenv_version'] = true
       node.override['elite']['sliim']['tmux']['scripts']['autotmux'] = {
         'path' => '/tmp/autotmux',
         'workdir' => '/tmp',
@@ -103,7 +100,7 @@ describe 'elite::tmux' do
                /status-left "#\[fg=sf-color,bg=sb-color\]\[#\[fg=scf-color,bg=scb-color\]#S#\[fg=sf-color,bg=sb-color\]\]"$/,
                /window-status-format "#\[fg=sf-color\]#I#F#W#\[default\]"$/,
                /window-status-current-format "#\[fg=sf-color,bg=sb-color,bold\]\[#\[fg=scf-color,bg=scb-color\]#I#F#W#\[fg=sf-color,bg=sb-color\]\]#\[default\]"$/,
-               %r{status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]Uptime: #\(uptime\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]User: #\(whoami\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]Ruby: #\(cat \$RBENV_ROOT/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]Python: #\(cat ~/.pyenv/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]Node: #\(cat ~/.ndenv/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$}]
+               %r{status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]Uptime: #\(uptime\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]User: #\(whoami\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$}]
 
     expect(subject).to create_template(config_file)
       .with(owner: 'sliim',
@@ -152,84 +149,6 @@ describe 'elite::tmux' do
 
     matches.each do |m|
       expect(subject).to render_file(config_file).with_content(m)
-    end
-  end
-
-  context 'without rbenv version in right status' do
-    let(:subject) do
-      ChefSpec::SoloRunner.new(step_into: %w(elite_tmux),
-                               platform: 'debian',
-                               version: '9.0') do |node|
-        node.override['elite']['users'] = %w(sliim foo)
-        node.override['elite']['groups'] = %w(elite)
-        node.override['elite']['sliim']['home'] = '/home/sliim'
-        node.override['elite']['sliim']['group'] = 'elite'
-        node.override['elite']['sliim']['groups'] = %w(elite)
-        node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-        node.override['elite']['sliim']['tmux']['color']['status_fg'] = 'sf-color'
-        node.override['elite']['sliim']['tmux']['color']['status_bg'] = 'sb-color'
-        node.override['elite']['sliim']['tmux']['color']['status_current_fg'] = 'scf-color'
-        node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
-        node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = false
-        node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = true
-      end.converge(described_recipe)
-    end
-
-    it 'should not display global ruby version' do
-      expect(subject).to render_file('/home/sliim/.dotfiles/tmux.conf')
-        .with_content(%r{status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]Python: #\(cat ~/.pyenv/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$})
-    end
-  end
-
-  context 'without pyenv version in right status' do
-    let(:subject) do
-      ChefSpec::SoloRunner.new(step_into: %w(elite_tmux),
-                               platform: 'debian',
-                               version: '9.0') do |node|
-        node.override['elite']['users'] = %w(sliim foo)
-        node.override['elite']['groups'] = %w(elite)
-        node.override['elite']['sliim']['home'] = '/home/sliim'
-        node.override['elite']['sliim']['group'] = 'elite'
-        node.override['elite']['sliim']['groups'] = %w(elite)
-        node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-        node.override['elite']['sliim']['tmux']['color']['status_fg'] = 'sf-color'
-        node.override['elite']['sliim']['tmux']['color']['status_bg'] = 'sb-color'
-        node.override['elite']['sliim']['tmux']['color']['status_current_fg'] = 'scf-color'
-        node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
-        node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = true
-        node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = false
-      end.converge(described_recipe)
-    end
-
-    it 'should not display global python version' do
-      expect(subject).to render_file('/home/sliim/.dotfiles/tmux.conf')
-        .with_content(%r{status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]Ruby: #\(cat \$RBENV_ROOT/version\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$})
-    end
-  end
-
-  context 'without rbenv and pyenv versions in right status' do
-    let(:subject) do
-      ChefSpec::SoloRunner.new(step_into: %w(elite_tmux),
-                               platform: 'debian',
-                               version: '9.0') do |node|
-        node.override['elite']['users'] = %w(sliim foo)
-        node.override['elite']['groups'] = %w(elite)
-        node.override['elite']['sliim']['home'] = '/home/sliim'
-        node.override['elite']['sliim']['group'] = 'elite'
-        node.override['elite']['sliim']['groups'] = %w(elite)
-        node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-        node.override['elite']['sliim']['tmux']['color']['status_fg'] = 'sf-color'
-        node.override['elite']['sliim']['tmux']['color']['status_bg'] = 'sb-color'
-        node.override['elite']['sliim']['tmux']['color']['status_current_fg'] = 'scf-color'
-        node.override['elite']['sliim']['tmux']['color']['status_current_bg'] = 'scb-color'
-        node.override['elite']['sliim']['tmux']['status']['rbenv_version'] = false
-        node.override['elite']['sliim']['tmux']['status']['pyenv_version'] = false
-      end.converge(described_recipe)
-    end
-
-    it 'should not display ruby and python versions' do
-      expect(subject).to render_file('/home/sliim/.dotfiles/tmux.conf')
-        .with_content(/status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$/)
     end
   end
 end

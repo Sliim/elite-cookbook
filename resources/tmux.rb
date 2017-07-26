@@ -38,8 +38,5 @@ attribute :color, kind_of: Hash, default: { 'pane_border_fg' => 'default',
                                           }
 attribute :status, kind_of: Hash, default: { 'interval' => 1,
                                              'commands' => {},
-                                             'pyenv_version' => false,
-                                             'rbenv_version' => false,
-                                             'ndenv_version' => false,
                                            }
 attribute :scripts, kind_of: Hash, default: {}
