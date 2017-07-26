@@ -47,6 +47,7 @@ suites:
       # - recipe[elite::rofi]
       - recipe[elite::docker_host]
       - recipe[elite::pentestenv]
+      - recipe[elite::python]
 
     attributes:
       elite:
@@ -59,6 +60,14 @@ suites:
           session: stumpwm
         docker_host:
           users: [h4x0r]
+        python:
+          "2": {}
+          "3":
+            options:
+              package_name: python3
+              dev_package: python3-dev
+            packages:
+              - PyYaML
         root:
           home: /root
           group: root

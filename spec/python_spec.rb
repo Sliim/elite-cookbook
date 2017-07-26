@@ -29,7 +29,7 @@ describe 'elite::python' do
             'package_name' => 'python3',
             'dev_package' => 'python3-dev',
           },
-          'packages' => ['PyYaML'],
+          'packages' => ['PyYAML'],
         },
       }
     end.converge(described_recipe)
@@ -44,7 +44,7 @@ describe 'elite::python' do
       .with(options: { 'package_name' => 'python3', 'dev_package' => 'python3-dev' })
   end
 
-  it 'installs python_package[PyYaML]' do
-    expect(subject).to install_python_package('PyYaML').with(python: '/usr/bin/python3')
+  it 'installs python_package[PyYAML]' do
+    expect(subject).to install_python_package('PyYAML').with(python: '/usr/bin/python3')
   end
 end
