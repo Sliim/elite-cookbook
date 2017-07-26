@@ -8,7 +8,7 @@ Requirements
 ------------
 #### Platforms
 The following platforms and versions are tested and supported using Opscode's test-kitchen.
-- `Debian 8`
+- `Debian 9`
 
 #### Cookbook dependencies
 - [apt](https://supermarket.chef.io/cookbooks/apt)
@@ -46,7 +46,7 @@ Attributes
 #### elite::python
 | Key               | Type  |  Description                                       |
 | ----------------- | ----- | -------------------------------------------------- |
-| `[elite][python]` | Array | Pythons to install, see [spec](spec/python_spec.rb) file for example |
+| `[elite][python]` | Hash  | Pythons to install, see [spec](spec/python_spec.rb) file for example |
 
 All others elements in the `elite` namespace is dedicated for users configuration.
 

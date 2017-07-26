@@ -15,7 +15,7 @@ describe file '/root/.ackrc' do
   it { should_not be_file }
 end
 
-describe command 'ack-grep --help' do
+describe command 'ack --help' do
   its(:stdout) { should match(/Usage:/) }
   its(:exit_status) { should eq 0 }
 end
