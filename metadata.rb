@@ -49,6 +49,7 @@ depends 'chef-dk'
 depends 'poise-python'
 
 supports 'debian', '> 8.0'
+supports 'ubuntu', '= 16.04'
 
 source_url 'https://github.com/Sliim/elite-cookbook' if
   respond_to?(:source_url)

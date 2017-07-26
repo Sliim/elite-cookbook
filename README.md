@@ -9,6 +9,7 @@ Requirements
 #### Platforms
 The following platforms and versions are tested and supported using Opscode's test-kitchen.
 - `Debian 9`
+- `Ubuntu 16.04`
 
 #### Cookbook dependencies
 - [apt](https://supermarket.chef.io/cookbooks/apt)
