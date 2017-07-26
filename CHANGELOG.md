@@ -3,6 +3,18 @@ elite CHANGELOG
 
 This file is used to list changes made in each version of the elite cookbook.
 
+0.7.0
+-----
+- Update tmux, zsh configurations
+- Changes:
+  - `elite_stumpwm` - Add `sessions_cmds` resource attribute
+  - `elite::docker_host` - Set `docker`group as `system`
+  - `elite_user` - Ignore failures when appending user to group
+  - `elite_tmux` - Add `commands` resource attribute
+  - `elite::slim` - Improved SLiM configuration template/attributes
+- New recipes:
+  - `elite::python` - Install python runtimes/packages from attributes
+
 0.6.0
 -----
 - Dotfiles improvements
