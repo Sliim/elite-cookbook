@@ -19,9 +19,6 @@ platforms:
     run_list:
       - recipe[apt]
       - recipe[git]
-    attributes:
-      locales:
-        locale_file: /etc/locale.gen
 
 suites:
   - name: default
@@ -48,7 +45,6 @@ suites:
       - recipe[elite::conky_dzen2]
       - recipe[elite::stumpwm]
       - recipe[elite::gtk]
-      - recipe[elite::locales]
       - recipe[elite::chef]
       - recipe[elite::irssi]
       - recipe[elite::rofi]
@@ -61,7 +57,6 @@ suites:
         users: [root, h4x0r]
         groups: [elite]
         packages: [tcpdump, emacs-nox]
-        locales: [fr_FR.UTF-8]
         slim:
           user: h4x0r
           session: stumpwm

@@ -8,7 +8,6 @@ default['elite']['groups'] = []
 default['elite']['users'] = []
 
 default['elite']['packages'] = []
-default['elite']['locales'] = []
 
 default['elite']['slim']['config'] = {}
 default['elite']['slim']['additional_themes'] = {}

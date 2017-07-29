@@ -62,7 +62,7 @@ action :create do
     source 'ini.erb'
     variables config: { Desktop:
                           { Session: new_resource.default_session,
-                            Language: node['locales']['default'] },
+                            Language: 'en_US.utf8' },
                       }
   end
 

@@ -16,7 +16,6 @@ The following platforms and versions are tested and supported using Opscode's te
 - [git](https://supermarket.chef.io/cookbooks/git)
 - [docker](https://supermarket.chef.io/cookbooks/docker)
 - [dunst](https://supermarket.chef.io/cookbooks/dunst)
-- [locales](https://github.com/redguide/locales/tree/v0.4.0)
 - [chef-dk](https://github.com/RoboticCheese/chef-dk-chef)
 - [poise-python](https://supermarket.chef.io/cookbooks/poise-python)
 
@@ -28,7 +27,6 @@ Attributes
 | `[elite][users]`    | Array | Elite users                          |
 | `[elite][groups]`   | Array | Elite groups                         |
 | `[elite][packages]` | Array | List of packages to install          |
-| `[elite][locales]`  | Array | List of locales to add on the system |
 
 #### elite::slim
 | Key                                | Type   |  Description                |
@@ -96,7 +94,6 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::git`
 - `elite::gtk`
 - `elite::irssi`
-- `elite::locales`
 - `elite::packages`
 - `elite::pentestenv`
 - `elite::pics`
