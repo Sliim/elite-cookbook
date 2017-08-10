@@ -38,21 +38,13 @@
 (utl-set-color screen-float-focus-color "<%= @stumpwm.color['float_focus'] %>")
 (utl-set-color screen-float-unfocus-color "<%= @stumpwm.color['float_unfocus'] %>")
 (update-colors-all-screens)
-
-(setf *shell-program* "/usr/bin/zsh"
-      *timeout-wait* 10
-      *startup-message* "Welcome <%= @username %>!"
-      *message-window-gravity* :bottom-right
-      *input-window-gravity* :bottom-left
-      *maxsize-border-width* 1
-      *transient-border-width* 1
-      *normal-border-width* 1
-      *window-border-style* :thin
-      *mouse-focus-policy* :click
-      *grab-pointer-character* 40
-      *grab-pointer-character-mask* 41
-      *grab-pointer-foreground* (lookup-color (current-screen) "<%= @stumpwm.color['grab_pointer_fg'] %>")
+(setf *grab-pointer-foreground* (lookup-color (current-screen) "<%= @stumpwm.color['grab_pointer_fg'] %>")
       *grab-pointer-background* (lookup-color (current-screen) "<%= @stumpwm.color['grab_pointer_bg'] %>"))
+
+<% unless @stumpwm.config.empty? %>
+(setf<% @stumpwm.config.each do |key, value| -%> <%= key %> <%= value %>
+<% end -%>)
+<% end -%>
 
 (set-font "<%= @stumpwm.font %>")
 

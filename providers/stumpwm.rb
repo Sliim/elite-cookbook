@@ -39,7 +39,8 @@ action :create do
               sessions_cmds: new_resource.sessions_cmds,
               kbd: new_resource.kbd,
               modules: new_resource.modules,
-              webjumps: new_resource.webjumps
+              webjumps: new_resource.webjumps,
+              config: new_resource.config
   end
 
   if new_resource.contrib

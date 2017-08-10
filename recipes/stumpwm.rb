@@ -41,5 +41,6 @@ node['elite']['users'].each do |u|
     contrib stumpwm['contrib'] if stumpwm['contrib']
     modules stumpwm['modules'] if stumpwm['modules']
     webjumps stumpwm['webjumps'] if stumpwm['webjumps']
+    config stumpwm['config'] if stumpwm['config']
   end
 end
