@@ -100,7 +100,7 @@ describe 'elite::tmux' do
                /status-left "#\[fg=sf-color,bg=sb-color\]\[#\[fg=scf-color,bg=scb-color\]#S#\[fg=sf-color,bg=sb-color\]\]"$/,
                /window-status-format "#\[fg=sf-color\]#I#F#W#\[default\]"$/,
                /window-status-current-format "#\[fg=sf-color,bg=sb-color,bold\]\[#\[fg=scf-color,bg=scb-color\]#I#F#W#\[fg=sf-color,bg=sb-color\]\]#\[default\]"$/,
-               %r{status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]Uptime: #\(uptime\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]User: #\(whoami\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$}]
+               /status-right "#\[fg=sf-color,bg=sb-color\] \[#\[fg=scf-color,bg=scb-color\]Uptime: #\(uptime\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]User: #\(whoami\)#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%Y-%m-%d#\[fg=sf-color,bg=sb-color\]\] \[#\[fg=scf-color,bg=scb-color\]%H:%M#\[fg=sf-color,bg=sb-color\]\]"$/]
 
     expect(subject).to create_template(config_file)
       .with(owner: 'sliim',
