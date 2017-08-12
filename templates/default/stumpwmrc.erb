@@ -63,6 +63,34 @@
 
         (sb-posix:setenv (car env-var) (cadr env-var) 1)))))
 
+;; Auto-split
+(defun maybe-balance-frames ()
+  (when (and (< 1 (length (group-frames (current-group)))) autosplit-enabled)
+    (balance-frames)))
+(defun autosplit ()
+  (when (and (< 1 (length (group-windows (current-group)))) autosplit-enabled)
+    (if (< (frame-height (window-frame (current-window)))
+           (frame-width (window-frame (current-window))))
+        (hsplit)
+      (vsplit))
+    (next)))
+(defun split-on-new-window (window)
+  (autosplit)
+  (maybe-balance-frames))
+(defun unsplit-on-window-destroy (window)
+  (remove-split)
+  (maybe-balance-frames))
+(defcommand toggle-autosplit () ()
+  (if autosplit-enabled
+      (progn
+        (setq autosplit-enabled nil)
+        (message "Autosplit disabled."))
+    (progn
+      (setq autosplit-enabled t)
+      (message "Autosplit enabled."))))
+(add-hook *new-window-hook* 'split-on-new-window)
+(add-hook *destroy-window-hook* 'unsplit-on-window-destroy)
+
 ;; Sources: https://lists.nongnu.org/archive/html/stumpwm-devel/2012-05/msg00026.html
 (defvar *browser* "firefox")
 (defcommand browser () ()
