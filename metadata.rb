@@ -45,6 +45,7 @@ depends 'dunst'
 depends 'git'
 depends 'chef-dk'
 depends 'poise-python'
+depends 'pentestenv'
 
 supports 'debian', '> 8.0'
 supports 'ubuntu', '= 16.04'

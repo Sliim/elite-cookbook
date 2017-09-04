@@ -120,7 +120,6 @@ suites:
                       "1": nload
           zsh: {}
           pentestenv:
-            repository: https://github.com/Sliim/pentest-env.git
             config:
               instance: [kali]
               targets: [mrrobot]

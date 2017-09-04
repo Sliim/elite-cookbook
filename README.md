@@ -18,6 +18,7 @@ The following platforms and versions are tested and supported using Opscode's te
 - [dunst](https://supermarket.chef.io/cookbooks/dunst)
 - [chef-dk](https://github.com/RoboticCheese/chef-dk-chef)
 - [poise-python](https://supermarket.chef.io/cookbooks/poise-python)
+- [pentestenv](https://supermarket.chef.io/cookbooks/pentestenv)
 
 Attributes
 ----------
