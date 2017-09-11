@@ -29,5 +29,7 @@ node['elite']['users'].each do |u|
     apps_reference emacs_config['apps_reference'] if emacs_config['apps_reference']
     apps_dependencies emacs_config['apps_dependencies'] if emacs_config['apps_dependencies']
     apps emacs_config['apps'] if emacs_config['apps']
+    cask_install_ignore_failure emacs_config['cask_install_ignore_failure'] \
+      if emacs_config['cask_install_ignore_failure']
   end
 end

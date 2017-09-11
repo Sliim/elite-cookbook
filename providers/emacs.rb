@@ -32,6 +32,7 @@ action :create do
                   'HOME' => user_home(user)
       user user
       group user_group(user)
+      ignore_failure new_resource.cask_install_ignore_failure
       action :nothing
     end
   end

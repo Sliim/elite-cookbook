@@ -112,6 +112,41 @@ describe 'elite::emacs' do
     expect(subject).to_not create_template('/home/sliim/.emacs-apps/Cask')
   end
 
+  ['emacs.d', 'emacs-apps'].each do |d|
+    it "does nothing execute[cask-install-sliim-#{d}]" do
+      resource = subject.execute("cask-install-sliim-#{d}")
+      expect(resource).to do_nothing
+      expect(resource.user).to match(/^sliim$/)
+      expect(resource.group).to match(/^elite$/)
+      expect(resource.command).to match(/^cask install$/)
+      expect(resource.cwd).to match(%r{^/home/sliim/.#{d}$})
+      expect(resource.ignore_failure).to eq false
+    end
+  end
+
+  context 'with cask_install_ignore_failures option' do
+    let(:subject) do
+      ChefSpec::SoloRunner.new(step_into: %w(elite_emacs elite_emacs_app),
+                               platform: 'debian',
+                               version: '9.0') do |node|
+        node.override['elite']['users'] = %w(sliim)
+        node.override['elite']['groups'] = %w(elite)
+        node.override['elite']['sliim']['name'] = 'Sliim'
+        node.override['elite']['sliim']['email'] = 'sliim@mailoo.org'
+        node.override['elite']['sliim']['home'] = '/home/sliim'
+        node.override['elite']['sliim']['emacs']['cask_install_ignore_failure'] = true
+      end.converge(described_recipe)
+    end
+
+    ['emacs.d', 'emacs-apps'].each do |d|
+      it "does nothing execute[cask-install-sliim-#{d}]" do
+        resource = subject.execute("cask-install-sliim-#{d}")
+        expect(resource).to do_nothing
+        expect(resource.ignore_failure).to eq true
+      end
+    end
+  end
+
   context 'with apps' do
     let(:subject) do
       ChefSpec::SoloRunner.new(step_into: %w(elite_emacs elite_emacs_app),
