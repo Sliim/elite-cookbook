@@ -74,11 +74,14 @@
         (hsplit)
       (vsplit))
     (next)))
+(defun unsplit ()
+  (when autosplit-enabled
+    (remove-split)))
 (defun split-on-new-window (window)
   (autosplit)
   (maybe-balance-frames))
 (defun unsplit-on-window-destroy (window)
-  (remove-split)
+  (unsplit)
   (maybe-balance-frames))
 (defcommand toggle-autosplit () ()
   (if autosplit-enabled
