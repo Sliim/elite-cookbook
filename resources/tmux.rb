@@ -25,6 +25,10 @@ attribute :user, kind_of: String, name_attribute: true
 attribute :mode, kind_of: String, default: '0640'
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :source, kind_of: String, default: 'tmux.conf.erb'
+attribute :prefix, kind_of: String, default: 'C-q'
+attribute :options, kind_of: Hash, default: {}
+attribute :kbd, kind_of: Hash, default: {}
+
 attribute :color, kind_of: Hash, default: { 'pane_border_fg' => 'default',
                                             'pane_border_bg' => 'default',
                                             'pane_active_border_fg' => 'white',

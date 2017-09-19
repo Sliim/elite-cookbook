@@ -32,7 +32,10 @@ action :create do
     source new_resource.source
     cookbook new_resource.cookbook
     variables color: new_resource.color,
-              status: new_resource.status
+              status: new_resource.status,
+              prefix: new_resource.prefix,
+              options: new_resource.options,
+              kbd: new_resource.kbd
   end
 
   elite_dotlink "#{user}-tmux.conf" do

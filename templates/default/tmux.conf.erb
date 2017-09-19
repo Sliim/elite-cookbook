@@ -5,33 +5,25 @@
 #
 
 set-window-option -g xterm-keys on
-set -g default-terminal "screen-256color"
 
-set -g prefix "C-q"
+<% @options.each do |key, value| %>
+set <%= key %> <%= value %>
+<% end %>
+
+<% unless @prefix == 'C-b' %>
+set -g prefix "<%= @prefix %>"
 unbind C-b
+<% end %>
 
-unbind s
-bind s set synchronize-panes
-
-bind | split-window -h
-bind - split-window -v
-
-bind -n M-Left select-pane -L
-bind -n M-Right select-pane -R
-bind -n M-Up select-pane -U
-bind -n M-Down select-pane -D
-
-set -g history-limit 100000
-set -g display-time 3500
-set -g monitor-activity on
-set -g visual-activity on
+<% @kbd.each do |key, value| %>
+bind <%= key %> <%= value %>
+<% end %>
 
 set -g pane-border-fg "<%= @color['pane_border_fg'] %>"
 set -g pane-border-bg "<%= @color['pane_border_bg'] %>"
 set -g pane-active-border-fg "<%= @color['pane_active_border_fg'] %>"
 set -g pane-active-border-bg "<%= @color['pane_active_border_bg'] %>"
 
-set -g automatic-rename on
 set-window-option -g status-attr dim
 set-window-option -g status-interval <%= @status['interval'] %>
 set-window-option -g status-fg "<%= @color['status_fg'] %>"

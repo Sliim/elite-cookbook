@@ -30,5 +30,8 @@ node['elite']['users'].each do |u|
     color tmux_config['color'] if tmux_config['color']
     status tmux_config['status'] if tmux_config['status']
     scripts tmux_config['scripts'] if tmux_config['scripts']
+    prefix tmux_config['prefix'] if tmux_config['prefix']
+    options tmux_config['options'] if tmux_config['options']
+    kbd tmux_config['kbd'] if tmux_config['kbd']
   end
 end
