@@ -87,7 +87,8 @@ action :create do
     variables config: new_resource.config,
               plugins: plugins,
               completions: completions,
-              theme: new_resource.theme
+              theme: new_resource.theme,
+              aliases: new_resource.aliases
   end
 
   %w(zshrc zsh.d).each do |l|

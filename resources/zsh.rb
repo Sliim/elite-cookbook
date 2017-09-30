@@ -33,3 +33,4 @@ attribute :config, kind_of: Hash, default: { 'pyenv_prompt' => false,
 attribute :plugins, kind_of: Hash, default: { elite: %w(common) }
 attribute :completions, kind_of: Hash, default: {}
 attribute :theme, kind_of: String, default: 'elite'
+attribute :aliases, kind_of: Hash, default: {}

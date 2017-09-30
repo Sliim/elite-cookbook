@@ -36,6 +36,7 @@ describe 'elite::zsh' do
       node.override['elite']['sliim']['zsh']['plugins']['wrapper'] = %w(plugin1 plugin2 plugin3)
       node.override['elite']['sliim']['zsh']['completions']['wrapper2'] = %w(comp1 comp2 comp3)
       node.override['elite']['sliim']['zsh']['theme'] = 'mytheme'
+      node.override['elite']['sliim']['zsh']['aliases'] = { magit: 'emacs -nw --eval \'(magit-status)\'' }
       node.override['elite']['sliim']['zsh']['config']['color1'] = '012'
       node.override['elite']['sliim']['zsh']['config']['color2'] = '345'
       node.override['elite']['sliim']['zsh']['config']['pyenv_prompt'] = true
@@ -71,7 +72,8 @@ describe 'elite::zsh' do
                /^ndenv_prompt=true$/,
                /^shell_color1=012$/,
                /^shell_color2=345$/,
-               /^theme=mytheme$/]
+               /^theme=mytheme$/,
+               /^alias magit="emacs -nw --eval '\(magit-status\)'"$/]
 
     expect(subject).to create_template(config_file)
       .with(owner: 'sliim',

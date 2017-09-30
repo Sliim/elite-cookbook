@@ -31,5 +31,6 @@ node['elite']['users'].each do |u|
     plugins zsh_config['plugins'] if zsh_config['plugins']
     completions zsh_config['completions'] if zsh_config['completions']
     theme zsh_config['theme'] if zsh_config['theme']
+    aliases zsh_config['aliases'] if zsh_config['aliases']
   end
 end
