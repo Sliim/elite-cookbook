@@ -27,17 +27,9 @@ attribute :source, kind_of: String, default: 'Xdefaults.erb'
 attribute :default_session, kind_of: String, default: 'stumpwm'
 attribute :config, kind_of: Hash, default: { 'urxvt' =>
                                              {
-                                               'transparent' => false,
-                                               'tintColor' => 'White',
-                                               'shading' => 30,
-                                               'saveLines' => 12_000,
+                                               'font' => 'xft:Bitstream Vera Sans Mono:pixelsize=10:antialias=true:hinting=true',
                                                'foreground' => 'White',
                                                'background' => 'Black',
-                                               'font' => 'xft:Bitstream Vera Sans Mono:pixelsize=10:antialias=true:hinting=true',
-                                               'boldFont' => 'xft:Bitstream Vera Sans Mono:bold:pixelsize=10:antialias=true:hinting=true',
-                                               'boldColors' => 'on',
-                                               'color4' => 'White',
-                                               'color12' => 'White',
                                              },
                                              'xterm' => {
                                                'foreground' => 'white',
