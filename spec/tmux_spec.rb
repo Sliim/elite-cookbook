@@ -49,6 +49,9 @@ describe 'elite::tmux' do
         'path' => '/tmp/autotmux',
         'workdir' => '/tmp',
         'default_window' => '0',
+        'environment' => {
+          'PATH' => '/bin'
+        },
         'windows' => {
           '0' => {
             'name' => 'spec',
@@ -139,6 +142,7 @@ describe 'elite::tmux' do
   it 'creates template[/tmp/autotmux]' do
     config_file = '/tmp/autotmux'
     matches = [%(tmux new-session -d -s autotmux -n spec -c /tmp),
+               %(tmux set-environment -t autotmux PATH /bin),
                /tmux split-window -h -t autotmux:0.$/,
                /tmux select-pane -t autotmux:0.0$/,
                /tmux-run-cmd "htop" 0 0$/,

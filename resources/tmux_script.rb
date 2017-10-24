@@ -24,6 +24,7 @@ attribute :name, kind_of: String
 attribute :path, kind_of: String
 attribute :owner, kind_of: String
 attribute :workdir, kind_of: String, default: ''
+attribute :environment, kind_of: Hash, default: {}
 attribute :windows, kind_of: Hash, default: {}
 attribute :default_window, kind_of: String, default: '0'
 attribute :source, kind_of: String, default: 'tmux-script.erb'

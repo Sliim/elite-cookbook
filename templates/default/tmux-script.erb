@@ -14,6 +14,9 @@ else
     <% else %>
     tmux new-window -t <%= @name %>:<%= id %> -n <%= win['name'] %> -c <%= @workdir %>
     <% end %>
+    <% @environment.each do | k, v | %>
+    tmux set-environment -t <%= @name %> <%= k %> <%= v %>
+    <% end %>
     <% win['win'].each do | i, w | %>
     tmux <%= w.gsub('{TARGET}', "-t #{@name}:#{id}.") %>
     <% end %>

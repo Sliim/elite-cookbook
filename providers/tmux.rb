@@ -50,6 +50,7 @@ action :create do
       default_window script['default_window'] if script['default_window']
       windows script['windows'] if script['windows']
       workdir script['workdir'] if script['workdir']
+      environment script['environment'] if script['environment']
     end
   end
 end

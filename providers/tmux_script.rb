@@ -37,6 +37,7 @@ action :create do
               workdir: workdir,
               name: new_resource.name,
               windows: new_resource.windows,
-              default_window: new_resource.default_window
+              default_window: new_resource.default_window,
+              environment: new_resource.environment
   end
 end
