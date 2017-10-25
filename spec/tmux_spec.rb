@@ -50,7 +50,7 @@ describe 'elite::tmux' do
         'workdir' => '/tmp',
         'default_window' => '0',
         'environment' => {
-          'PATH' => '/bin'
+          'PATH' => '/bin',
         },
         'windows' => {
           '0' => {
