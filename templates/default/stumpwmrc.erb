@@ -75,7 +75,7 @@
       (vsplit))
     (next)))
 (defun unsplit ()
-  (when autosplit-enabled
+  (when (and (= 0 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) autounsplit-enabled)
     (remove-split)))
 (defun split-on-new-window (window)
   (autosplit)
@@ -83,14 +83,22 @@
 (defun unsplit-on-window-destroy (window)
   (unsplit)
   (maybe-balance-frames))
+(defcommand enable-autounsplit () ()
+  (setq autounsplit-enabled t)
+  (message "Auto unsplit enabled."))
+(defcommand disable-autounsplit () ()
+  (setq autounsplit-enabled nil)
+  (message "Auto unsplit disabled."))
+(defcommand enable-autosplit () ()
+  (setq autosplit-enabled t)
+  (message "Autosplit enabled."))
+(defcommand disable-autosplit () ()
+  (setq autosplit-enabled nil)
+  (message "Autosplit disabled."))
 (defcommand toggle-autosplit () ()
   (if autosplit-enabled
-      (progn
-        (setq autosplit-enabled nil)
-        (message "Autosplit disabled."))
-    (progn
-      (setq autosplit-enabled t)
-      (message "Autosplit enabled."))))
+      (disable-autosplit)
+    (enable-autosplit)))
 (add-hook *new-window-hook* 'split-on-new-window)
 (add-hook *destroy-window-hook* 'unsplit-on-window-destroy)
 

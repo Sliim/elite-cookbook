@@ -46,4 +46,5 @@ attribute :kbd, kind_of: Hash, default: {}
 attribute :contrib, kind_of: [TrueClass, FalseClass], default: false
 attribute :modules, kind_of: Array, default: []
 attribute :webjumps, kind_of: Hash, default: {}
-attribute :config, kind_of: Hash, default: { 'autosplit-enabled' => 'nil' }
+attribute :config, kind_of: Hash, default: { 'autosplit-enabled' => 'nil',
+                                             'autounsplit-enabled' => 'nil' }
