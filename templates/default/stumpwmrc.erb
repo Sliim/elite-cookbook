@@ -180,9 +180,6 @@
 <% @sessions.each do |session, _config| %>
                       "gnew <%= session %>"
 <% end %>
-<% @sessions_cmds.each do |cmd| %>
-                      "<%= cmd %>"
-<% end %>
                       )
 <% count = 1 %>
 <% @sessions.each do |session, config| %>
@@ -193,3 +190,11 @@
   (run-or-raise "<%= config['command'] %>" '<%= config['props'] %>))
 (define-key *top-map* (kbd "<%= config['kbd'] %>") "<%= session %>-session")
 <% end %>
+
+(unless (boundp 'elite-initialized)
+(stumpwm:run-commands "gselect elite"
+<% @init_cmds.each do |cmd| %>
+                      "<%= cmd %>"
+<% end %>
+                      ))
+(setq elite-initialized t)

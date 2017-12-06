@@ -36,7 +36,7 @@ action :create do
               commands: new_resource.commands,
               programs: new_resource.programs,
               sessions: new_resource.sessions,
-              sessions_cmds: new_resource.sessions_cmds,
+              init_cmds: new_resource.init_cmds,
               kbd: new_resource.kbd,
               modules: new_resource.modules,
               webjumps: new_resource.webjumps,
