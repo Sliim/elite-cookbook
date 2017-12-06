@@ -1,3 +1,5 @@
 .kitchen
 Gemfile.lock
 Berksfile.lock
+/vendor
+/.bundle
