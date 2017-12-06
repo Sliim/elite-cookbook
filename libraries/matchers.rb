@@ -140,4 +140,8 @@ if defined?(ChefSpec)
   def create_elite_stumpwm(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_stumpwm, :create, user)
   end
+
+  def create_elite_moc(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_moc, :create, user)
+  end
 end
