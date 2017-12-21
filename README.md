@@ -95,6 +95,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::git`
 - `elite::gtk`
 - `elite::irssi`
+- `elite::moc
 - `elite::packages`
 - `elite::pentestenv`
 - `elite::pics`
