@@ -34,14 +34,15 @@ node['elite']['users'].each do |u|
     file 'bin'
   end
 
-  next unless bin.key?('scripts')
-
-  bin['scripts'].each do |b|
-    elite_bin "#{u}-#{b}" do
-      owner u
-      script b
-      cookbook bin['cookbook'] if bin['cookbook']
-      source bin['source_dir'] if bin['source_dir']
+  bin.each do |cookbook, conf|
+    next unless conf.key? 'scripts'
+    conf['scripts'].each do |script|
+      elite_bin "#{u}-#{script}" do
+        owner u
+        script script
+        cookbook cookbook
+        source_dir conf['source_dir'] if conf['source_dir']
+      end
     end
   end
 end

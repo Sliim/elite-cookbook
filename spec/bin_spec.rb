@@ -30,7 +30,8 @@ describe 'elite::bin' do
       node.override['elite']['sliim']['group'] = 'elite'
       node.override['elite']['sliim']['groups'] = %w(elite)
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-      node.override['elite']['sliim']['bin']['scripts'] = %w(foo bar)
+      node.override['elite']['sliim']['bin']['wrapper']['scripts'] = %w(foo bar)
+      node.override['elite']['sliim']['bin']['wrapper']['source_dir'] = 'mybin/'
     end.converge(described_recipe)
   end
 
@@ -46,16 +47,16 @@ describe 'elite::bin' do
     expect(subject).to create_elite_bin('sliim-foo')
       .with(owner: 'sliim',
             script: 'foo',
-            cookbook: 'elite',
-            source_dir: 'bin/')
+            cookbook: 'wrapper',
+            source_dir: 'mybin/')
   end
 
   it 'creates elite_bin[sliim-bar]' do
     expect(subject).to create_elite_bin('sliim-bar')
       .with(owner: 'sliim',
             script: 'bar',
-            cookbook: 'elite',
-            source_dir: 'bin/')
+            cookbook: 'wrapper',
+            source_dir: 'mybin/')
   end
 
   it 'creates directory[/home/sliim/.dotfiles/bin]' do
@@ -77,8 +78,8 @@ describe 'elite::bin' do
       .with(owner: 'sliim',
             group: 'elite',
             mode: '0750',
-            source: 'bin/foo',
-            cookbook: 'elite')
+            source: 'mybin/foo',
+            cookbook: 'wrapper')
   end
 
   it 'creates cookbook_file[/home/sliim/.dotfiles/bin/bar]' do
@@ -86,7 +87,7 @@ describe 'elite::bin' do
       .with(owner: 'sliim',
             group: 'elite',
             mode: '0750',
-            source: 'bin/bar',
-            cookbook: 'elite')
+            source: 'mybin/bar',
+            cookbook: 'wrapper')
   end
 end
