@@ -133,6 +133,10 @@ suites:
           dunst: {}
           stumpwm:
             contrib: true
+            modules:
+              elite:
+                - keyring
+                - autosplit
           gtk: {}
           chef:
             node_name: sliim

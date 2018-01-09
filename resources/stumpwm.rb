@@ -44,7 +44,7 @@ attribute :init_cmds, kind_of: Array, default: []
 attribute :commands, kind_of: Hash, default: {}
 attribute :kbd, kind_of: Hash, default: {}
 attribute :contrib, kind_of: [TrueClass, FalseClass], default: false
-attribute :modules, kind_of: Array, default: []
+attribute :modules, kind_of: Hash, default: {}
 attribute :webjumps, kind_of: Hash, default: {}
 attribute :config, kind_of: Hash, default: { 'autosplit-enabled' => 'nil',
                                              'autounsplit-enabled' => 'nil' }

@@ -20,7 +20,7 @@ require_relative 'spec_helper'
 
 describe 'elite::stumpwm' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: %w(elite_stumpwm),
+    ChefSpec::SoloRunner.new(step_into: %w(elite_stumpwm elite_stumpwm_module elite_stumpwm_d),
                              platform: 'debian',
                              version: '9.0') do |node|
       node.override['elite']['users'] = %w(sliim foo)
@@ -59,7 +59,8 @@ describe 'elite::stumpwm' do
       node.override['elite']['sliim']['stumpwm']['commands']['mycmd'] = 'urxvt'
       node.override['elite']['sliim']['stumpwm']['kbd']['*root-map*']['t'] = 'urxvt'
       node.override['elite']['sliim']['stumpwm']['contrib'] = true
-      node.override['elite']['sliim']['stumpwm']['modules'] = %w(mymod)
+      node.override['elite']['sliim']['stumpwm']['modules']['wrapper'] = %w(mymod1 mymod2)
+      node.override['elite']['sliim']['stumpwm']['modules']['contrib'] = %w(alert-me)
       node.override['elite']['sliim']['stumpwm']['webjumps']['cookbooks'] = 'https://supermarket.chef.io/cookbooks/'
       node.override['elite']['sliim']['stumpwm']['config'] = { '*timeout-wait*' => 1337 }
     end.converge(described_recipe)
@@ -78,8 +79,54 @@ describe 'elite::stumpwm' do
       .with(cookbook: 'elite')
   end
 
-  it 'installs package[stumpwm]' do
-    expect(subject).to install_package('stumpwm')
+  it 'creates elite_stumpwm_d[sliim]' do
+    expect(subject).to create_elite_stumpwm_d('sliim')
+  end
+
+  it 'creates directory[/home/sliim/.dotfiles/stumpwm.d]' do
+    expect(subject).to create_directory('/home/sliim/.dotfiles/stumpwm.d')
+      .with(owner: 'sliim',
+            group: 'elite',
+            mode: '0750')
+  end
+
+  it 'syncs git[/home/sliim/.dotfiles/stumpwm.d/contrib]' do
+    expect(subject).to sync_git('/home/sliim/.dotfiles/stumpwm.d/contrib')
+      .with(user: 'sliim',
+            group: 'elite',
+            repository: 'https://github.com/stumpwm/stumpwm-contrib',
+            reference: 'master')
+  end
+
+  it 'does not create elite_stumpwm_module[sliim-alert-me]' do
+    expect(subject).to_not create_elite_stumpwm_module('sliim-alert-me')
+  end
+
+  %w(mymod1 mymod2).each do |m|
+    it "creates elite_stumpwm_module[sliim-#{m}]" do
+      expect(subject).to create_elite_stumpwm_module("sliim-#{m}")
+        .with(owner: 'sliim',
+              mod: m,
+              cookbook: 'wrapper')
+    end
+
+    it "creates directory[/home/sliim/.dotfiles/stumpwm.d/contrib/#{m}]" do
+      expect(subject).to create_directory("/home/sliim/.dotfiles/stumpwm.d/contrib/#{m}")
+        .with(owner: 'sliim',
+              group: 'elite',
+              mode: '0750')
+    end
+
+    ['package.lisp', "#{m}.lisp", "#{m}.asd"].each do |f|
+      it "creates cookbook_file[/home/sliim/.dotfiles/stumpwm.d/contrib/#{m}/#{f}]" do
+        expect(subject).to create_cookbook_file("/home/sliim/.dotfiles/stumpwm.d/contrib/#{m}/#{f}")
+          .with(owner: 'sliim',
+                group: 'elite',
+                mode: '0640',
+                source: "stumpwm.d/modules/#{m}/#{f}",
+                cookbook: 'wrapper')
+      end
+    end
   end
 
   it 'creates template[/home/sliim/.dotfiles/stumpwmrc]' do
@@ -118,7 +165,9 @@ describe 'elite::stumpwm' do
                /^\(defcommand mycmd \(\) \(\)$/,
                /\(run-shell-command "urxvt"\)/,
                /\(run-shell-command "urxvt"\)/,
-               /\(load-module "mymod"\)$/,
+               /\(load-module "mymod1"\)$/,
+               /\(load-module "mymod2"\)$/,
+               /\(load-module "alert-me"\)$/,
                /^\(define-key \*root-map\* \(kbd "t"\) "urxvt"\)$/,
                %r{^\(make-web-jump cookbooks "https://supermarket.chef.io/cookbooks/"\)$},
               ]
@@ -132,21 +181,6 @@ describe 'elite::stumpwm' do
     matches.each do |m|
       expect(subject).to render_file(config_file).with_content(m)
     end
-  end
-
-  it 'creates directory[/home/sliim/.dotfiles/stumpwm.d]' do
-    expect(subject).to create_directory('/home/sliim/.dotfiles/stumpwm.d')
-      .with(owner: 'sliim',
-            group: 'elite',
-            mode: '0750')
-  end
-
-  it 'syncs git[/home/sliim/.dotfiles/stumpwm.d/contrib]' do
-    expect(subject).to sync_git('/home/sliim/.dotfiles/stumpwm.d/contrib')
-      .with(user: 'sliim',
-            group: 'elite',
-            repository: 'https://github.com/stumpwm/stumpwm-contrib',
-            reference: 'master')
   end
 
   it 'creates elite_dotlink[sliim-stumpwmrc]' do

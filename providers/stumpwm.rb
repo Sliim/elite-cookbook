@@ -24,6 +24,39 @@ end
 
 action :create do
   user = new_resource.user
+  pics = user_config(user, 'pics')
+  modules = []
+
+  elite_picture "#{user}-#{new_resource.wallpaper}" do
+    owner user
+    pic new_resource.wallpaper
+    cookbook pics['cookbook'] if pics['cookbook']
+    source_dir pics['source_dir'] if pics['source_dir']
+    only_if { pics }
+  end
+
+  elite_stumpwm_d user
+
+  git "#{user_dotfiles(user)}/stumpwm.d/contrib" do
+    user user
+    group user_group(user)
+    repository 'https://github.com/stumpwm/stumpwm-contrib'
+    reference 'master'
+    action :sync
+    only_if { new_resource.contrib }
+  end
+
+  new_resource.modules.each do |cookbook, mods|
+    mods.each do |mod|
+      elite_stumpwm_module "#{user}-#{mod}" do
+        owner user
+        mod mod
+        cookbook cookbook.to_s
+        not_if { cookbook == 'contrib' }
+      end
+      modules << mod
+    end
+  end
 
   template "#{user_dotfiles(user)}/stumpwmrc" do
     owner user
@@ -38,30 +71,14 @@ action :create do
               sessions: new_resource.sessions,
               init_cmds: new_resource.init_cmds,
               kbd: new_resource.kbd,
-              modules: new_resource.modules,
+              modules: modules,
               webjumps: new_resource.webjumps,
               config: new_resource.config
   end
 
-  if new_resource.contrib
-    directory "#{user_dotfiles(user)}/stumpwm.d" do
-      owner user
-      group user_group(user)
-      mode '0750'
-    end
-
-    git "#{user_dotfiles(user)}/stumpwm.d/contrib" do
-      user user
-      group user_group(user)
-      repository 'https://github.com/stumpwm/stumpwm-contrib'
-      reference 'master'
-      action :sync
-    end
-
-    elite_dotlink "#{user}-stumpwm.d" do
-      owner user
-      file 'stumpwm.d'
-    end
+  elite_dotlink "#{user}-stumpwm.d" do
+    owner user
+    file 'stumpwm.d'
   end
 
   elite_dotlink "#{user}-stumpwmrc" do
@@ -72,15 +89,5 @@ action :create do
   elite_bin "#{user}-stumpish" do
     owner user
     script 'stumpish'
-  end
-
-  pics = user_config(user, 'pics')
-  if pics
-    elite_picture "#{user}-#{new_resource.wallpaper}" do
-      owner user
-      pic new_resource.wallpaper
-      cookbook pics['cookbook'] if pics['cookbook']
-      source_dir pics['source_dir'] if pics['source_dir']
-    end
   end
 end

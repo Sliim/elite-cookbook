@@ -136,6 +136,8 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite_pics`
 - `elite_stuff`
 - `elite_stumpwm`
+- `elite_stumpwm_d`
+- `elite_stumpwm_module`
 - `elite_terminfo`
 - `elite_tmux`
 - `elite_user`

@@ -18,8 +18,6 @@
 
 include_recipe 'elite::dotfiles'
 
-package 'stumpwm'
-
 node['elite']['users'].each do |u|
   stumpwm = user_config(u, 'stumpwm')
   next unless stumpwm

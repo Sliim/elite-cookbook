@@ -48,60 +48,6 @@
 
 (set-font "<%= @stumpwm.font %>")
 
-;; Gnome keyring
-(let* ((output (run-shell-command "/usr/bin/gnome-keyring-daemon --start" t))
-       (lines (loop :for i = 0 :then (1+ j)
-                    :as j = (position #\linefeed output :start i)
-                    :collect (subseq output i j)
-                    :while j)))
-  (dolist (line lines)
-    (when (> (length line) 0)
-      (let ((env-var (loop :for i = 0 :then (1+ j)
-                           :as j = (position #\= line :start i)
-                           :collect (subseq line i j)
-                           :while j)))
-
-        (sb-posix:setenv (car env-var) (cadr env-var) 1)))))
-
-;; Auto-split
-(defun maybe-balance-frames ()
-  (when (and (< 1 (length (group-frames (current-group)))) autosplit-enabled)
-    (balance-frames)))
-(defun autosplit ()
-  (when (and (< 1 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) autosplit-enabled)
-    (if (< (frame-height (window-frame (current-window)))
-           (frame-width (window-frame (current-window))))
-        (hsplit)
-      (vsplit))
-    (next)))
-(defun unsplit ()
-  (when (and (= 0 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) autounsplit-enabled)
-    (remove-split)))
-(defun split-on-new-window (window)
-  (autosplit)
-  (maybe-balance-frames))
-(defun unsplit-on-window-destroy (window)
-  (unsplit)
-  (maybe-balance-frames))
-(defcommand enable-autounsplit () ()
-  (setq autounsplit-enabled t)
-  (message "Auto unsplit enabled."))
-(defcommand disable-autounsplit () ()
-  (setq autounsplit-enabled nil)
-  (message "Auto unsplit disabled."))
-(defcommand enable-autosplit () ()
-  (setq autosplit-enabled t)
-  (message "Autosplit enabled."))
-(defcommand disable-autosplit () ()
-  (setq autosplit-enabled nil)
-  (message "Autosplit disabled."))
-(defcommand toggle-autosplit () ()
-  (if autosplit-enabled
-      (disable-autosplit)
-    (enable-autosplit)))
-(add-hook *new-window-hook* 'split-on-new-window)
-(add-hook *destroy-window-hook* 'unsplit-on-window-destroy)
-
 ;; Sources: https://lists.nongnu.org/archive/html/stumpwm-devel/2012-05/msg00026.html
 (defvar *browser* "firefox")
 (defcommand browser () ()
@@ -131,6 +77,7 @@
 <% end %>
 
 ;; Modules
+(set-module-dir (pathname-as-directory (concat (getenv "HOME") "/.stumpwm.d/contrib")))
 <% @modules.each do |m| %>
 (load-module "<%= m %>")
 <% end %>
@@ -197,4 +144,6 @@
                       "<%= cmd %>"
 <% end %>
                       ))
+
+(update-window-gravity)
 (setq elite-initialized t)
