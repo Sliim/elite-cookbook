@@ -31,7 +31,7 @@ describe 'elite::moc' do
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
       node.override['elite']['sliim']['moc']['config'] = {
         'Theme' => 'yellow_red_theme',
-        'MusicDir' => '~/Music'
+        'MusicDir' => '~/Music',
       }
     end.converge(described_recipe)
   end
