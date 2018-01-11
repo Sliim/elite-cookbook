@@ -4,27 +4,39 @@
 ;; Provider:: stumpwm_module
 ;; Module:: autosplit
 
+(defvar *autosplit-enabled* t
+  "Enable autosplit.")
+
+(defvar *autounsplit-enabled* t
+  "Enable autounsplit.")
+
+(defvar *autosplit-backlist-win-class* "gcr-prompter|Gcr-prompter"
+  "List of windows classes to blacklist for autosplit..")
+
+(defvar *autosplit-backlist-win-title* "NoAutoSplit"
+  "List of windows titles to blacklist for autosplit..")
+
 (defun maybe-balance-frames ()
-  (when (and (< 1 (length (group-frames (current-group)))) autosplit-enabled)
+  (when (and (< 1 (length (group-frames (current-group)))) *autosplit-enabled*)
     (balance-frames)))
 
 (defun autosplit ()
-  (when (and (< 1 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) autosplit-enabled)
+  (when (and (< 1 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) *autosplit-enabled*)
     (if (< (frame-height (window-frame (current-window)))
            (frame-width (window-frame (current-window))))
         (hsplit)
       (vsplit))))
 
 (defun unsplit ()
-  (when (and (= 0 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) autounsplit-enabled)
+  (when (and (= 0 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) *autounsplit-enabled*)
     (remove-split)))
 
 (defun split-on-new-window (window)
   (unless (or (typep (current-group) 'float-group)
               (window-transient-p window)
               (window-modal-p window)
-              (window-matches-properties-p window :class "gcr-prompter")
-              (window-matches-properties-p window :class "Gcr-prompter"))
+              (window-matches-properties-p window :class *autosplit-backlist-win-class*)
+              (window-matches-properties-p window :title *autosplit-backlist-win-title*))
     (autosplit)
     (maybe-balance-frames)
     (group-focus-window (window-group window) window)))
@@ -34,28 +46,28 @@
     (unsplit)))
 
 (defcommand enable-autosplit () ()
-  (setq autosplit-enabled t)
+  (setq *autosplit-enabled* t)
   (message "Autosplit enabled."))
 
 (defcommand disable-autosplit () ()
-  (setq autosplit-enabled nil)
+  (setq *autosplit-enabled* nil)
   (message "Autosplit disabled."))
 
 (defcommand enable-autounsplit () ()
-  (setq autounsplit-enabled t)
+  (setq *autounsplit-enabled* t)
   (message "Auto unsplit enabled."))
 
 (defcommand disable-autounsplit () ()
-  (setq autounsplit-enabled nil)
+  (setq *autounsplit-enabled* nil)
   (message "Auto unsplit disabled."))
 
 (defcommand toggle-autosplit () ()
-  (if autosplit-enabled
+  (if *autosplit-enabled*
       (disable-autosplit)
     (enable-autosplit)))
 
 (defcommand toggle-autounsplit () ()
-  (if autounsplit-enabled
+  (if *autounsplit-enabled*
       (disable-autounsplit)
     (enable-autounsplit)))
 
