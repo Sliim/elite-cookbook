@@ -16,33 +16,32 @@
 (defvar *autosplit-backlist-win-title* "NoAutoSplit"
   "List of windows titles to blacklist for autosplit..")
 
-(defun maybe-balance-frames ()
-  (when (and (< 1 (length (group-frames (current-group)))) *autosplit-enabled*)
-    (balance-frames)))
-
 (defun autosplit ()
-  (when (and (< 1 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) *autosplit-enabled*)
+  (when (< 1 (length (frame-windows (current-group) (tile-group-current-frame (current-group)))))
     (if (< (frame-height (window-frame (current-window)))
            (frame-width (window-frame (current-window))))
         (hsplit)
-      (vsplit))))
+      (vsplit))
+    (balance-frames)))
 
 (defun unsplit ()
-  (when (and (= 0 (length (frame-windows (current-group) (tile-group-current-frame (current-group))))) *autounsplit-enabled*)
+  (when (and (= 0 (length (frame-windows (current-group) (tile-group-current-frame (current-group)))))
+             (> (length (head-frames (current-group) (current-head))) 1))
     (remove-split)))
 
 (defun split-on-new-window (window)
-  (unless (or (typep (current-group) 'float-group)
+  (unless (or (not *autosplit-enabled*)
+              (typep (current-group) 'float-group)
               (window-transient-p window)
               (window-modal-p window)
               (window-matches-properties-p window :class *autosplit-backlist-win-class*)
               (window-matches-properties-p window :title *autosplit-backlist-win-title*))
     (autosplit)
-    (maybe-balance-frames)
     (group-focus-window (window-group window) window)))
 
 (defun unsplit-on-window-destroy (window)
-  (unless (typep (current-group) 'float-group)
+  (unless (or (not *autounsplit-enabled*)
+              (typep (current-group) 'float-group))
     (unsplit)))
 
 (defcommand enable-autosplit () ()
