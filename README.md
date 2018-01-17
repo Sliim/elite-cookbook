@@ -95,7 +95,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite::git`
 - `elite::gtk`
 - `elite::irssi`
-- `elite::moc
+- `elite::moc`
 - `elite::packages`
 - `elite::pentestenv`
 - `elite::pics`
@@ -144,26 +144,13 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite_x`
 - `elite_zsh`
 
-Tests
------
-
-- First, install dependencies:  
-`bundle install`
-
-- Run Checkstyle and ChefSpec:  
-`bundle exec rake`
-
-- Run Kitchen tests:
-`bundle exec rake kitchen`
+Testing
+-------
+See [TESTING.md](TESTING.md)
 
 Contributing
 ------------
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 Licenses and Authors
 -------------------
