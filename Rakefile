@@ -4,9 +4,13 @@ def bundle_exec(command)
   sh "bundle exec #{command}"
 end
 
+task :install do
+  sh 'bundle install --path=vendor/bundle'
+end
+
 task :vendor do
   rm_rf 'cookbooks'
-  bundle_exec 'berks vendor cookbooks'
+  bundle_exec 'berks vendor vendor/cookbooks'
 end
 
 namespace :test do
