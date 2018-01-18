@@ -30,6 +30,7 @@ suites:
       - recipe[elite::bin]
       - recipe[elite::bash]
       - recipe[elite::cask]
+      - recipe[elite::compton]
       - recipe[elite::emacs]
       - recipe[elite::git]
       - recipe[elite::pics]
@@ -84,6 +85,7 @@ suites:
           ack: {}
           bin: {}
           cask: {}
+          compton: {}
           dotfiles:
             init_repo: true
           emacs:

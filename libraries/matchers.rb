@@ -152,4 +152,8 @@ if defined?(ChefSpec)
   def create_elite_moc(user)
     ChefSpec::Matchers::ResourceMatcher.new(:elite_moc, :create, user)
   end
+
+  def create_elite_compton(user)
+    ChefSpec::Matchers::ResourceMatcher.new(:elite_compton, :create, user)
+  end
 end
