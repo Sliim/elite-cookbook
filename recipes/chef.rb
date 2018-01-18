@@ -16,8 +16,6 @@
 # limitations under the License.
 #
 
-include_recipe 'chef-dk'
-
 node['elite']['users'].each do |u|
   chef = user_config(u, 'chef')
   next unless chef

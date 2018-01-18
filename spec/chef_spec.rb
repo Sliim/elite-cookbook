@@ -40,10 +40,6 @@ describe 'elite::chef' do
     end.converge(described_recipe)
   end
 
-  it 'includes recipe[chef-dk]' do
-    expect(subject).to include_recipe('chef-dk')
-  end
-
   it 'creates elite_chef[sliim]' do
     expect(subject).to create_elite_chef('sliim')
       .with(mode: '0640',

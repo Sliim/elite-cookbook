@@ -45,7 +45,6 @@ depends 'apt'
 depends 'docker'
 depends 'dunst'
 depends 'git'
-depends 'chef-dk'
 depends 'poise-python'
 depends 'pentestenv'
 
