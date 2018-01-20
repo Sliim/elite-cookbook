@@ -4,6 +4,8 @@
 ;; Provider:: stumpwm_module
 ;; Module:: autosplit
 
+;; Note: Set *new-frame-action* to :empty
+
 (defvar *autosplit-enabled* t
   "Enable autosplit.")
 
@@ -11,10 +13,13 @@
   "Enable autounsplit.")
 
 (defvar *autosplit-backlist-win-class* "gcr-prompter|Gcr-prompter"
-  "List of windows classes to blacklist for autosplit..")
+  "List of windows classes to blacklist for autosplit.")
 
 (defvar *autosplit-backlist-win-title* "NoAutoSplit"
-  "List of windows titles to blacklist for autosplit..")
+  "List of windows titles to blacklist for autosplit.")
+
+(defvar *autosplit-backlist-groups* "no-auto-split"
+  "List of groups to blacklist for autosplit.")
 
 (defun autosplit ()
   (when (< 1 (length (frame-windows (current-group) (tile-group-current-frame (current-group)))))
@@ -35,8 +40,11 @@
               (window-transient-p window)
               (window-modal-p window)
               (window-matches-properties-p window :class *autosplit-backlist-win-class*)
-              (window-matches-properties-p window :title *autosplit-backlist-win-title*))
+              (window-matches-properties-p window :title *autosplit-backlist-win-title*)
+              (string-match *autosplit-backlist-groups* (group-name (current-group))))
     (autosplit)
+    (fnext)
+    (pull-window window)
     (group-focus-window (window-group window) window)))
 
 (defun unsplit-on-window-destroy (window)
