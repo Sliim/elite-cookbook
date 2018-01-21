@@ -31,4 +31,9 @@ action :create do
     mode '0750'
     recursive true
   end
+
+  elite_dotlink "#{user}-stumpwm.d" do
+    owner user
+    file 'stumpwm.d'
+  end
 end

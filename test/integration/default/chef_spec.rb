@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-describe command 'chef --version' do
-  its(:stdout) { should match(/Chef Development Kit Version/) }
-end
-
 describe file '/home/h4x0r/.chef' do
   it { should be_directory }
   it { should be_linked_to '/home/h4x0r/.dotfiles/chef' }

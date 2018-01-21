@@ -76,11 +76,6 @@ action :create do
               config: new_resource.config
   end
 
-  elite_dotlink "#{user}-stumpwm.d" do
-    owner user
-    file 'stumpwm.d'
-  end
-
   elite_dotlink "#{user}-stumpwmrc" do
     owner user
     file 'stumpwmrc'

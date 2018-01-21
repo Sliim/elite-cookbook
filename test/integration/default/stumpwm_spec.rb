@@ -15,9 +15,16 @@ describe file '/home/h4x0r/.stumpwmrc' do
   it { should be_grouped_into 'elite' }
 end
 
+describe file '/home/h4x0r/.stumpwm.d' do
+  it { should be_directory }
+  it { should be_linked_to '/home/h4x0r/.dotfiles/stumpwm.d' }
+  it { should be_owned_by 'h4x0r' }
+  it { should be_grouped_into 'elite' }
+end
+
 describe file '/home/h4x0r/.stumpwm.d/modules' do
   it { should be_directory }
-  it { should be_linked_to '/home/h4x0r/.dotfiles/stumpwm.d/modules' }
+  it { should be_mode 0750 }
   it { should be_owned_by 'h4x0r' }
   it { should be_grouped_into 'elite' }
 end
@@ -58,11 +65,4 @@ describe file '/home/h4x0r/bin/stumpish' do
   it { should be_executable }
   it { should be_owned_by 'h4x0r' }
   it { should be_grouped_into 'elite' }
-end
-
-describe file '/usr/share/xsessions/stumpwm.desktop' do
-  it { should be_file }
-  it { should be_mode 0644 }
-  it { should be_owned_by 'root' }
-  it { should be_grouped_into 'root' }
 end

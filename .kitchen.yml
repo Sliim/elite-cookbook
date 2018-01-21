@@ -52,6 +52,7 @@ suites:
       - recipe[elite::docker_host]
       - recipe[elite::pentestenv]
       - recipe[elite::python]
+      - recipe[elite::moc]
 
     attributes:
       elite:
@@ -86,6 +87,7 @@ suites:
           bin: {}
           cask: {}
           compton: {}
+          moc: {}
           dotfiles:
             init_repo: true
           emacs:
