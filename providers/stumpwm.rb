@@ -37,7 +37,7 @@ action :create do
 
   elite_stumpwm_d user
 
-  git "#{user_dotfiles(user)}/stumpwm.d/contrib" do
+  git "#{user_dotfiles(user)}/stumpwm.d/modules/contrib" do
     user user
     group user_group(user)
     repository 'https://github.com/stumpwm/stumpwm-contrib'

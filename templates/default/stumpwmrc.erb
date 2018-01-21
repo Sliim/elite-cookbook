@@ -77,7 +77,7 @@
 <% end %>
 
 ;; Modules
-(set-module-dir (pathname-as-directory (concat (getenv "HOME") "/.stumpwm.d/contrib")))
+(set-module-dir (pathname-as-directory (concat (getenv "HOME") "/.stumpwm.d/modules")))
 <% @modules.each do |m| %>
 (load-module "<%= m %>")
 <% end %>

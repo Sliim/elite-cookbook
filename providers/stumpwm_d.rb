@@ -25,9 +25,10 @@ end
 action :create do
   user = new_resource.user
 
-  directory "#{user_dotfiles(user)}/stumpwm.d" do
+  directory "#{user_dotfiles(user)}/stumpwm.d/modules" do
     owner user
     group user_group(user)
     mode '0750'
+    recursive true
   end
 end

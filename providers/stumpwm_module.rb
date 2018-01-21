@@ -26,7 +26,7 @@ action :create do
   user = new_resource.owner
   elite_stumpwm_d user
 
-  directory "#{user_dotfiles(user)}/stumpwm.d/contrib/#{new_resource.mod}" do
+  directory "#{user_dotfiles(user)}/stumpwm.d/modules/#{new_resource.mod}" do
     owner user
     group user_group(user)
     mode '0750'
@@ -34,7 +34,7 @@ action :create do
   end
 
   ['package.lisp', "#{new_resource.mod}.lisp", "#{new_resource.mod}.asd"].each do |modfile|
-    cookbook_file "#{user_dotfiles(user)}/stumpwm.d/contrib/#{new_resource.mod}/#{modfile}" do
+    cookbook_file "#{user_dotfiles(user)}/stumpwm.d/modules/#{new_resource.mod}/#{modfile}" do
       owner user
       group user_group(user)
       mode '0640'

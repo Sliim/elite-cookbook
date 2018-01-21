@@ -83,15 +83,16 @@ describe 'elite::stumpwm' do
     expect(subject).to create_elite_stumpwm_d('sliim')
   end
 
-  it 'creates directory[/home/sliim/.dotfiles/stumpwm.d]' do
-    expect(subject).to create_directory('/home/sliim/.dotfiles/stumpwm.d')
+  it 'creates directory[/home/sliim/.dotfiles/stumpwm.d/modules]' do
+    expect(subject).to create_directory('/home/sliim/.dotfiles/stumpwm.d/modules')
       .with(owner: 'sliim',
             group: 'elite',
-            mode: '0750')
+            mode: '0750',
+            recursive: true)
   end
 
-  it 'syncs git[/home/sliim/.dotfiles/stumpwm.d/contrib]' do
-    expect(subject).to sync_git('/home/sliim/.dotfiles/stumpwm.d/contrib')
+  it 'syncs git[/home/sliim/.dotfiles/stumpwm.d/modules/contrib]' do
+    expect(subject).to sync_git('/home/sliim/.dotfiles/stumpwm.d/modules/contrib')
       .with(user: 'sliim',
             group: 'elite',
             repository: 'https://github.com/stumpwm/stumpwm-contrib',
@@ -110,16 +111,16 @@ describe 'elite::stumpwm' do
               cookbook: 'wrapper')
     end
 
-    it "creates directory[/home/sliim/.dotfiles/stumpwm.d/contrib/#{m}]" do
-      expect(subject).to create_directory("/home/sliim/.dotfiles/stumpwm.d/contrib/#{m}")
+    it "creates directory[/home/sliim/.dotfiles/stumpwm.d/modules/#{m}]" do
+      expect(subject).to create_directory("/home/sliim/.dotfiles/stumpwm.d/modules/#{m}")
         .with(owner: 'sliim',
               group: 'elite',
               mode: '0750')
     end
 
     ['package.lisp', "#{m}.lisp", "#{m}.asd"].each do |f|
-      it "creates cookbook_file[/home/sliim/.dotfiles/stumpwm.d/contrib/#{m}/#{f}]" do
-        expect(subject).to create_cookbook_file("/home/sliim/.dotfiles/stumpwm.d/contrib/#{m}/#{f}")
+      it "creates cookbook_file[/home/sliim/.dotfiles/stumpwm.d/modules/#{m}/#{f}]" do
+        expect(subject).to create_cookbook_file("/home/sliim/.dotfiles/stumpwm.d/modules/#{m}/#{f}")
           .with(owner: 'sliim',
                 group: 'elite',
                 mode: '0640',
