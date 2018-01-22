@@ -31,7 +31,7 @@ end
 
 describe file '/home/h4x0r/.stumpwm.d/modules/contrib' do
   it { should be_directory }
-  it { should be_mode 0750 }
+  it { should be_mode 0755 }
   it { should be_owned_by 'h4x0r' }
   it { should be_grouped_into 'elite' }
 end

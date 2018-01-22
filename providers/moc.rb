@@ -25,7 +25,11 @@ end
 action :create do
   user = new_resource.user
 
-  directory "#{user_dotfiles(user)}/moc"
+  directory "#{user_dotfiles(user)}/moc" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
 
   elite_dotlink "#{user}-moc" do
     owner user

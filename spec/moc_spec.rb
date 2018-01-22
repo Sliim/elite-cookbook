@@ -54,6 +54,9 @@ describe 'elite::moc' do
 
   it 'create directory[/home/sliim/.dotfiles/moc]' do
     expect(subject).to create_directory('/home/sliim/.dotfiles/moc')
+      .with(owner: 'sliim',
+            group: 'elite',
+            mode: '0750')
   end
 
   it 'creates elite_dotlink[sliim-moc]' do

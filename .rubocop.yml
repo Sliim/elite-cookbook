@@ -10,6 +10,8 @@ AllCops:
     - resources/**/*
     - spec/**/*
     - test/**/*
+  Exclude:
+    - vendor/**/*
 
 LineLength:
   Exclude:

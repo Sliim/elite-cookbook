@@ -83,6 +83,14 @@ describe 'elite::stumpwm' do
     expect(subject).to create_elite_stumpwm_d('sliim')
   end
 
+  it 'creates directory[/home/sliim/.dotfiles/stumpwm.d]' do
+    expect(subject).to create_directory('/home/sliim/.dotfiles/stumpwm.d')
+      .with(owner: 'sliim',
+            group: 'elite',
+            mode: '0750',
+            recursive: true)
+  end
+
   it 'creates directory[/home/sliim/.dotfiles/stumpwm.d/modules]' do
     expect(subject).to create_directory('/home/sliim/.dotfiles/stumpwm.d/modules')
       .with(owner: 'sliim',

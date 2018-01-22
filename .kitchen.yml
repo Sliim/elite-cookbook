@@ -91,6 +91,7 @@ suites:
           dotfiles:
             init_repo: true
           emacs:
+            cask_install_ignore_failure: true
             repository: https://github.com/Sliim/emacs.d
             apps_repository: https://github.com/Sliim/emacs-apps
             apps_dependencies: [magit]
