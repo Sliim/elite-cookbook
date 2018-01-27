@@ -6,6 +6,8 @@
 
 ;; Note: Set *new-frame-action* to :empty
 
+(in-package #:stumpwm)
+
 (defvar *autosplit-enabled* t
   "Enable autosplit.")
 
@@ -27,6 +29,7 @@
            (frame-width (window-frame (current-window))))
         (hsplit)
       (vsplit))
+    (fnext)
     (balance-frames)))
 
 (defun unsplit ()
@@ -43,7 +46,6 @@
               (window-matches-properties-p window :title *autosplit-backlist-win-title*)
               (string-match *autosplit-backlist-groups* (group-name (current-group))))
     (autosplit)
-    (fnext)
     (pull-window window)
     (group-focus-window (window-group window) window)))
 
