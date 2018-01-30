@@ -22,8 +22,6 @@ def whyrun_supported?
   true
 end
 
-# TODO: Improve dunst cookbook and simplify this provider
-
 action :create do
   user = new_resource.user
   vars = new_resource.vars
@@ -44,7 +42,7 @@ action :create do
     source 'dunstrc.erb'
     cookbook 'dunst'
     mode '0640'
-    variables dunst: vars
+    variables config: vars['config'].merge(vars['rules'])
   end
 
   elite_bin "#{user}-notifier" do
