@@ -14,8 +14,6 @@
 <% end %>
 (run-shell-command "xrdb -merge ~/.Xdefaults")
 (run-shell-command "feh --bg-scale ~/pics/<%= @stumpwm.wallpaper %>")
-(run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command "conky -c ~/.conky.d/dzen2| dzen2 -ta r -dock")
 <% unless @stumpwm.post_commands.empty? %>
 <% @stumpwm.post_commands.each do |c| -%>
 (run-shell-command "<%= c %>")
