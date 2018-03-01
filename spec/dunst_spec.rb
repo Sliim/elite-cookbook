@@ -40,10 +40,8 @@ describe 'elite::dunst' do
     expect(subject).to include_recipe('elite::dotfiles')
   end
 
-  ['dunst', 'alsa-utils', 'libnotify-bin'].each do |p|
-    it "installs package[#{p}]" do
-      expect(subject).to install_package(p)
-    end
+  it 'includes recipe[dunst]' do
+    expect(subject).to include_recipe('dunst')
   end
 
   it 'creates elite_dunst[sliim]' do

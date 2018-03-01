@@ -24,8 +24,11 @@ end
 
 action :create do
   user = new_resource.user
-  vars = new_resource.vars
-  vars = node['dunst'] if vars.nil?
+  config = {}
+
+  %w(config rules).each do |key|
+    config = config.merge(new_resource.vars[key]) if new_resource.vars.key? key
+  end
 
   elite_configd user
 
@@ -42,7 +45,7 @@ action :create do
     source 'dunstrc.erb'
     cookbook 'dunst'
     mode '0640'
-    variables config: vars['config'].merge(vars['rules'])
+    variables config: config
   end
 
   elite_bin "#{user}-notifier" do

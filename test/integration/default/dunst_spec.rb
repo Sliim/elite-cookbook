@@ -1,17 +1,5 @@
 # -*- coding: utf-8 -*-
 
-describe package 'dunst' do
-  it { should be_installed }
-end
-
-describe package 'alsa-utils' do
-  it { should be_installed }
-end
-
-describe package 'libnotify-bin' do
-  it { should be_installed }
-end
-
 describe file '/home/h4x0r/bin/notifier' do
   it { should be_file }
   it { should be_executable }

@@ -17,16 +17,15 @@
 #
 
 include_recipe 'elite::dotfiles'
-
-['dunst', 'alsa-utils', 'libnotify-bin'].each do |pkg|
-  package pkg
-end
+include_recipe 'dunst'
 
 node['elite']['users'].each do |u|
   dunst = user_config(u, 'dunst')
-  next unless dunst
+  next if dunst.nil?
+
+  dunst = dunst.merge(node['dunst']) if node.key? 'dunst'
   elite_dunst u do
     user u
-    vars node['dunst']
+    vars dunst
   end
 end
