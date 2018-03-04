@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 acpi -V | grep Battery 2>&1 >/dev/null || exit 1
+ls /sys/class/power_supply/BAT* 2>&1 >/dev/null  || exit 2
 battery_info=$(acpi -V | grep Battery | awk 'NR==1')
 
 battery_status=$(echo $battery_info | sed 's/^Battery 0: \([a-zA-Z]*\)\(.*\)/\1/')
