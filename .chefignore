@@ -59,6 +59,7 @@ Rakefile
 .kitchen
 .kitchen.*
 dockerfiles
+vendor
 
 # SCM #
 #######
