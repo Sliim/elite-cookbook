@@ -26,7 +26,6 @@ node['elite']['users'].each do |u|
     cookbook irssi['cookbook'] if irssi['cookbook']
     scripts_source irssi['scripts_source'] if irssi['scripts_source']
     config_source irssi['config_source'] if irssi['config_source']
-    startup_source irssi['startup_source'] if irssi['startup_source']
     mode irssi['mode'] if irssi['mode']
     startup irssi['startup'] if irssi['startup']
     servers irssi['servers'] if irssi['servers']

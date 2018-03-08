@@ -41,13 +41,11 @@ action :create do
     source new_resource.scripts_source
   end
 
-  template "#{user_dotfiles(user)}/irssi/startup" do
+  file "#{user_dotfiles(user)}/irssi/startup" do
     owner user
     group user_group(user)
     mode new_resource.mode
-    cookbook new_resource.cookbook
-    source new_resource.startup_source
-    variables lines: new_resource.startup
+    content new_resource.startup.join("\n")
   end
 
   template "#{user_dotfiles(user)}/irssi/config" do

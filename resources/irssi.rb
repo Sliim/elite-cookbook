@@ -24,7 +24,6 @@ attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
 attribute :cookbook, kind_of: String, default: 'elite'
 attribute :config_source, kind_of: String, default: 'irssi/config.erb'
-attribute :startup_source, kind_of: String, default: 'list2file.erb'
 attribute :scripts_source, kind_of: String, default: 'irssi/scripts'
 attribute :mode, kind_of: String, default: '0640'
 attribute :startup, kind_of: Array, default: []
