@@ -126,12 +126,11 @@
                       "gnew <%= session %>"
 <% end %>
                       )
-<% count = 1 %>
 <% @sessions.each do |session, config| %>
 
 (defcommand <%= session %>-session () ()
   "<%= config['desc'] %>"
-  (stumpwm:run-commands "gselect <%= count+=1 %>")
+  (stumpwm:run-commands "gselect <%= session %>")
   (run-or-raise "<%= config['command'] %>" '<%= config['props'] %>))
 (define-key *top-map* (kbd "<%= config['kbd'] %>") "<%= session %>-session")
 <% end %>
