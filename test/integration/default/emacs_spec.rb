@@ -51,13 +51,6 @@ describe file '/home/h4x0r/bin/ediff-merge-tool' do
   it { should be_grouped_into 'elite' }
 end
 
-describe file '/home/h4x0r/.local/share/applications/emacs.desktop' do
-  it { should be_file }
-  it { should be_mode 0640 }
-  it { should be_owned_by 'h4x0r' }
-  it { should be_grouped_into 'elite' }
-end
-
 describe file '/home/h4x0r/.emacs-apps' do
   it { should be_directory }
   it { should be_owned_by 'h4x0r' }

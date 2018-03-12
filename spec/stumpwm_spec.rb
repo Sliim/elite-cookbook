@@ -163,12 +163,12 @@ describe 'elite::stumpwm' do
                /"gnew codz"$/,
                /^\(defcommand pwnage/,
                /"Pwnage session"$/,
-               /\(stumpwm:run-commands "gselect 2"\)$/,
+               /\(stumpwm:run-commands "gselect pwnage"\)$/,
                /\(run-or-raise "urxvt -title Pwnage" '\(:title "Pwnage"\)\)\)$/,
                /^\(define-key \*top-map\* \(kbd "s-p"\) "pwnage-session"\)$/,
                /^\(defcommand codz/,
                /"Codz session"$/,
-               /\(stumpwm:run-commands "gselect 3"\)$/,
+               /\(stumpwm:run-commands "gselect codz"\)$/,
                /\(run-or-raise "urxvt -title Codz" '\(:title "Codz"\)\)\)$/,
                /^\(define-key \*top-map\* \(kbd "s-c"\) "codz-session"\)$/,
                /^\(defcommand mycmd \(\) \(\)$/,
@@ -190,6 +190,40 @@ describe 'elite::stumpwm' do
     matches.each do |m|
       expect(subject).to render_file(config_file).with_content(m)
     end
+  end
+
+  it 'creates elite_desktop_app[sliim-stumpwm-elite-program]' do
+    expect(subject).to create_elite_desktop_app('sliim-stumpwm-elite-program')
+      .with(owner: 'sliim',
+            app: 'stumpwm-elite-program',
+            config: {
+              'Name' => 'Stumpwm-Elite',
+              'GenericName' => 'Stumpwm Elite program (s-s)',
+              'Comment' => 'Stumpwm Elite program',
+              'Exec' => 'stumpish elite',
+              'Terminal' => false,
+              'Type' => 'Application',
+              'Encoding' => 'UTF-8',
+              'Icon' => 'preferences-desktop-display',
+              'Categories' => 'StumpWM;Programs'
+            })
+  end
+
+  it 'creates elite_desktop_app[sliim-stumpwm-pwnage-session]' do
+    expect(subject).to create_elite_desktop_app('sliim-stumpwm-pwnage-session')
+      .with(owner: 'sliim',
+            app: 'stumpwm-pwnage-session',
+            config: {
+              'Name' => 'Stumpwm-Pwnage',
+              'GenericName' => 'Pwnage session (s-p)',
+              'Comment' => 'Stumpwm Pwnage session',
+              'Exec' => 'stumpish pwnage-session',
+              'Terminal' => false,
+              'Type' => 'Application',
+              'Encoding' => 'UTF-8',
+              'Icon' => 'preferences-desktop-display',
+              'Categories' => 'StumpWM;Sessions'
+            })
   end
 
   it 'creates elite_dotlink[sliim-stumpwmrc]' do

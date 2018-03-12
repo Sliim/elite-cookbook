@@ -165,38 +165,4 @@ describe 'elite::x' do
             cookbook: 'elite',
             source_dir: 'bin/')
   end
-
-  it 'creates elite_desktop_app[sliim-urxvt]' do
-    expect(subject).to create_elite_desktop_app('sliim-urxvt')
-      .with(owner: 'sliim',
-            app: 'urxvt',
-            cookbook: 'elite',
-            source_dir: 'applications/')
-  end
-
-  appdir = '/home/sliim/.dotfiles/local/share/applications'
-
-  it "creates directory[#{appdir}]" do
-    expect(subject).to create_directory(appdir)
-      .with(owner: 'sliim',
-            group: 'elite',
-            mode: '0750',
-            recursive: true)
-  end
-
-  it 'creates elite_dotlink[sliim-local]' do
-    expect(subject).to create_elite_dotlink('sliim-local')
-      .with(skip_if_exists: true,
-            owner: 'sliim',
-            file: 'local')
-  end
-
-  it "creates cookbook_file[#{appdir}/urxvt.desktop]" do
-    expect(subject).to create_cookbook_file("#{appdir}/urxvt.desktop")
-      .with(owner: 'sliim',
-            group: 'elite',
-            mode: '0640',
-            cookbook: 'elite',
-            source: 'applications/urxvt.desktop')
-  end
 end

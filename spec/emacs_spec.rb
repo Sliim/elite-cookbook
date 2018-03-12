@@ -95,19 +95,6 @@ describe 'elite::emacs' do
             source_dir: 'bin/')
   end
 
-  it 'creates elite_desktop_app[sliim-emacs]' do
-    expect(subject).to create_elite_desktop_app('sliim-emacs')
-      .with(owner: 'sliim',
-            app: 'emacs',
-            cookbook: 'elite',
-            source_dir: 'applications/')
-  end
-
-  appdir = '/home/sliim/.dotfiles/local/share/applications'
-  it "does not create cookbook_file[#{appdir}/emacs.desktop]" do
-    expect(subject).to_not create_cookbook_file("#{appdir}/emacs.desktop")
-  end
-
   it 'does not create template[/home/sliim/.emacs-apps/Cask]' do
     expect(subject).to_not create_template('/home/sliim/.emacs-apps/Cask')
   end

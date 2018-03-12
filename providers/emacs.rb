@@ -74,11 +74,6 @@ action :create do
     end
   end
 
-  elite_desktop_app 'sliim-emacs' do
-    owner user
-    app 'emacs'
-  end
-
   unless new_resource.apps.empty?
     git "#{user_home(user)}/.emacs-apps" do
       user user

@@ -77,9 +77,4 @@ action :create do
     owner user
     script 'disable-screensaver'
   end
-
-  elite_desktop_app "#{user}-urxvt" do
-    owner user
-    app 'urxvt'
-  end
 end

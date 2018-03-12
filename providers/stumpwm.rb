@@ -76,6 +76,38 @@ action :create do
               config: new_resource.config
   end
 
+  new_resource.programs.each do |name, prog|
+    elite_desktop_app "#{user}-stumpwm-#{name}-program" do
+      owner user
+      app "stumpwm-#{name}-program"
+      config 'Name' => "Stumpwm-#{name.capitalize}",
+             'GenericName' => "Stumpwm #{name.capitalize} program (#{prog['kbd']})",
+             'Comment' => "Stumpwm #{name.capitalize} program",
+             'Exec' => "stumpish #{name}",
+             'Terminal' => false,
+             'Type' => 'Application',
+             'Encoding' => 'UTF-8',
+             'Icon' => 'preferences-desktop-display',
+             'Categories' => 'StumpWM;Programs'
+    end
+  end
+
+  new_resource.sessions.each do |name, session|
+    elite_desktop_app "#{user}-stumpwm-#{name}-session" do
+      owner user
+      app "stumpwm-#{name}-session"
+      config 'Name' => "Stumpwm-#{name.capitalize}",
+             'GenericName' => "#{session['desc']} (#{session['kbd']})",
+             'Comment' => "Stumpwm #{name.capitalize} session",
+             'Exec' => "stumpish #{name}-session",
+             'Terminal' => false,
+             'Type' => 'Application',
+             'Encoding' => 'UTF-8',
+             'Icon' => 'preferences-desktop-display',
+             'Categories' => 'StumpWM;Sessions'
+    end
+  end
+
   elite_dotlink "#{user}-stumpwmrc" do
     owner user
     file 'stumpwmrc'
