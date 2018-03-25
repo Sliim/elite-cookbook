@@ -14,13 +14,13 @@
 (defvar *autounsplit-enabled* t
   "Enable autounsplit.")
 
-(defvar *autosplit-backlist-win-class* "gcr-prompter|Gcr-prompter"
+(defvar *autosplit-blacklist-win-class* "gcr-prompter|Gcr-prompter"
   "List of windows classes to blacklist for autosplit.")
 
-(defvar *autosplit-backlist-win-title* "NoAutoSplit"
+(defvar *autosplit-blacklist-win-title* "NoAutoSplit"
   "List of windows titles to blacklist for autosplit.")
 
-(defvar *autosplit-backlist-groups* "no-auto-split"
+(defvar *autosplit-blacklist-groups* "no-auto-split"
   "List of groups to blacklist for autosplit.")
 
 (defun autosplit ()
@@ -42,9 +42,9 @@
               (typep (current-group) 'float-group)
               (window-transient-p window)
               (window-modal-p window)
-              (window-matches-properties-p window :class *autosplit-backlist-win-class*)
-              (window-matches-properties-p window :title *autosplit-backlist-win-title*)
-              (string-match *autosplit-backlist-groups* (group-name (current-group))))
+              (window-matches-properties-p window :class *autosplit-blacklist-win-class*)
+              (window-matches-properties-p window :title *autosplit-blacklist-win-title*)
+              (string-match *autosplit-blacklist-groups* (group-name (current-group))))
     (autosplit)
     (pull-window window)
     (group-focus-window (window-group window) window)))
