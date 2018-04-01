@@ -205,7 +205,7 @@ describe 'elite::stumpwm' do
               'Type' => 'Application',
               'Encoding' => 'UTF-8',
               'Icon' => 'preferences-desktop-display',
-              'Categories' => 'StumpWM;Programs'
+              'Categories' => 'StumpWM;Programs',
             })
   end
 
@@ -222,7 +222,7 @@ describe 'elite::stumpwm' do
               'Type' => 'Application',
               'Encoding' => 'UTF-8',
               'Icon' => 'preferences-desktop-display',
-              'Categories' => 'StumpWM;Sessions'
+              'Categories' => 'StumpWM;Sessions',
             })
   end
 
