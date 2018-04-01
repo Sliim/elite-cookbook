@@ -130,7 +130,8 @@
 
 (defcommand <%= session %>-session () ()
   "<%= config['desc'] %>"
-  (stumpwm:run-commands "gselect <%= session %>")
+  (when (< (length (find-matching-windows '<%= config['props'] %> *run-or-raise-all-groups* *run-or-raise-all-screens*)) 1)
+    (stumpwm:run-commands "gselect <%= session %>"))
   (run-or-raise "<%= config['command'] %>" '<%= config['props'] %>))
 (define-key *top-map* (kbd "<%= config['kbd'] %>") "<%= session %>-session")
 <% end %>
