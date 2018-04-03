@@ -40,6 +40,7 @@
 (defun split-on-new-window (window)
   (unless (or (not *autosplit-enabled*)
               (typep (current-group) 'float-group)
+              (typep window 'float-window)
               (window-transient-p window)
               (window-modal-p window)
               (window-matches-properties-p window :class *autosplit-blacklist-win-class*)
