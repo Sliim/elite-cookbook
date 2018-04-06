@@ -21,7 +21,7 @@ export ALTERNATE_EDITOR="$EMACS_BIN -nw"
 emacs_server_file="/tmp/emacs$UID/server"
 
 alias emacs="$EMACS_BIN --no-site-file --no-site-lisp --no-splash"
-alias ed="eshell --daemon >&$EMACS_DAEMON_LOG_FILE"
+alias ed="emacs --daemon >&$EMACS_DAEMON_LOG_FILE"
 alias ecli="$EMACS_CLIENT_BIN -n"
 alias eshell="emacs -nw -e eshell"
 alias epdf="emacs -Q"
@@ -34,8 +34,8 @@ function emacs-daemon-started() {
 }
 
 function emacs-daemon-start() {
-    ed
-    notify-send "Emacs daemon" "Emacs daemon started." -i emacs -u normal
+    ed && notify-send "Emacs daemon" "Emacs daemon started." -i emacs -u normal ||
+          notify-send "Emacs daemon" "Cannot start Emacs daemon." -i emacs -u critical
 }
 
 function emacs-daemon-stop() {
@@ -65,6 +65,7 @@ function emacs-snapshot-create() {
 
 function emacs-daemon-check() {
     if ! emacs-daemon-started; then
+        notify-send "Emacs daemon" "Starting Emacs daemon.." -i emacs -u normal
         echo -n "Starting Emacs daemon.."
         emacs-daemon-start
         echo ".done."
