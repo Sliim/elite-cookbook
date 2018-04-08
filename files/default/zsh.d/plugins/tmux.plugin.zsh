@@ -15,10 +15,10 @@ function tmux-colors () {
 }
 
 function tmux-send-keys() {
-    tmux send-keys -t "$session:$2.$3" "$1"
+    tmux send-keys -t "$4:$2.$3" "$1"
 }
 
 function tmux-run-cmd() {
-    tmux-send-keys "$1" "$2" "$3"
-    tmux-send-keys "C-m" "$2" "$3"
+    tmux-send-keys "$1" "$2" "$3" "$4"
+    tmux-send-keys "C-m" "$2" "$3" "$4"
 }

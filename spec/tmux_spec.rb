@@ -145,10 +145,10 @@ describe 'elite::tmux' do
                %(tmux set-environment -t autotmux PATH /bin),
                /tmux split-window -h -t autotmux:0.$/,
                /tmux select-pane -t autotmux:0.0$/,
-               /tmux-run-cmd "htop" 0 0$/,
-               /tmux-run-cmd "nload" 0 1$/,
-               /tmux-run-cmd "pwd" 0 2$/,
-               /tmux-run-cmd "ls -la" 0 2$/]
+               /tmux-run-cmd "htop" 0 0 autotmux$/,
+               /tmux-run-cmd "nload" 0 1 autotmux$/,
+               /tmux-run-cmd "pwd" 0 2 autotmux$/,
+               /tmux-run-cmd "ls -la" 0 2 autotmux$/]
 
     expect(subject).to create_template(config_file)
       .with(owner: 'sliim',

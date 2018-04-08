@@ -23,10 +23,10 @@ else
     <% win['cmds'].each do | pane, cmd | %>
     <% if cmd.is_a? ::Array %>
     <% cmd.each do |c| %>
-    tmux-run-cmd "<%= c %>" <%= id %> <%= pane %>
+    tmux-run-cmd "<%= c %>" <%= id %> <%= pane %> <%= @name %>
     <% end %>
     <% else %>
-    tmux-run-cmd "<%= cmd %>" <%= id %> <%= pane %>
+    tmux-run-cmd "<%= cmd %>" <%= id %> <%= pane %> <%= @name %>
     <% end %>
     <% end %>
     <% end %>
