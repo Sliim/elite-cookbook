@@ -29,15 +29,11 @@ describe 'elite::conky_dzen2' do
       node.override['elite']['sliim']['group'] = 'elite'
       node.override['elite']['sliim']['groups'] = %w(elite)
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
-      node.override['elite']['sliim']['conky']['panel']['default_color'] = 'AAAAAA'
-      node.override['elite']['sliim']['conky']['panel']['color1'] = 'BBBBBB'
-      node.override['elite']['sliim']['conky']['panel']['color2'] = 'CCCCCC'
-      node.override['elite']['sliim']['conky']['panel']['color3'] = 'DDDDDD'
-      node.override['elite']['sliim']['conky']['panel']['color4'] = 'EEEEEE'
-      node.override['elite']['sliim']['conky']['panel']['cpu_count'] = 42
-      node.override['elite']['sliim']['conky']['panel']['battery'] = 'BAT1337'
-      node.override['elite']['sliim']['conky']['panel']['ethernet_interface'] = 'eth0'
-      node.override['elite']['sliim']['conky']['panel']['wireless_interface'] = 'wlan0'
+      node.override['elite']['sliim']['conky']['config']['default_color'] = 'AAAAAA'
+      node.override['elite']['sliim']['conky']['config']['color1'] = 'BBBBBB'
+      node.override['elite']['sliim']['conky']['config']['color2'] = 'CCCCCC'
+      node.override['elite']['sliim']['conky']['config']['color3'] = 'DDDDDD'
+      node.override['elite']['sliim']['conky']['config']['color4'] = 'EEEEEE'
     end.converge(described_recipe)
   end
 

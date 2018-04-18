@@ -22,13 +22,10 @@ resource_name :elite_conky_dzen2
 
 attribute :name, kind_of: String
 attribute :user, kind_of: String, name_attribute: true
-attribute :panel, kind_of: Hash, default: { 'default_color' => 'FFFFFF',
-                                            'color1' => 'FFFFFF',
-                                            'color2' => 'AAAAAA',
-                                            'color3' => '777777',
-                                            'color4' => '444444',
-                                            'cpu_count' => 2,
-                                            'battery' => 'BAT0',
-                                            'ethernet_interface' => 'eth0',
-                                            'wireless_interface' => 'wlan0',
+attribute :config, kind_of: Hash, default: { 'default_color' => 'FFFFFF',
+                                             'color1' => 'FFFFFF',
+                                             'color2' => 'AAAAAA',
+                                             'color3' => '777777',
+                                             'color4' => '444444',
+                                             'interface_type_blacklist' => []
                                           }

@@ -24,6 +24,6 @@ node['elite']['users'].each do |u|
   conky_config = user_config(u, 'conky')
   next unless conky_config
   elite_conky_dzen2 u do
-    panel conky_config['panel'] if conky_config['panel']
+    config conky_config['config'] if conky_config['config']
   end
 end

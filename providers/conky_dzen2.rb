@@ -31,7 +31,7 @@ action :create do
     mode '0640'
     source 'conky.d/dzen2.erb'
     cookbook 'elite'
-    variables conky: new_resource.panel,
+    variables conky: new_resource.config,
               home: user_home(user)
   end
 

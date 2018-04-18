@@ -13,14 +13,14 @@ use_spacer none
 
 TEXT
 ${execi 300 ~/.conky.d/scripts/battery-notify.sh}\
-^fg(\#<%= @conky['color2'] %>) ${if_existing /proc/net/route <%= @conky['wireless_interface'] %>}^fg(\#<%= @conky['color3'] %>)<%= @conky['wireless_interface'] %>: ^fg(\#<%= @conky['color4'] %>)${wireless_link_qual <%= @conky['wireless_interface'] %>}%^fg(\#<%= @conky['color2'] %>) ^fg(\#<%= @conky['color4'] %>)↓${downspeed <%= @conky['wireless_interface'] %>}^fg(\#<%= @conky['color3'] %>)>^fg(\#<%= @conky['color4'] %>)${totaldown <%= @conky['wireless_interface'] %>}  ^fg(\#<%= @conky['color4'] %>)↑${upspeed <%= @conky['wireless_interface'] %>}^fg(\#<%= @conky['color3'] %>)>^fg(\#<%= @conky['color4'] %>)${totalup <%= @conky['wireless_interface'] %>}^fg(\#<%= @conky['color2'] %>)  ${endif}\
-${if_existing /proc/net/route <%= @conky['ethernet_interface'] %>}^fg(\#<%= @conky['color3'] %>)<%= @conky['ethernet_interface'] %>: ^fg(\#<%= @conky['color4'] %>)↓${downspeed <%= @conky['ethernet_interface'] %>}^fg(\#<%= @conky['color3'] %>)>^fg(\#<%= @conky['color4'] %>)${totaldown <%= @conky['ethernet_interface'] %>}  ^fg(\#<%= @conky['color4'] %>)↑${upspeed <%= @conky['ethernet_interface'] %>}^fg(\#<%= @conky['color3'] %>)>^fg(\#<%= @conky['color4'] %>)${totalup <%= @conky['ethernet_interface'] %>}^fg(\#<%= @conky['color2'] %>)  ${endif}\
-^fg(\#<%= @conky['color2'] %>) [≡ ^fg(\#<%= @conky['color4'] %>)${memperc}^fg(\#<%= @conky['color3'] %>)%^fg(\#<%= @conky['color2'] %>)]\
-^fg(\#<%= @conky['color2'] %>) [☢ \
-<% for c in 1..@conky['cpu_count'] do %>\
-^fg(\#<%= @conky['color4'] %>)${cpu cpu<%= c %>}^fg(\#<%= @conky['color3'] %>)% <% end %> \
-^fg(\#<%= @conky['color4'] %>)${acpitemp}^fg(\#<%= @conky['color3'] %>)°C^fg(\#<%= @conky['color2'] %>)]\
-<% unless @conky['battery'].empty? %>^fg(\#<%= @conky['color2'] %>) [☰ ^fg(\#<%= @conky['color4'] %>)${battery_percent <%= @conky['battery'] %>}^fg(\#<%= @conky['color3'] %>)%^fg(\#<%= @conky['color2'] %>)]<% end %>\
+<% for inf, ifconfig in node['network']['interfaces'] do %><% next if ["lo"].include?(inf) || ! ifconfig.key?('type') || @conky['interface_type_blacklist'].include?(ifconfig['type']) %>\
+${if_existing /proc/net/route <%= inf %>}^fg(\#<%= @conky['color2'] %>)<%= inf %>: ^fg(\#<%= @conky['color4'] %>)<% unless ifconfig['ring_params'].empty? %>^fg(\#<%= @conky['color4'] %>)${wireless_link_qual <%= inf %>}% <% end %>↓${downspeed <%= inf %>}>${totaldown <%= inf %>}  ↑${upspeed <%= inf %>}>${totalup <%= inf %>}${endif}<% end %>\
+^fg(\#<%= @conky['color2'] %>) [≡ ^fg(\#<%= @conky['color4'] %>)${memperc}%]\
+^fg(\#<%= @conky['color2'] %>) [☢ ^fg(\#<%= @conky['color4'] %>)\
+<% for c in 1..node['cpu']['total'] do %>\
+${cpu cpu<%= c %>}% <% end %> \
+${acpitemp}°C^fg(\#<%= @conky['color2'] %>)]\
+<% if node['kernel']['modules'].key?('battery') %>^fg(\#<%= @conky['color2'] %>) [☰ ^fg(\#<%= @conky['color4'] %>)${battery_percent BAT<%= node['kernel']['modules']['battery']['refcount'] %>}%^fg(\#<%= @conky['color2'] %>)]<% end %>\
 ${if_existing <%= @home %>/Maildir}^fg(\#<%= @conky['color2'] %>) [✉ ^fg(\#<%= @conky['color4'] %>)${execi 600 mu find flag:unread 2>/dev/null | wc -l}^fg(\#<%= @conky['color2'] %>)]${endif}\
-^fg(\#<%= @conky['color2'] %>) [♪ ^fg(\#<%= @conky['color4'] %>)${exec amixer -c 0 get Master toggle | tail -1 | awk '{print $4}' | sed "s/[^0-9]//g";}^fg(\#<%= @conky['color3'] %>)%^fg(\#<%= @conky['color2'] %>)] \
-^fg(\#<%= @conky['color2'] %>) [^fg(\#<%= @conky['color4'] %>)${time %Y}-${time %m}-${time %d}^fg(\#<%= @conky['color2'] %>)] [^fg(\#<%= @conky['color4'] %>)${time %H}:${time %M}:${time %S}^fg(\#<%= @conky['color2'] %>)]
+^fg(\#<%= @conky['color2'] %>) [♪ ^fg(\#<%= @conky['color4'] %>)${exec amixer -c 0 get Master toggle | tail -1 | awk '{print $4}' | sed "s/[^0-9]//g";}%^fg(\#<%= @conky['color2'] %>)] \
+^fg(\#<%= @conky['color2'] %>) [${time %Y}-${time %m}-${time %d}] [${time %H}:${time %M}:${time %S}]
