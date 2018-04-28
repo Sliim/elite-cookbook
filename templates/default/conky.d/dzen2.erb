@@ -14,7 +14,7 @@ use_spacer none
 TEXT
 ${execi 300 ~/.conky.d/scripts/battery-notify.sh}\
 <% for inf, ifconfig in node['network']['interfaces'] do %><% next if ["lo"].include?(inf) || ! ifconfig.key?('type') || @conky['interface_type_blacklist'].include?(ifconfig['type']) %>\
-${if_existing /proc/net/route <%= inf %>}^fg(\#<%= @conky['color2'] %>)<%= inf %>: ^fg(\#<%= @conky['color4'] %>)<% unless ifconfig['ring_params'].empty? %>^fg(\#<%= @conky['color4'] %>)${wireless_link_qual <%= inf %>}% <% end %>↓${downspeed <%= inf %>}>${totaldown <%= inf %>}  ↑${upspeed <%= inf %>}>${totalup <%= inf %>}${endif}<% end %>\
+${if_existing /proc/net/route <%= inf %>}^fg(\#<%= @conky['color2'] %>)<%= inf %>: ^fg(\#<%= @conky['color4'] %>)<% unless ifconfig['ring_params'].empty? %>^fg(\#<%= @conky['color4'] %>)${wireless_link_qual <%= inf %>}% <% end %>^fg(\#<%= @conky['color2'] %>)↓^fg(\#<%= @conky['color4'] %>)${downspeed <%= inf %>}>${totaldown <%= inf %>}  ^fg(\#<%= @conky['color2'] %>)↑^fg(\#<%= @conky['color4'] %>)${upspeed <%= inf %>}>${totalup <%= inf %>}${endif}<% end %>\
 ^fg(\#<%= @conky['color2'] %>) [≡ ^fg(\#<%= @conky['color4'] %>)${memperc}%]\
 ^fg(\#<%= @conky['color2'] %>) [☢ ^fg(\#<%= @conky['color4'] %>)\
 <% for c in 1..node['cpu']['total'] do %>\
@@ -23,4 +23,4 @@ ${acpitemp}°C^fg(\#<%= @conky['color2'] %>)]\
 <% if node['kernel']['modules'].key?('battery') %>^fg(\#<%= @conky['color2'] %>) [☰ ^fg(\#<%= @conky['color4'] %>)${battery_percent BAT<%= node['kernel']['modules']['battery']['refcount'] %>}%^fg(\#<%= @conky['color2'] %>)]<% end %>\
 ${if_existing <%= @home %>/Maildir}^fg(\#<%= @conky['color2'] %>) [✉ ^fg(\#<%= @conky['color4'] %>)${execi 600 mu find flag:unread 2>/dev/null | wc -l}^fg(\#<%= @conky['color2'] %>)]${endif}\
 ^fg(\#<%= @conky['color2'] %>) [♪ ^fg(\#<%= @conky['color4'] %>)${exec amixer -c 0 get Master toggle | tail -1 | awk '{print $4}' | sed "s/[^0-9]//g";}%^fg(\#<%= @conky['color2'] %>)] \
-^fg(\#<%= @conky['color2'] %>) [${time %Y}-${time %m}-${time %d}] [${time %H}:${time %M}:${time %S}]
+^fg(\#<%= @conky['color2'] %>) [^fg(\#<%= @conky['color4'] %>)${time %Y}-${time %m}-${time %d}^fg(\#<%= @conky['color2'] %>)] [^fg(\#<%= @conky['color4'] %>)${time %H}:${time %M}:${time %S}^fg(\#<%= @conky['color2'] %>)]

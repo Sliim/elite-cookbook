@@ -127,6 +127,7 @@ See `specs` or [kitchen.yml](.kitchen.yml) for more examples.
 - `elite_chef`
 - `elite_compton`
 - `elite_conky`
+- `elite_conky_rc`
 - `elite_conky_dzen2`
 - `elite_dunst`
 - `elite_emacs`

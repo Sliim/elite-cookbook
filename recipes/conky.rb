@@ -23,5 +23,8 @@ package 'conky'
 node['elite']['users'].each do |u|
   conky_config = user_config(u, 'conky')
   next unless conky_config
-  elite_conky u
+  elite_conky u do
+    global_config conky_config['global_config'] if conky_config.key?('global_config')
+    configs conky_config['configs'] if conky_config.key?('configs')
+  end
 end

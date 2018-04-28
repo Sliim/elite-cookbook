@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Resource:: conky
+# Resource:: conky_rc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,9 +18,13 @@
 
 actions :create
 default_action :create
-resource_name :elite_conky
+resource_name :elite_conky_rc
 
 attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :global_config, kind_of: Hash, default: {}
-attribute :configs, kind_of: Hash, default: {}
+attribute :rc, kind_of: String
+attribute :owner, kind_of: String
+attribute :config, kind_of: Hash, default: {}
+attribute :text, kind_of: Array, default: []
+attribute :cookbook, kind_of: String, default: 'elite'
+attribute :source, kind_of: String, default: 'conky.d/rc.erb'
+attribute :mode, kind_of: String, default: '0640'

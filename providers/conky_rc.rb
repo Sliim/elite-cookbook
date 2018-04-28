@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Cookbook Name:: elite
-# Provider:: conky
+# Provider:: conky_rc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,29 +23,28 @@ def whyrun_supported?
 end
 
 action :create do
-  user = new_resource.user
+  user = new_resource.owner
+  config = new_resource.config
+  text = new_resource.text
 
-  ['conky.d', 'conky.d/var', 'conky.d/scripts'].each do |dir|
-    directory "#{user_dotfiles(user)}/#{dir}" do
-      owner user
-      group user_group(user)
-      mode '0750'
-    end
+  dbrc = begin
+           data_bag_item('elite_conky', new_resource.rc)
+         rescue
+           nil
+         end
+
+  if dbrc
+    config = dbrc['config'].merge(new_resource.config) if dbrc.key?('config')
+    text = dbrc['text'] + new_resource.text if dbrc.key?('text')
   end
 
-  elite_dotlink "#{user}-conky" do
+  template "#{user_dotfiles(user)}/conky.d/#{new_resource.rc}" do
     owner user
-    file 'conky.d'
-  end
-
-  new_resource.configs.each do |name, rc|
-    config = rc.key?('config') ? rc['config'] : {}
-    text = rc.key?('text') ? rc['text'] : []
-    elite_conky_rc "#{user}-#{name}" do
-      owner user
-      rc name
-      config config.merge(new_resource.global_config)
-      text text
-    end
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables config: config,
+              text: text
   end
 end

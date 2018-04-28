@@ -27,5 +27,5 @@ attribute :config, kind_of: Hash, default: { 'default_color' => 'FFFFFF',
                                              'color2' => 'AAAAAA',
                                              'color3' => '777777',
                                              'color4' => '444444',
-                                             'interface_type_blacklist' => []
+                                             'interface_type_blacklist' => [],
                                           }
