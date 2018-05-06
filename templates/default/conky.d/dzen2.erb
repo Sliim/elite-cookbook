@@ -13,8 +13,8 @@ use_spacer none
 
 TEXT
 ${execi 300 ~/.conky.d/scripts/battery-notify.sh}\
-<% for inf, ifconfig in node['network']['interfaces'] do %><% next if ["lo"].include?(inf) || ! ifconfig.key?('type') || @conky['interface_type_blacklist'].include?(ifconfig['type']) %>\
-${if_existing /proc/net/route <%= inf %>}^fg(\#<%= @conky['color2'] %>)<%= inf %>: ^fg(\#<%= @conky['color4'] %>)<% unless ifconfig['ring_params'].empty? %>^fg(\#<%= @conky['color4'] %>)${wireless_link_qual <%= inf %>}% <% end %>^fg(\#<%= @conky['color2'] %>)↓^fg(\#<%= @conky['color4'] %>)${downspeed <%= inf %>}>${totaldown <%= inf %>}  ^fg(\#<%= @conky['color2'] %>)↑^fg(\#<%= @conky['color4'] %>)${upspeed <%= inf %>}>${totalup <%= inf %>}${endif}<% end %>\
+<% for inf, ifconfig in node['network']['interfaces'] do %><% next if ["lo"].include?(inf) || ! ifconfig.key?('type') || @interface_type_blacklist.include?(ifconfig['type']) %>\
+${if_existing /proc/net/route <%= inf %>}^fg(\#<%= @conky['color2'] %>)<%= inf %>: ^fg(\#<%= @conky['color4'] %>)<% unless ifconfig['ring_params'].nil? || ifconfig['ring_params'].empty? %>^fg(\#<%= @conky['color4'] %>)${wireless_link_qual <%= inf %>}% <% end %>^fg(\#<%= @conky['color2'] %>)↓^fg(\#<%= @conky['color4'] %>)${downspeed <%= inf %>}>${totaldown <%= inf %>}  ^fg(\#<%= @conky['color2'] %>)↑^fg(\#<%= @conky['color4'] %>)${upspeed <%= inf %>}>${totalup <%= inf %>}${endif}<% end %>\
 ^fg(\#<%= @conky['color2'] %>) [≡ ^fg(\#<%= @conky['color4'] %>)${memperc}%]\
 ^fg(\#<%= @conky['color2'] %>) [☢ ^fg(\#<%= @conky['color4'] %>)\
 <% for c in 1..node['cpu']['total'] do %>\

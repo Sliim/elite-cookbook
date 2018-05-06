@@ -32,6 +32,7 @@ action :create do
     source 'conky.d/dzen2.erb'
     cookbook 'elite'
     variables conky: new_resource.config,
+              interface_type_blacklist: new_resource.interface_type_blacklist,
               home: user_home(user)
   end
 

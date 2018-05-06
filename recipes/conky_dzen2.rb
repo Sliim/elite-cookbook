@@ -25,5 +25,6 @@ node['elite']['users'].each do |u|
   next unless conky_config
   elite_conky_dzen2 u do
     config conky_config['global_config'] if conky_config['global_config']
+    interface_type_blacklist conky_config['interface_type_blacklist'] if conky_config['interface_type_blacklist']
   end
 end
