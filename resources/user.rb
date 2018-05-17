@@ -16,12 +16,42 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_user
+provides :elite_user
+default_action :create
 
-attribute :name, kind_of: String
-attribute :home, kind_of: String, default: ''
-attribute :shell, kind_of: String, default: '/bin/zsh'
-attribute :password, kind_of: String, default: nil
-attribute :groups, kind_of: Array, default: []
+property :home, String, default: ''
+property :shell, String, default: '/bin/zsh'
+property :password, String, default: nil
+property :groups, Array, default: []
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  name = new_resource.name
+  home = new_resource.home
+  home = user_home name if home.empty?
+  shell = new_resource.shell
+  shell = user_shell name if shell.empty?
+
+  node.override['elite'][name]['home'] = home
+  node.override['elite'][name]['shell'] = shell
+
+  user name do
+    home home
+    shell shell
+    manage_home !::File.exist?(home)
+    password new_resource.password unless new_resource.password.nil?
+  end
+
+  new_resource.groups.each do |g|
+    group g do
+      action :modify
+      append true
+      members [name]
+      ignore_failure true
+    end
+  end
+end

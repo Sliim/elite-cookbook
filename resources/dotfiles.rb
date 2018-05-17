@@ -16,14 +16,57 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_dotfiles
+provides :elite_dotfiles
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :mode, kind_of: String, default: '0640'
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'list2file.erb'
-attribute :ignore, kind_of: Array, default: []
-attribute :init_repo, kind_of: [TrueClass, FalseClass], default: false
+property :user, String, name_property: true
+property :mode, String, default: '0640'
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'list2file.erb'
+property :ignore, Array, default: []
+property :init_repo, [TrueClass, FalseClass], default: false
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  directory user_dotfiles(user) do
+    owner user
+    group user_group(user)
+    mode '0750'
+    recursive true
+  end
+
+  if new_resource.init_repo
+    execute 'git init' do
+      cwd user_dotfiles(user)
+      user user
+      group user_group(user)
+    end
+
+    execute "git config user.name '#{user_name(user)}'" do
+      cwd user_dotfiles(user)
+      user user
+      group user_group(user)
+    end
+
+    execute "git config user.email '#{user_email(user)}'" do
+      cwd user_dotfiles(user)
+      user user
+      group user_group(user)
+    end
+
+    template "#{user_dotfiles(user)}/.gitignore" do
+      owner user
+      group user_group(user)
+      cookbook new_resource.cookbook
+      source new_resource.source
+      mode new_resource.mode
+      variables lines: new_resource.ignore
+    end
+  end
+end

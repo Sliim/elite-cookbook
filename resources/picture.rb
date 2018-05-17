@@ -16,12 +16,39 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_picture
+provides :elite_picture
+default_action :create
 
-attribute :name, kind_of: String
-attribute :pic, kind_of: String, name_attribute: true
-attribute :owner, kind_of: String
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source_dir, kind_of: String, default: 'pics/'
+property :pic, String, name_property: true
+property :owner, String
+property :cookbook, String, default: 'elite'
+property :source_dir, String, default: 'pics/'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.owner
+  directory "#{user_dotfiles(user)}/pics" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  elite_dotlink "#{user}-pics" do
+    owner user
+    file 'pics'
+    dotprefix false
+    skip_if_exists true
+  end
+
+  cookbook_file "#{user_dotfiles(user)}/pics/#{new_resource.pic}" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    cookbook new_resource.cookbook
+    source "#{new_resource.source_dir}#{new_resource.pic}"
+  end
+end

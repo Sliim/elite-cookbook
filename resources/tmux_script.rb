@@ -16,17 +16,40 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_tmux_script
+provides :elite_tmux_script
+default_action :create
 
-attribute :name, kind_of: String
-attribute :path, kind_of: String
-attribute :owner, kind_of: String
-attribute :workdir, kind_of: String, default: ''
-attribute :environment, kind_of: Hash, default: {}
-attribute :windows, kind_of: Hash, default: {}
-attribute :default_window, kind_of: String, default: '0'
-attribute :source, kind_of: String, default: 'tmux-script.erb'
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :mode, kind_of: String, default: '0750'
+property :path, String
+property :owner, String
+property :workdir, String, default: ''
+property :environment, Hash, default: {}
+property :windows, Hash, default: {}
+property :default_window, String, default: '0'
+property :source, String, default: 'tmux-script.erb'
+property :cookbook, String, default: 'elite'
+property :mode, String, default: '0750'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.owner
+  workdir = new_resource.workdir
+  workdir = user_home(user) if workdir.empty?
+
+  template new_resource.path do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables script: new_resource,
+              workdir: workdir,
+              name: new_resource.name,
+              windows: new_resource.windows,
+              default_window: new_resource.default_window,
+              environment: new_resource.environment
+  end
+end

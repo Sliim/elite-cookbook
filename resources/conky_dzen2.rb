@@ -16,17 +16,43 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_conky_dzen2
+provides :elite_conky_dzen2
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :config, kind_of: Hash, default: { 'default_color' => 'FFFFFF',
-                                             'color1' => 'FFFFFF',
-                                             'color2' => 'AAAAAA',
-                                             'color3' => '777777',
-                                             'color4' => '444444'
-                                           }
+property :user, String, name_property: true
+property :config, Hash, default: { 'default_color' => 'FFFFFF',
+                                   'color1' => 'FFFFFF',
+                                   'color2' => 'AAAAAA',
+                                   'color3' => '777777',
+                                   'color4' => '444444',
+                                 }
 
-attribute :interface_type_blacklist, kind_of: Array, default: []
+property :interface_type_blacklist, Array, default: []
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  template "#{user_dotfiles(user)}/conky.d/dzen2" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source 'conky.d/dzen2.erb'
+    cookbook 'elite'
+    variables conky: new_resource.config,
+              interface_type_blacklist: new_resource.interface_type_blacklist,
+              home: user_home(user)
+  end
+
+  cookbook_file "#{user_dotfiles(user)}/conky.d/scripts/battery-notify.sh" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    source 'conky.d/scripts/battery-notify.sh'
+    cookbook 'elite'
+  end
+end

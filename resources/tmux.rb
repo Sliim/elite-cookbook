@@ -16,31 +16,67 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_tmux
+provides :elite_tmux
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :mode, kind_of: String, default: '0640'
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'tmux.conf.erb'
-attribute :prefix, kind_of: String, default: 'C-q'
-attribute :options, kind_of: Hash, default: {}
-attribute :kbd, kind_of: Hash, default: {}
+property :user, String, name_property: true
+property :mode, String, default: '0640'
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'tmux.conf.erb'
+property :prefix, String, default: 'C-q'
+property :options, Hash, default: {}
+property :kbd, Hash, default: {}
 
-attribute :color, kind_of: Hash, default: { 'pane_border_fg' => 'default',
-                                            'pane_border_bg' => 'default',
-                                            'pane_active_border_fg' => 'white',
-                                            'pane_active_border_bg' => 'default',
-                                            'status_fg' => 'default',
-                                            'status_bg' => 'black',
-                                            'status_current_fg' => 'white',
-                                            'status_current_bg' => 'black',
-                                            'message_fg' => 'brightred',
-                                            'message_bg' => 'black',
-                                          }
-attribute :status, kind_of: Hash, default: { 'interval' => 1,
-                                             'commands' => {},
-                                           }
-attribute :scripts, kind_of: Hash, default: {}
+property :color, Hash, default: { 'pane_border_fg' => 'default',
+                                  'pane_border_bg' => 'default',
+                                  'pane_active_border_fg' => 'white',
+                                  'pane_active_border_bg' => 'default',
+                                  'status_fg' => 'default',
+                                  'status_bg' => 'black',
+                                  'status_current_fg' => 'white',
+                                  'status_current_bg' => 'black',
+                                  'message_fg' => 'brightred',
+                                  'message_bg' => 'black',
+                                }
+property :status, Hash, default: { 'interval' => 1,
+                                   'commands' => {},
+                                 }
+property :scripts, Hash, default: {}
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  template "#{user_dotfiles(user)}/tmux.conf" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables color: new_resource.color,
+              status: new_resource.status,
+              prefix: new_resource.prefix,
+              options: new_resource.options,
+              kbd: new_resource.kbd
+  end
+
+  elite_dotlink "#{user}-tmux.conf" do
+    owner user
+    file 'tmux.conf'
+  end
+
+  new_resource.scripts.each do |name, script|
+    elite_tmux_script name do
+      owner user
+      path script['path'] if script['path']
+      default_window script['default_window'] if script['default_window']
+      windows script['windows'] if script['windows']
+      workdir script['workdir'] if script['workdir']
+      environment script['environment'] if script['environment']
+    end
+  end
+end

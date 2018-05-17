@@ -16,12 +16,39 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_sound
+provides :elite_sound
+default_action :create
 
-attribute :name, kind_of: String
-attribute :sound, kind_of: String, name_attribute: true
-attribute :owner, kind_of: String
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source_dir, kind_of: String, default: 'sounds/'
+property :sound, String, name_property: true
+property :owner, String
+property :cookbook, String, default: 'elite'
+property :source_dir, String, default: 'sounds/'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.owner
+  directory "#{user_dotfiles(user)}/sounds" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  elite_dotlink "#{user}-sounds" do
+    owner user
+    file 'sounds'
+    dotprefix true
+    skip_if_exists true
+  end
+
+  cookbook_file "#{user_dotfiles(user)}/sounds/#{new_resource.sound}" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    cookbook new_resource.cookbook
+    source "#{new_resource.source_dir}#{new_resource.sound}"
+  end
+end

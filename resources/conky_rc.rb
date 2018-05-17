@@ -16,15 +16,45 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_conky_rc
+provides :elite_conky_rc
+default_action :create
 
-attribute :name, kind_of: String
-attribute :rc, kind_of: String
-attribute :owner, kind_of: String
-attribute :config, kind_of: Hash, default: {}
-attribute :text, kind_of: Array, default: []
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'conky.d/rc.erb'
-attribute :mode, kind_of: String, default: '0640'
+property :rc, String
+property :owner, String
+property :config, Hash, default: {}
+property :text, Array, default: []
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'conky.d/rc.erb'
+property :mode, String, default: '0640'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.owner
+  config = new_resource.config
+  text = new_resource.text
+
+  dbrc = begin
+           data_bag_item('elite_conky', new_resource.rc)
+         rescue
+           nil
+         end
+
+  if dbrc
+    config = dbrc['config'].merge(new_resource.config) if dbrc.key?('config')
+    text = dbrc['text'] + new_resource.text if dbrc.key?('text')
+  end
+
+  template "#{user_dotfiles(user)}/conky.d/#{new_resource.rc}" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables config: config,
+              text: text
+  end
+end

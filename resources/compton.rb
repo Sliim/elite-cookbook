@@ -16,13 +16,31 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_compton
+provides :elite_compton
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :mode, kind_of: String, default: '0640'
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'ini.erb'
-attribute :config, kind_of: Hash, default: {}
+property :user, String, name_property: true
+property :mode, String, default: '0640'
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'ini.erb'
+property :config, Hash, default: {}
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  elite_configd user
+
+  template "#{user_dotfiles(user)}/config/compton.conf" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables config: new_resource.config
+  end
+end

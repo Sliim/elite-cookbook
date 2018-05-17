@@ -16,13 +16,42 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_moc
+provides :elite_moc
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :mode, kind_of: String, default: '0640'
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'ini.erb'
-attribute :config, kind_of: Hash, default: {}
+property :user, String, name_property: true
+property :mode, String, default: '0640'
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'ini.erb'
+property :config, Hash, default: {}
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  directory "#{user_dotfiles(user)}/moc" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  elite_dotlink "#{user}-moc" do
+    owner user
+    file 'moc'
+  end
+
+  package 'moc'
+
+  template "#{user_dotfiles(user)}/moc/config" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables config: new_resource.config
+  end
+end

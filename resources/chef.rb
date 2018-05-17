@@ -16,16 +16,57 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_chef
+provides :elite_chef
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :mode, kind_of: String, default: '0640'
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :client_source, kind_of: String, default: 'chef/knife.rb.erb'
-attribute :stove_source, kind_of: String, default: 'chef/stove.erb'
-attribute :client_key_path, kind_of: String, default: nil
-attribute :node_name, kind_of: String, default: 'sliim'
-attribute :chef_server_url, kind_of: String, default: nil
+property :user, String, name_property: true
+property :mode, String, default: '0640'
+property :cookbook, String, default: 'elite'
+property :client_source, String, default: 'chef/knife.rb.erb'
+property :stove_source, String, default: 'chef/stove.erb'
+property :client_key_path, String, default: nil
+property :node_name, String, default: 'sliim'
+property :chef_server_url, String, default: nil
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  directory "#{user_dotfiles(user)}/chef" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  template "#{user_dotfiles(user)}/chef/knife.rb" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.client_source
+    cookbook new_resource.cookbook
+    variables node_name: new_resource.node_name,
+              client_key_path: new_resource.client_key_path,
+              chef_server_url: new_resource.chef_server_url
+  end
+
+  template "#{user_dotfiles(user)}/stove" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    cookbook new_resource.cookbook
+    source new_resource.stove_source
+    variables node_name: new_resource.node_name,
+              client_key_path: new_resource.client_key_path
+  end
+
+  %w(chef stove).each do |link|
+    elite_dotlink "#{user}-#{link}" do
+      owner user
+      file link
+    end
+  end
+end

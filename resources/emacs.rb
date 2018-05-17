@@ -16,17 +16,102 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_emacs
+provides :elite_emacs
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :repository, kind_of: String, default: 'https://github.com/Sliim/emacs.d.git'
-attribute :reference, kind_of: String, default: 'master'
-attribute :apps_repository, kind_of: String, default: 'https://github.com/Sliim/emacs-apps.git'
-attribute :apps_reference, kind_of: String, default: 'master'
-attribute :apps_dependencies, kind_of: Array, default: []
-attribute :apps, kind_of: Hash, default: {}
-attribute :cask_install_ignore_failure, kind_of: [TrueClass, FalseClass], default: false
+property :user, String, name_property: true
+property :cookbook, String, default: 'elite'
+property :repository, String, default: 'https://github.com/Sliim/emacs.d.git'
+property :reference, String, default: 'master'
+property :apps_repository, String, default: 'https://github.com/Sliim/emacs-apps.git'
+property :apps_reference, String, default: 'master'
+property :apps_dependencies, Array, default: []
+property :apps, Hash, default: {}
+property :cask_install_ignore_failure, [TrueClass, FalseClass], default: false
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+  ['emacs.d', 'emacs-apps'].each do |d|
+    execute "cask-install-#{user}-#{d}" do
+      cwd "#{user_home(user)}/.#{d}"
+      command 'cask install'
+      environment 'PATH' => "#{ENV['PATH']}:#{user_home(user)}/.cask/bin",
+                  'HOME' => user_home(user)
+      user user
+      group user_group(user)
+      ignore_failure new_resource.cask_install_ignore_failure
+      action :nothing
+    end
+  end
+
+  git "#{user_home(user)}/.emacs.d" do
+    not_if { new_resource.repository.empty? }
+    notifies :run, "execute[cask-install-#{user}-emacs.d]"
+    user user
+    group user_group(user)
+    repository new_resource.repository
+    reference new_resource.reference
+    enable_submodules true
+    action :sync
+  end
+
+  directory "#{user_dotfiles(user)}/eshell" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  cookbook_file "#{user_dotfiles(user)}/eshell/alias" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source 'eshell/alias'
+    cookbook new_resource.cookbook
+  end
+
+  elite_dotlink "#{user}-eshell" do
+    owner user
+    file 'eshell'
+  end
+
+  %w(ec ediff-merge-tool).each do |bin|
+    elite_bin "#{user}-#{bin}" do
+      owner user
+      script bin
+    end
+  end
+
+  unless new_resource.apps.empty?
+    git "#{user_home(user)}/.emacs-apps" do
+      user user
+      group user_group(user)
+      repository new_resource.apps_repository
+      reference new_resource.apps_reference
+      notifies :run, "execute[cask-install-#{user}-emacs-apps]"
+      action :sync
+    end
+
+    template "#{user_home(user)}/.emacs-apps/Cask" do
+      not_if { new_resource.apps_dependencies.empty? }
+      owner user
+      group user_group(user)
+      mode '0640'
+      cookbook new_resource.cookbook
+      source 'emacs-apps/Cask.erb'
+      variables deps: new_resource.apps_dependencies
+    end
+
+    new_resource.apps.each do |name, config|
+      elite_emacs_app "#{user}-#{name}" do
+        owner user
+        app name
+        config config
+      end
+    end
+  end
+end

@@ -16,12 +16,35 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_pics
+provides :elite_pics
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source_dir, kind_of: String, default: 'pics/'
-attribute :pics, kind_of: Array, default: []
+property :user, String, name_property: true
+property :cookbook, String, default: 'elite'
+property :source_dir, String, default: 'pics/'
+property :pics, Array, default: []
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  directory "#{user_dotfiles(user)}/pics/scrot" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    recursive true
+  end
+
+  new_resource.pics.each do |pic|
+    elite_picture "#{user}-#{pic}" do
+      owner user
+      pic pic
+      cookbook new_resource.cookbook
+      source_dir new_resource.source_dir
+    end
+  end
+end

@@ -16,29 +16,89 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_x
+provides :elite_x
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'Xdefaults.erb'
-attribute :default_session, kind_of: String, default: 'stumpwm'
-attribute :config, kind_of: Hash, default: { 'urxvt' =>
-                                             {
-                                               'font' => 'xft:Bitstream Vera Sans Mono:pixelsize=10:antialias=true:hinting=true',
-                                               'foreground' => 'White',
-                                               'background' => 'Black',
-                                             },
-                                             'xterm' => {
-                                               'foreground' => 'white',
-                                               'background' => 'black',
-                                             },
-                                             'dzen2' => {
-                                               'font' => 'xft:Bitstream Vera Sans Mono:pixelsize=10:antialias=true:hinting=true',
-                                               'foreground' => 'White',
-                                               'background' => 'black',
-                                             },
-                                             'rofi' => {},
-                                           }
+property :user, String, name_property: true
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'Xdefaults.erb'
+property :default_session, String, default: 'stumpwm'
+property :config, Hash, default: { 'urxvt' =>
+                                   {
+                                     'font' => 'xft:Bitstream Vera Sans Mono:pixelsize=10:antialias=true:hinting=true',
+                                     'foreground' => 'White',
+                                     'background' => 'Black',
+                                   },
+                                   'xterm' => {
+                                     'foreground' => 'white',
+                                     'background' => 'black',
+                                   },
+                                   'dzen2' => {
+                                     'font' => 'xft:Bitstream Vera Sans Mono:pixelsize=10:antialias=true:hinting=true',
+                                     'foreground' => 'White',
+                                     'background' => 'black',
+                                   },
+                                   'rofi' => {},
+                                 }
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  template "#{user_dotfiles(user)}/Xdefaults" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    cookbook new_resource.cookbook
+    source new_resource.source
+    variables config: new_resource.config
+    notifies :run, 'execute[xrdb-merge]'
+  end
+
+  remote_directory "#{user_dotfiles(user)}/urxvt.d" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    files_owner user
+    files_group user_group(user)
+    files_mode '0640'
+    source 'urxvt.d'
+  end
+
+  execute 'xrdb-merge' do
+    action :nothing
+    command "xrdb -merge #{user_dotfiles(user)}/Xdefaults"
+    user user
+    group user_group(user)
+    ignore_failure true
+    environment DISPLAY: ':0.0'
+  end
+
+  template "#{user_dotfiles(user)}/dmrc" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    cookbook new_resource.cookbook
+    source 'ini.erb'
+    variables config: { Desktop:
+                          { Session: new_resource.default_session,
+                            Language: 'en_US.utf8' },
+                      }
+  end
+
+  %w(Xdefaults urxvt.d dmrc).each do |link|
+    elite_dotlink "#{user}-#{link}" do
+      owner user
+      file link
+    end
+  end
+
+  elite_bin "#{user}-disable-screensaver" do
+    owner user
+    script 'disable-screensaver'
+  end
+end

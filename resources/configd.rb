@@ -16,9 +16,33 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_configd
+provides :elite_configd
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
+property :user, String, name_property: true
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  execute 'move+link-user-configd-dir' do
+    command "mv #{user_home(user)}/.config #{user_dotfiles(user)}/config && ln -s #{user_dotfiles(user)}/config #{user_home(user)}/.config"
+    action :run
+    only_if { ::File.directory? "#{user_home(user)}/.config" }
+  end
+
+  directory "#{user_dotfiles(user)}/config" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  elite_dotlink "#{user}-configd" do
+    owner user
+    file 'config'
+  end
+end

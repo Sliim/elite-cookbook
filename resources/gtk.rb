@@ -16,28 +16,84 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_gtk
+provides :elite_gtk
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'gtkrc-2.0.erb'
-attribute :font_name, kind_of: String, default: 'sans 8'
-attribute :theme_name, kind_of: String, default: 'Cyanized'
-attribute :theme_rc, kind_of: String, default: 'Cyanized/gtkrc.erb'
-attribute :icon_theme_name, kind_of: String, default: 'ACYL'
-attribute :toolbar_style, kind_of: String, default: 'GTK_TOOLBAR_ICONS'
-attribute :toolbar_icon_size, kind_of: String, default: 'GTK_ICON_SIZE_SMALL_TOOLBAR'
-attribute :color, kind_of: Hash, default: { 'bg_color' => '#0C0C0E',
-                                            'selected_bg_color' => '#162C30',
-                                            'base_color' => '#0C0C0E',
-                                            'fg_color' => '#56BFD2',
-                                            'selected_fg_color' => '#00D7FF',
-                                            'text_color' => '#56BFD2',
-                                            'tooltip_bg_color' => '#F5F5B5',
-                                            'tooltip_fg_color' => '#162C30',
-                                            'link_color' => '#496B8D',
-                                            'panel_bg' => '#0C0C0E',
-                                          }
+property :user, String, name_property: true
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'gtkrc-2.0.erb'
+property :font_name, String, default: 'sans 8'
+property :theme_name, String, default: 'Cyanized'
+property :theme_rc, String, default: 'Cyanized/gtkrc.erb'
+property :icon_theme_name, String, default: 'ACYL'
+property :toolbar_style, String, default: 'GTK_TOOLBAR_ICONS'
+property :toolbar_icon_size, String, default: 'GTK_ICON_SIZE_SMALL_TOOLBAR'
+property :color, Hash, default: { 'bg_color' => '#0C0C0E',
+                                  'selected_bg_color' => '#162C30',
+                                  'base_color' => '#0C0C0E',
+                                  'fg_color' => '#56BFD2',
+                                  'selected_fg_color' => '#00D7FF',
+                                  'text_color' => '#56BFD2',
+                                  'tooltip_bg_color' => '#F5F5B5',
+                                  'tooltip_fg_color' => '#162C30',
+                                  'link_color' => '#496B8D',
+                                  'panel_bg' => '#0C0C0E',
+                                }
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  template "#{user_dotfiles(user)}/gtkrc-2.0" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables gtk: new_resource
+  end
+
+  directory "#{user_dotfiles(user)}/themes" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  remote_directory "#{user_dotfiles(user)}/themes/#{new_resource.theme_name}" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    files_owner user
+    files_group user_group(user)
+    files_mode '0640'
+    source "gtk/themes/#{new_resource.theme_name}"
+    cookbook new_resource.cookbook
+  end
+
+  template "#{user_dotfiles(user)}/themes/#{new_resource.theme_name}/gtk-2.0/gtkrc" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source "gtk/themes/#{new_resource.theme_rc}"
+    cookbook new_resource.cookbook
+    variables gtk: new_resource
+    only_if { %w(Cyanized Redified Greenified Orangified).include? new_resource.theme_name }
+  end
+
+  directory "#{user_dotfiles(user)}/icons" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  %w(gtkrc-2.0 icons themes).each do |dotf|
+    elite_dotlink "#{user}-#{dotf}" do
+      owner user
+      file dotf
+    end
+  end
+end

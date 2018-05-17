@@ -16,21 +16,101 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_zsh
+provides :elite_zsh
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'zshrc.erb'
-attribute :config, kind_of: Hash, default: { 'pyenv_prompt' => false,
-                                             'rbenv_prompt' => false,
-                                             'ndenv_prompt' => false,
-                                             'color1' => '239',
-                                             'color2' => '085',
-                                           }
-attribute :plugins, kind_of: Hash, default: { elite: %w(common) }
-attribute :completions, kind_of: Hash, default: {}
-attribute :theme, kind_of: String, default: 'elite'
-attribute :aliases, kind_of: Hash, default: {}
+property :user, String, name_property: true
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'zshrc.erb'
+property :config, Hash, default: { 'pyenv_prompt' => false,
+                                   'rbenv_prompt' => false,
+                                   'ndenv_prompt' => false,
+                                   'color1' => '239',
+                                   'color2' => '085',
+                                 }
+property :plugins, Hash, default: { elite: %w(common) }
+property :completions, Hash, default: {}
+property :theme, String, default: 'elite'
+property :aliases, Hash, default: {}
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+  plugins = []
+  completions = []
+
+  directory "#{user_dotfiles(user)}/zsh.d" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  cookbook_file "#{user_dotfiles(user)}/zsh.d/init.zsh" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source 'zsh.d/init.zsh'
+  end
+
+  remote_directory "#{user_dotfiles(user)}/zsh.d/lib" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    files_owner user
+    files_group user_group(user)
+    files_mode '0640'
+    source 'zsh.d/lib'
+  end
+
+  new_resource.plugins.each do |cb, plugs|
+    plugs.each do |p|
+      elite_zsh_plugin "#{user}-#{p}" do
+        owner user
+        plugin p
+        cookbook cb.to_s
+      end
+      plugins << p
+    end
+  end
+
+  new_resource.completions.each do |cb, comps|
+    comps.each do |c|
+      elite_zsh_completion "#{user}-#{c}" do
+        owner user
+        completion c
+        cookbook cb.to_s
+      end
+      completions << c
+    end
+  end
+
+  elite_zsh_theme "#{user}-#{new_resource.theme}" do
+    owner user
+    theme new_resource.theme
+    cookbook new_resource.cookbook
+  end
+
+  template "#{user_dotfiles(user)}/zshrc" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    cookbook new_resource.cookbook
+    source new_resource.source
+    variables config: new_resource.config,
+              plugins: plugins,
+              completions: completions,
+              theme: new_resource.theme,
+              aliases: new_resource.aliases
+  end
+
+  %w(zshrc zsh.d).each do |l|
+    elite_dotlink "#{user}-#{l}" do
+      owner user
+      file l
+    end
+  end
+end

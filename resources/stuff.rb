@@ -16,12 +16,29 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_stuff
+provides :elite_stuff
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :repository, kind_of: String, default: 'https://github.com/Sliim/elite-stuff.git'
-attribute :reference, kind_of: String, default: 'master'
-attribute :install_path, kind_of: String, default: nil
+property :user, String, name_property: true
+property :repository, String, default: 'https://github.com/Sliim/elite-stuff.git'
+property :reference, String, default: 'master'
+property :install_path, String, default: nil
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+  install_path = new_resource.install_path
+  install_path = "#{user_home(user)}/elite-stuff" if install_path.nil?
+
+  git install_path do
+    user user
+    group user_group(user)
+    repository new_resource.repository
+    reference new_resource.reference
+    action :sync
+  end
+end

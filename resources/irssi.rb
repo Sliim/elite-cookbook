@@ -16,20 +16,69 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_irssi
+provides :elite_irssi
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :config_source, kind_of: String, default: 'irssi/config.erb'
-attribute :scripts_source, kind_of: String, default: 'irssi/scripts'
-attribute :mode, kind_of: String, default: '0640'
-attribute :startup, kind_of: Array, default: []
-attribute :servers, kind_of: Array, default: []
-attribute :channels, kind_of: Array, default: []
-attribute :chatnets, kind_of: Array, default: []
-attribute :aliases, kind_of: Hash, default: {}
-attribute :settings, kind_of: Hash, default: {}
-attribute :hilights, kind_of: Array, default: []
+property :user, String, name_property: true
+property :cookbook, String, default: 'elite'
+property :config_source, String, default: 'irssi/config.erb'
+property :scripts_source, String, default: 'irssi/scripts'
+property :mode, String, default: '0640'
+property :startup, Array, default: []
+property :servers, Array, default: []
+property :channels, Array, default: []
+property :chatnets, Array, default: []
+property :aliases, Hash, default: {}
+property :settings, Hash, default: {}
+property :hilights, Array, default: []
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  directory "#{user_dotfiles(user)}/irssi" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  remote_directory "#{user_dotfiles(user)}/irssi/scripts" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    files_owner user
+    files_group user_group(user)
+    files_mode new_resource.mode
+    source new_resource.scripts_source
+  end
+
+  file "#{user_dotfiles(user)}/irssi/startup" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    content new_resource.startup.join("\n")
+  end
+
+  template "#{user_dotfiles(user)}/irssi/config" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    cookbook new_resource.cookbook
+    source new_resource.config_source
+    variables servers: new_resource.servers,
+              channels: new_resource.channels,
+              chatnets: new_resource.chatnets,
+              aliases: new_resource.aliases,
+              settings: new_resource.settings,
+              hilights: new_resource.hilights
+  end
+
+  elite_dotlink "#{user}-irssi" do
+    owner user
+    file 'irssi'
+  end
+end

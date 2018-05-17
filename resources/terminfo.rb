@@ -16,11 +16,34 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_terminfo
+provides :elite_terminfo
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source_dir, kind_of: String, default: 'terminfo'
+property :user, String, name_property: true
+property :cookbook, String, default: 'elite'
+property :source_dir, String, default: 'terminfo'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  remote_directory "#{user_dotfiles(user)}/terminfo" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    files_owner user
+    files_group user_group(user)
+    files_mode '0640'
+    source new_resource.source_dir
+    cookbook new_resource.cookbook
+  end
+
+  elite_dotlink "#{user}-terminfo" do
+    owner user
+    file 'terminfo'
+  end
+end

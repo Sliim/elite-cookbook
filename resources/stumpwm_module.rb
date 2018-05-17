@@ -16,11 +16,36 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_stumpwm_module
+provides :elite_stumpwm_module
+default_action :create
 
-attribute :name, kind_of: String
-attribute :mod, kind_of: String, name_attribute: true
-attribute :owner, kind_of: String
-attribute :cookbook, kind_of: String, default: 'elite'
+property :mod, String, name_property: true
+property :owner, String
+property :cookbook, String, default: 'elite'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.owner
+  elite_stumpwm_d user
+
+  directory "#{user_dotfiles(user)}/stumpwm.d/modules/#{new_resource.mod}" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    recursive true
+  end
+
+  ['package.lisp', "#{new_resource.mod}.lisp", "#{new_resource.mod}.asd"].each do |modfile|
+    cookbook_file "#{user_dotfiles(user)}/stumpwm.d/modules/#{new_resource.mod}/#{modfile}" do
+      owner user
+      group user_group(user)
+      mode '0640'
+      source "stumpwm.d/modules/#{new_resource.mod}/#{modfile}"
+      cookbook new_resource.cookbook
+    end
+  end
+end

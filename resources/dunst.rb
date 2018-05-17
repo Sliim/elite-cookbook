@@ -16,10 +16,52 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_dunst
+provides :elite_dunst
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :vars, kind_of: Hash, default: nil
+property :user, String, name_property: true
+property :vars, Hash, default: nil
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+  config = {}
+
+  %w(config rules).each do |key|
+    config = config.merge(new_resource.vars[key]) if new_resource.vars.key? key
+  end
+
+  elite_configd user
+
+  directory "#{user_dotfiles(user)}/config/dunst" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    recursive true
+  end
+
+  template "#{user_dotfiles(user)}/config/dunst/dunstrc" do
+    owner user
+    group user_group(user)
+    source 'dunstrc.erb'
+    cookbook 'dunst'
+    mode '0640'
+    variables config: config
+  end
+
+  elite_bin "#{user}-notifier" do
+    owner user
+    script 'notifier'
+  end
+
+  %w(bip.wav alert.wav).each do |s|
+    elite_sound "#{user}-#{s}" do
+      owner user
+      sound s
+    end
+  end
+end

@@ -16,11 +16,32 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_zsh_completion
+provides :elite_zsh_completion
+default_action :create
 
-attribute :name, kind_of: String
-attribute :completion, kind_of: String, name_attribute: true
-attribute :owner, kind_of: String
-attribute :cookbook, kind_of: String, default: 'elite'
+property :completion, String, name_property: true
+property :owner, String
+property :cookbook, String, default: 'elite'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.owner
+
+  directory "#{user_dotfiles(user)}/zsh.d/completions" do
+    owner user
+    group user_group(user)
+    mode '0750'
+  end
+
+  cookbook_file "#{user_dotfiles(user)}/zsh.d/completions/_#{new_resource.completion}" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    source "zsh.d/completions/_#{new_resource.completion}"
+    cookbook new_resource.cookbook
+  end
+end

@@ -16,20 +16,41 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_ack
+provides :elite_ack
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :mode, kind_of: String, default: '0640'
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'list2file.erb'
-attribute :config, kind_of: Array, default: ['--ignore-dir=.project/',
-                                             '--ignore-dir=var/',
-                                             '--ignore-dir=log/',
-                                             '--ignore-dir=cover/',
-                                             '--ignore-dir=logs/',
-                                             '--ignore-dir=vendor/',
-                                             '--ignore-dir=.cask/',
-                                             '--type-set=puppet=.pp,.puppet']
+property :user, String, name_property: true
+property :mode, String, default: '0640'
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'list2file.erb'
+property :config, Array, default: ['--ignore-dir=.project/',
+                                   '--ignore-dir=var/',
+                                   '--ignore-dir=log/',
+                                   '--ignore-dir=cover/',
+                                   '--ignore-dir=logs/',
+                                   '--ignore-dir=vendor/',
+                                   '--ignore-dir=.cask/',
+                                   '--type-set=puppet=.pp,.puppet']
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  template "#{user_dotfiles(user)}/ackrc" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.source
+    cookbook new_resource.cookbook
+    variables lines: new_resource.config
+  end
+
+  elite_dotlink "#{user}-ackrc" do
+    owner user
+    file 'ackrc'
+  end
+end

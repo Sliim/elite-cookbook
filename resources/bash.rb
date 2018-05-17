@@ -16,11 +16,31 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_bash
+provides :elite_bash
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source, kind_of: String, default: 'bashrc'
+property :user, String, name_property: true
+property :cookbook, String, default: 'elite'
+property :source, String, default: 'bashrc'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  cookbook_file "#{user_dotfiles(user)}/bashrc" do
+    owner user
+    group user_group(user)
+    mode '0640'
+    cookbook new_resource.cookbook
+    source new_resource.source
+  end
+
+  elite_dotlink "#{user}-bashrc" do
+    owner user
+    file 'bashrc'
+  end
+end

@@ -16,11 +16,26 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_cask
+provides :elite_cask
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :repository, kind_of: String, default: 'https://github.com/cask/cask.git'
-attribute :reference, kind_of: String, default: 'master'
+property :user, String, name_property: true
+property :repository, String, default: 'https://github.com/cask/cask.git'
+property :reference, String, default: 'master'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  git "#{user_home(user)}/.cask" do
+    user user
+    group user_group(user)
+    repository new_resource.repository
+    reference new_resource.reference
+    action :sync
+  end
+end

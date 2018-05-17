@@ -16,12 +16,30 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_dotlink
+provides :elite_dotlink
+default_action :create
 
-attribute :name, kind_of: String
-attribute :file, kind_of: String, name_attribute: true
-attribute :owner, kind_of: String
-attribute :dotprefix, kind_of: [TrueClass, FalseClass], default: true
-attribute :skip_if_exists, kind_of: [TrueClass, FalseClass], default: false
+property :file, String, name_property: true
+property :owner, String
+property :dotprefix, [TrueClass, FalseClass], default: true
+property :skip_if_exists, [TrueClass, FalseClass], default: false
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  owner = new_resource.owner
+  file = new_resource.file
+  file = ".#{file}" if new_resource.dotprefix
+  exists = ::File.exist? "#{user_home(owner)}/#{file}"
+
+  link "#{user_home(owner)}/#{file}" do
+    owner owner
+    group user_group(owner)
+    link_type :symbolic
+    to "#{user_dotfiles(owner)}/#{new_resource.file}"
+    only_if { !exists || (exists && !new_resource.skip_if_exists) }
+  end
+end

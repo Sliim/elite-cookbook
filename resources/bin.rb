@@ -16,12 +16,27 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_bin
+provides :elite_bin
+default_action :create
 
-attribute :name, kind_of: String
-attribute :script, kind_of: String, name_attribute: true
-attribute :owner, kind_of: String
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source_dir, kind_of: String, default: 'bin/'
+property :script, String, name_property: true
+property :owner, String
+property :cookbook, String, default: 'elite'
+property :source_dir, String, default: 'bin/'
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.owner
+
+  cookbook_file "#{user_dotfiles(user)}/bin/#{new_resource.script}" do
+    owner user
+    group user_group(user)
+    mode '0750'
+    cookbook new_resource.cookbook
+    source new_resource.source_dir + new_resource.script
+  end
+end

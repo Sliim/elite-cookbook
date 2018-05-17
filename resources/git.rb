@@ -16,34 +16,70 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_git
+provides :elite_git
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :username, kind_of: String
-attribute :email, kind_of: String
-attribute :mode, kind_of: String, default: '0640'
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :gitconfig_src, kind_of: String, default: 'gitconfig.erb'
-attribute :gitignore_src, kind_of: String, default: 'list2file.erb'
-attribute :gitignore, kind_of: Array, default: ['*.a',
-                                                '*.o',
-                                                '*.py[co]',
-                                                '*.so',
-                                                '*.sw[nop]',
-                                                '*~',
-                                                '*.elc',
-                                                '*.pyc',
-                                                '.#*',
-                                                '\#*\#',
-                                                '.\#*',
-                                                'auto-save-list',
-                                                'tramp',
-                                                '__pycache__',
-                                                'bzr-orphans',
-                                                '/.emacs.desktop',
-                                                '/.emacs.desktop.lock',
-                                                '/.project',
-                                                '/.ropeproject']
+property :user, String, name_property: true
+property :username, String
+property :email, String
+property :mode, String, default: '0640'
+property :cookbook, String, default: 'elite'
+property :gitconfig_src, String, default: 'gitconfig.erb'
+property :gitignore_src, String, default: 'list2file.erb'
+property :gitignore, Array, default: ['*.a',
+                                      '*.o',
+                                      '*.py[co]',
+                                      '*.so',
+                                      '*.sw[nop]',
+                                      '*~',
+                                      '*.elc',
+                                      '*.pyc',
+                                      '.#*',
+                                      '\#*\#',
+                                      '.\#*',
+                                      'auto-save-list',
+                                      'tramp',
+                                      '__pycache__',
+                                      'bzr-orphans',
+                                      '/.emacs.desktop',
+                                      '/.emacs.desktop.lock',
+                                      '/.project',
+                                      '/.ropeproject']
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  template "#{user_dotfiles(user)}/gitconfig" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.gitconfig_src
+    cookbook new_resource.cookbook
+    variables name: new_resource.username,
+              email: new_resource.email
+  end
+
+  template "#{user_dotfiles(user)}/gitignore" do
+    owner user
+    group user_group(user)
+    mode new_resource.mode
+    source new_resource.gitignore_src
+    cookbook new_resource.cookbook
+    variables lines: new_resource.gitignore
+  end
+
+  elite_dotlink "#{user}-gitconfig" do
+    owner user
+    file 'gitconfig'
+  end
+
+  elite_dotlink "#{user}-gitignore" do
+    owner user
+    file 'gitignore'
+  end
+end

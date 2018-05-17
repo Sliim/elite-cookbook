@@ -16,11 +16,42 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_conky
+provides :elite_conky
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
-attribute :global_config, kind_of: Hash, default: {}
-attribute :configs, kind_of: Hash, default: {}
+property :user, String, name_property: true
+property :global_config, Hash, default: {}
+property :configs, Hash, default: {}
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  ['conky.d', 'conky.d/var', 'conky.d/scripts'].each do |dir|
+    directory "#{user_dotfiles(user)}/#{dir}" do
+      owner user
+      group user_group(user)
+      mode '0750'
+    end
+  end
+
+  elite_dotlink "#{user}-conky" do
+    owner user
+    file 'conky.d'
+  end
+
+  new_resource.configs.each do |name, rc|
+    config = rc.key?('config') ? rc['config'] : {}
+    text = rc.key?('text') ? rc['text'] : []
+    elite_conky_rc "#{user}-#{name}" do
+      owner user
+      rc name
+      config config.merge(new_resource.global_config)
+      text text
+    end
+  end
+end

@@ -16,13 +16,63 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_desktop_app
+provides :elite_desktop_app
+default_action :create
 
-attribute :name, kind_of: String
-attribute :app, kind_of: String, name_attribute: true
-attribute :owner, kind_of: String
-attribute :cookbook, kind_of: String, default: 'elite'
-attribute :source_dir, kind_of: String, default: 'applications/'
-attribute :config, kind_of: Hash, default: nil
+property :app, String, name_property: true
+property :owner, String
+property :cookbook, String, default: 'elite'
+property :source_dir, String, default: 'applications/'
+property :config, Hash, default: nil
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  if node.recipe?('elite::x')
+    user = new_resource.owner
+    location = "#{user_dotfiles(user)}/local/share/applications"
+
+    directory location do
+      owner user
+      group user_group(user)
+      mode '0750'
+      recursive true
+      notifies :run, 'execute[chown-local-user-dir]', :delayed
+    end
+
+    execute 'chown-local-user-dir' do
+      command "chown -R #{user}:#{user_group(user)} #{user_dotfiles(user)}/local"
+      action :nothing
+    end
+
+    elite_dotlink "#{user}-local" do
+      skip_if_exists true
+      owner user
+      file 'local'
+    end
+
+    if new_resource.config
+      template "#{location}/#{new_resource.app}.desktop" do
+        owner user
+        group user_group(user)
+        mode '0640'
+        cookbook new_resource.cookbook
+        source 'app.desktop.erb'
+        variables app: new_resource.config
+      end
+    else
+      cookbook_file "#{location}/#{new_resource.app}.desktop" do
+        owner user
+        group user_group(user)
+        mode '0640'
+        cookbook new_resource.cookbook
+        source "#{new_resource.source_dir}#{new_resource.app}.desktop"
+      end
+    end
+  else
+    Chef::Log.warn('Node doesn\'t includes elite::x recipe. Skip desktop application')
+  end
+end

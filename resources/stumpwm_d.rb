@@ -16,9 +16,30 @@
 # limitations under the License.
 #
 
-actions :create
-default_action :create
 resource_name :elite_stumpwm_d
+provides :elite_stumpwm_d
+default_action :create
 
-attribute :name, kind_of: String
-attribute :user, kind_of: String, name_attribute: true
+property :user, String, name_property: true
+
+def whyrun_supported?
+  true
+end
+
+action :create do
+  user = new_resource.user
+
+  %w(stumpwm.d stumpwm.d/modules).each do |dir|
+    directory "#{user_dotfiles(user)}/#{dir}" do
+      owner user
+      group user_group(user)
+      mode '0750'
+      recursive true
+    end
+  end
+
+  elite_dotlink "#{user}-stumpwm.d" do
+    owner user
+    file 'stumpwm.d'
+  end
+end
