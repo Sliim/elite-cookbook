@@ -20,8 +20,7 @@ require_relative 'spec_helper'
 
 describe 'elite::python' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override['elite']['python'] = {
         '2' => {},
         '3' => {

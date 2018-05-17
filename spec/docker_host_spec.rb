@@ -20,8 +20,7 @@ require_relative 'spec_helper'
 
 describe 'elite::docker_host' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['docker_host']['users'] = %w(sliim)

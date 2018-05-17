@@ -5,9 +5,7 @@ require 'chefspec/berkshelf'
 
 describe 'elite::default' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: ['elite_user'],
-                             platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new(step_into: ['elite_user']) do |node|
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(sliim)
       node.override['elite']['sliim'] = {
@@ -41,9 +39,7 @@ describe 'elite::default' do
 
   context 'without home' do
     let(:subject) do
-      ChefSpec::SoloRunner.new(step_into: ['elite_user'],
-                               platform: 'debian',
-                               version: '9.0') do |node|
+      ChefSpec::SoloRunner.new(step_into: ['elite_user']) do |node|
         node.override['elite']['groups'] = %w(elite)
         node.override['elite']['users'] = %w(sliim)
         node.override['elite']['sliim'] = {
@@ -63,9 +59,7 @@ describe 'elite::default' do
 
   context 'with empty shell' do
     let(:subject) do
-      ChefSpec::SoloRunner.new(step_into: ['elite_user'],
-                               platform: 'debian',
-                               version: '9.0') do |node|
+      ChefSpec::SoloRunner.new(step_into: ['elite_user']) do |node|
         node.override['elite']['groups'] = %w(elite)
         node.override['elite']['users'] = %w(sliim)
         node.override['elite']['sliim'] = {
@@ -85,9 +79,7 @@ describe 'elite::default' do
 
   context 'without shell' do
     let(:subject) do
-      ChefSpec::SoloRunner.new(step_into: ['elite_user'],
-                               platform: 'debian',
-                               version: '9.0') do |node|
+      ChefSpec::SoloRunner.new(step_into: ['elite_user']) do |node|
         node.override['elite']['groups'] = %w(elite)
         node.override['elite']['users'] = %w(sliim)
         node.override['elite']['sliim'] = {

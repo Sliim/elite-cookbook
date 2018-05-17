@@ -21,9 +21,7 @@ require_relative 'spec_helper'
 describe 'elite::bin' do
   let(:subject) do
     ChefSpec::SoloRunner
-      .new(step_into: ['elite_bin'],
-           platform: 'debian',
-           version: '9.0') do |node|
+      .new(step_into: ['elite_bin']) do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['home'] = '/home/sliim'

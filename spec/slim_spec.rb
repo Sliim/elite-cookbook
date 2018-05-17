@@ -20,8 +20,7 @@ require_relative 'spec_helper'
 
 describe 'elite::slim' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['slim']['config']['default_user'] = 'sliim'

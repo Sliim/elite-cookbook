@@ -20,9 +20,7 @@ require_relative 'spec_helper'
 
 describe 'elite::conky_dzen2' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: %w(elite_conky_dzen2),
-                             platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new(step_into: %w(elite_conky_dzen2)) do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['home'] = '/home/sliim'

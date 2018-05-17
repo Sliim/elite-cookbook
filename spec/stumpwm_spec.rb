@@ -20,9 +20,7 @@ require_relative 'spec_helper'
 
 describe 'elite::stumpwm' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: %w(elite_stumpwm elite_stumpwm_module elite_stumpwm_d),
-                             platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new(step_into: %w(elite_stumpwm elite_stumpwm_module elite_stumpwm_d)) do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['email'] = 'sliim@mailoo.org'

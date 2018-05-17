@@ -21,9 +21,7 @@ require 'chefspec/berkshelf'
 
 describe 'elite::dotfiles' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(platform: 'debian',
-                             version: '9.0',
-                             step_into: 'elite_dotfiles') do |node|
+    ChefSpec::SoloRunner.new(step_into: 'elite_dotfiles') do |node|
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['users'] = %w(sliim)
       node.override['elite']['sliim'] = {
@@ -67,9 +65,7 @@ describe 'elite::dotfiles' do
 
   context 'without dotfd' do
     let(:subject) do
-      ChefSpec::SoloRunner.new(platform: 'debian',
-                               version: '9.0',
-                               step_into: 'elite_dotfiles') do |node|
+      ChefSpec::SoloRunner.new(step_into: 'elite_dotfiles') do |node|
         node.override['elite']['groups'] = %w(elite)
         node.override['elite']['users'] = %w(sliim)
         node.override['elite']['sliim'] = {
@@ -132,9 +128,7 @@ describe 'elite::dotfiles' do
 
   context 'without init_repo' do
     let(:subject) do
-      ChefSpec::SoloRunner.new(platform: 'debian',
-                               version: '9.0',
-                               step_into: 'elite_dotfiles') do |node|
+      ChefSpec::SoloRunner.new(step_into: 'elite_dotfiles') do |node|
         node.override['elite']['groups'] = %w(elite)
         node.override['elite']['users'] = %w(sliim)
         node.override['elite']['sliim'] = {

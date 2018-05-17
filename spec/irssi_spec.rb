@@ -20,9 +20,7 @@ require_relative 'spec_helper'
 
 describe 'elite::irssi' do
   let(:subject) do
-    ChefSpec::SoloRunner.new(step_into: ['elite_irssi'],
-                             platform: 'debian',
-                             version: '9.0') do |node|
+    ChefSpec::SoloRunner.new(step_into: ['elite_irssi']) do |node|
       node.override['elite']['users'] = %w(sliim foo)
       node.override['elite']['groups'] = %w(elite)
       node.override['elite']['sliim']['dotfd'] = '/home/sliim/.dotfiles'
