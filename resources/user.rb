@@ -22,7 +22,7 @@ default_action :create
 
 property :home, String, default: ''
 property :shell, String, default: '/bin/zsh'
-property :password, String, default: nil
+property :password, String, default: ''
 property :groups, Array, default: []
 
 def whyrun_supported?
@@ -43,7 +43,7 @@ action :create do
     home home
     shell shell
     manage_home !::File.exist?(home)
-    password new_resource.password unless new_resource.password.nil?
+    password new_resource.password unless new_resource.password.empty?
   end
 
   new_resource.groups.each do |g|

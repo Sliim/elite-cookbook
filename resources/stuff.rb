@@ -23,7 +23,7 @@ default_action :create
 property :user, String, name_property: true
 property :repository, String, default: 'https://github.com/Sliim/elite-stuff.git'
 property :reference, String, default: 'master'
-property :install_path, String, default: nil
+property :install_path, String, default: '/opt/elite-stuff'
 
 def whyrun_supported?
   true

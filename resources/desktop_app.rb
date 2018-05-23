@@ -24,7 +24,7 @@ property :app, String, name_property: true
 property :owner, String
 property :cookbook, String, default: 'elite'
 property :source_dir, String, default: 'applications/'
-property :config, Hash, default: nil
+property :config, Hash, default: {}
 
 def whyrun_supported?
   true
@@ -54,7 +54,15 @@ action :create do
       file 'local'
     end
 
-    if new_resource.config
+    if new_resource.config.empty?
+      cookbook_file "#{location}/#{new_resource.app}.desktop" do
+        owner user
+        group user_group(user)
+        mode '0640'
+        cookbook new_resource.cookbook
+        source "#{new_resource.source_dir}#{new_resource.app}.desktop"
+      end
+    else
       template "#{location}/#{new_resource.app}.desktop" do
         owner user
         group user_group(user)
@@ -62,14 +70,6 @@ action :create do
         cookbook new_resource.cookbook
         source 'app.desktop.erb'
         variables app: new_resource.config
-      end
-    else
-      cookbook_file "#{location}/#{new_resource.app}.desktop" do
-        owner user
-        group user_group(user)
-        mode '0640'
-        cookbook new_resource.cookbook
-        source "#{new_resource.source_dir}#{new_resource.app}.desktop"
       end
     end
   else

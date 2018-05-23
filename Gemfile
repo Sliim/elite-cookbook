@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 source 'https://rubygems.org'
 
-gem 'chef', '~> 12'
+gem 'chef', "~> #{ENV['CHEF_VERSION'] || 13}"
 gem 'berkshelf'
 gem 'rake'
 

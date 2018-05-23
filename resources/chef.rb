@@ -25,9 +25,9 @@ property :mode, String, default: '0640'
 property :cookbook, String, default: 'elite'
 property :client_source, String, default: 'chef/knife.rb.erb'
 property :stove_source, String, default: 'chef/stove.erb'
-property :client_key_path, String, default: nil
+property :client_key_path, String, default: ''
 property :node_name, String, default: 'sliim'
-property :chef_server_url, String, default: nil
+property :chef_server_url, String, default: ''
 
 def whyrun_supported?
   true

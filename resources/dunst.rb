@@ -21,7 +21,7 @@ provides :elite_dunst
 default_action :create
 
 property :user, String, name_property: true
-property :vars, Hash, default: nil
+property :vars, Hash, default: {}
 
 def whyrun_supported?
   true
