@@ -33,7 +33,7 @@ action :create do
   app = new_resource.app
   config = new_resource.config
 
-  desktop = config['desktop']
+  desktop = config['desktop'] || {}
 
   elite_desktop_app "#{user}-#{app}" do
     not_if { desktop.nil? }
