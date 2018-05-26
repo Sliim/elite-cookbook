@@ -12,6 +12,7 @@ end
 
 group :unit do
   gem 'chefspec'
+  gem 'docker-api', '= 1.34.0'
 end
 
 group :kitchen do
